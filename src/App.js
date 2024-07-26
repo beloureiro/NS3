@@ -11,13 +11,14 @@ const DynamicExpertiseDashboard = () => {
   const expertiseAreas = useMemo(() => ({
     businessManagement: {
       title: "Business Management",
-      color: "#FF6B6B",
+      color: "#ADFF2F",
       skills: [
         { name: "Operational Management", value: 90 },
         { name: "Process Improvement", value: 85 },
         { name: "Strategic Planning", value: 75 },
         { name: "Financial Analysis", value: 75 },
-        { name: "Project Management", value: 85 }
+        { name: "Project Management", value: 85 },
+        { name: "Customer Satisfaction", value: 80 }
       ]
     },
     dataAnalysis: {
@@ -28,7 +29,8 @@ const DynamicExpertiseDashboard = () => {
         { name: "Microsoft Power BI", value: 95 },
         { name: "Data Modeling", value: 90 },
         { name: "Python Programming", value: 75 },
-        { name: "Advanced Excel", value: 75 }
+        { name: "Advanced Excel", value: 75 },
+        { name: "Artificial Intelligence", value: 85 }
       ]
     },
     consultingTeaching: {
@@ -39,7 +41,19 @@ const DynamicExpertiseDashboard = () => {
         { name: "Problem-Solving Training", value: 95 },
         { name: "Financial Training", value: 80 },
         { name: "Lean Process Management", value: 75 },
-        { name: "Strategic Planning", value: 80 }
+        { name: "Strategic Planning", value: 80 },
+        { name: "Solution Development", value: 85 }
+      ]
+    },
+    designInnovation: {
+      title: "Design & Innovation",
+      color: "#FF6B6B",
+      skills: [
+        { name: "Design", value: 85 },
+        { name: "Innovation", value: 90 },
+        { name: "Creativity", value: 80 },
+        { name: "Product Development", value: 75 },
+        { name: "Innovative Solutions", value: 85 }
       ]
     },
     healthLeadership: {
@@ -71,7 +85,7 @@ const DynamicExpertiseDashboard = () => {
           <PolarAngleAxis
             dataKey="name"
             stroke="#ffffff"
-            tick={{ fontSize: 14, wordWrap: 'break-word', whiteSpace: 'pre-wrap', textAlign: 'center' }}
+            tick={{ fontSize: 12, wordWrap: 'break-word', whiteSpace: 'pre-wrap', textAlign: 'center' }}
             tickFormatter={(value) => {
               const words = value.split(' ');
               if (words.length > 1) {
@@ -80,7 +94,7 @@ const DynamicExpertiseDashboard = () => {
               return value;
             }}
           />
-          <PolarRadiusAxis angle={37} domain={[0, 100]} stroke="#ffffff" />
+          <PolarRadiusAxis angle={55} domain={[0, 100]} stroke="#ffffff" />
           <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.5} />
         </RadarChart>
       </ResponsiveContainer>
