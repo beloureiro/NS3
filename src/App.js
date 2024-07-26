@@ -127,7 +127,7 @@ function App() {
         
         <div className="mt-8"> {/* Reduzi a margem superior */}
           <h2 className="text-2xl font-semibold mb-4">Transform Your Business Today</h2>
-          <div className="flex justify-center space-x-6">
+          <div className="flex justify-center flex-wrap space-x-6 md:space-x-6"> {/* Ajustei a flexbox para mobile */}
             <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
               <Mail size={24} />
             </a>
