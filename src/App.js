@@ -25,10 +25,10 @@ const DynamicExpertiseDashboard = () => {
       color: "#4ECDC4",
       skills: [
         { name: "Business Intelligence (BI)", value: 85 },
-        { name: "Microsoft Power BI", value: 90 },
-        { name: "Data Modeling", value: 80 },
-        { name: "Python Programming", value: 75 },
-        { name: "Advanced Excel", value: 95 }
+        { name: "Microsoft Power BI", value: 95 },
+        { name: "Data Modeling", value: 90 },
+        { name: "Python Programming", value: 65 },
+        { name: "Advanced Excel", value: 85 }
       ]
     },
     consultingTeaching: {
@@ -40,6 +40,17 @@ const DynamicExpertiseDashboard = () => {
         { name: "Financial Training", value: 80 },
         { name: "Lean Process Management", value: 85 },
         { name: "Strategic Planning", value: 80 }
+      ]
+    },
+    healthLeadership: {
+      title: "Health Leadership",
+      color: "#1E90FF",
+      skills: [
+        { name: "Leadership", value: 85 },
+        { name: "Inclusion & Diversity", value: 95 },
+        { name: "Emotional Intelligence", value: 90 },
+        { name: "Wellness Programs", value: 75 },
+        { name: "Health & Safety Policies", value: 85 }
       ]
     }
   }), []);
