@@ -15,7 +15,7 @@ const DynamicExpertiseDashboard = () => {
       skills: [
         { name: "Operational Management", value: 90 },
         { name: "Process Improvement", value: 85 },
-        { name: "Strategic Planning", value: 80 },
+        { name: "Strategic Planning", value: 75 },
         { name: "Financial Analysis", value: 75 },
         { name: "Project Management", value: 85 }
       ]
@@ -27,8 +27,8 @@ const DynamicExpertiseDashboard = () => {
         { name: "Business Intelligence (BI)", value: 85 },
         { name: "Microsoft Power BI", value: 95 },
         { name: "Data Modeling", value: 90 },
-        { name: "Python Programming", value: 65 },
-        { name: "Advanced Excel", value: 85 }
+        { name: "Python Programming", value: 75 },
+        { name: "Advanced Excel", value: 75 }
       ]
     },
     consultingTeaching: {
@@ -36,9 +36,9 @@ const DynamicExpertiseDashboard = () => {
       color: "#FFA62B",
       skills: [
         { name: "Business Consulting", value: 90 },
-        { name: "Problem-Solving Training", value: 85 },
+        { name: "Problem-Solving Training", value: 95 },
         { name: "Financial Training", value: 80 },
-        { name: "Lean Process Management", value: 85 },
+        { name: "Lean Process Management", value: 75 },
         { name: "Strategic Planning", value: 80 }
       ]
     },
@@ -46,7 +46,7 @@ const DynamicExpertiseDashboard = () => {
       title: "Health Leadership",
       color: "#1E90FF",
       skills: [
-        { name: "Leadership", value: 85 },
+        { name: "Leadership", value: 90 },
         { name: "Inclusion & Diversity", value: 95 },
         { name: "Emotional Intelligence", value: 90 },
         { name: "Wellness Programs", value: 75 },
@@ -65,12 +65,12 @@ const DynamicExpertiseDashboard = () => {
 
   const renderRadarChart = () => {
     return (
-      <ResponsiveContainer width="100%" height={300}> {/* Ajuste a altura do gráfico aqui */}
-        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={animateData}>
+      <ResponsiveContainer width="100%" height={350}> {/* Ajuste a altura do gráfico aqui */}
+        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}>
           <PolarGrid stroke="#e0e0e0" />
-          <PolarAngleAxis dataKey="name" stroke="#ffffff" />
-          <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#ffffff" />
-          <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.6} />
+          <PolarAngleAxis dataKey="name" stroke="#ffffff" tick={{ fontSize: 14 }} />
+          <PolarRadiusAxis angle={37} domain={[0, 100]} stroke="#ffffff" />
+          <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.5} />
         </RadarChart>
       </ResponsiveContainer>
     );
@@ -78,12 +78,12 @@ const DynamicExpertiseDashboard = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 flex-wrap">
         {Object.keys(expertiseAreas).map(areaKey => (
           <button
             key={areaKey}
             onClick={() => setActiveArea(areaKey)}
-            className={`px-4 py-2 mx-2 rounded transition-all duration-300 transform hover:scale-105 ${
+            className={`px-4 py-2 mx-2 my-1 rounded transition-all duration-300 transform hover:scale-105 ${
               activeArea === areaKey 
                 ? 'bg-black text-white'
                 : 'bg-gray-800 hover:bg-gray-700 text-white'
@@ -107,14 +107,14 @@ function App() {
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-4xl text-center">
-        <h1 className="text-4xl font-bold mb-8">Solution in Business Management</h1>
+        <h1 className="text-4xl font-bold mb-4">Solution in Business Management</h1> {/* Reduzi a margem inferior */}
         
-        <div className="mb-12 transform hover:scale-105 transition-transform duration-300">
+        <div className="mb-8 transform hover:scale-105 transition-transform duration-300"> {/* Reduzi a margem inferior */}
           <img src={logo} alt="InMotion logo" className="mx-auto" />
           <p className="mt-2 text-gray-400">Your Daily Toolbox for Business Excellence</p>
         </div>
         
-        <div className="mb-12">
+        <div className="mb-8"> {/* Reduzi a margem inferior */}
           <h2 className="text-2xl font-semibold mb-4">Our Expertise</h2>
           <p className="leading-relaxed">
             Explore our dynamic range of skills across key business domains. Our expertise is 
@@ -125,7 +125,7 @@ function App() {
         
         <DynamicExpertiseDashboard />
         
-        <div className="mt-12">
+        <div className="mt-8"> {/* Reduzi a margem superior */}
           <h2 className="text-2xl font-semibold mb-4">Transform Your Business Today</h2>
           <div className="flex justify-center space-x-6">
             <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
