@@ -68,7 +68,18 @@ const DynamicExpertiseDashboard = () => {
       <ResponsiveContainer width="100%" height={350}> {/* Ajuste a altura do gráfico aqui */}
         <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}>
           <PolarGrid stroke="#e0e0e0" />
-          <PolarAngleAxis dataKey="name" stroke="#ffffff" tick={{ fontSize: 14 }} />
+          <PolarAngleAxis
+            dataKey="name"
+            stroke="#ffffff"
+            tick={{ fontSize: 14, wordWrap: 'break-word', whiteSpace: 'pre-wrap', textAlign: 'center' }}
+            tickFormatter={(value) => {
+              const words = value.split(' ');
+              if (words.length > 1) {
+                return `${words[0]}\n${words.slice(1).join(' ')}`;
+              }
+              return value;
+            }}
+          />
           <PolarRadiusAxis angle={37} domain={[0, 100]} stroke="#ffffff" />
           <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.5} />
         </RadarChart>
@@ -127,7 +138,7 @@ function App() {
         
         <div className="mt-8"> {/* Reduzi a margem superior */}
           <h2 className="text-2xl font-semibold mb-4">Transform Your Business Today</h2>
-          <div className="flex justify-center flex-wrap space-x-6 md:space-x-6"> {/* Ajustei a flexbox para mobile */}
+          <div className="flex justify-center space-x-6">
             <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
               <Mail size={24} />
             </a>
