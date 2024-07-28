@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Mail, Phone, Linkedin, MessageCircle } from 'lucide-react';
-import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
-import './index.css'; // Certifique-se de que o Tailwind CSS está configurado
-import logo from './assets/rsz_1design_inmotion_181818.png'; // Ajuste o caminho para o logotipo
+import React, { useState, useEffect, useMemo } from 'react'; // Importa o React e alguns hooks para gerenciar estado e efeitos colaterais
+import { Helmet } from 'react-helmet'; // Importa o Helmet para manipular o <head> do documento HTML
+import { Mail, Phone, Linkedin, MessageCircle } from 'lucide-react'; // Importa ícones de contato do pacote lucide-react
+import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts'; // Importa componentes para criar gráficos radar
+import './index.css'; // Importa o arquivo de estilo CSS
+import logo from './assets/rsz_1design_inmotion_181818.png'; // Importa o logotipo do projeto
 
+// Componente para mostrar diferentes áreas de expertise com gráficos radar
 const DynamicExpertiseDashboard = () => {
-  const [activeArea, setActiveArea] = useState('businessManagement');
-  const [animateData, setAnimateData] = useState([]);
+  const [activeArea, setActiveArea] = useState('businessManagement'); // Estado para controlar a área de expertise ativa
+  const [animateData, setAnimateData] = useState([]); // Estado para controlar os dados animados dos gráficos
 
+  // Define as áreas de expertise e suas respectivas habilidades
   const expertiseAreas = useMemo(() => ({
     businessManagement: {
       title: "Business Management",
@@ -67,21 +70,23 @@ const DynamicExpertiseDashboard = () => {
         { name: "Health & Safety Policies", value: 85 }
       ]
     }
-  }), []);
+  }), []); // Use useMemo para memoizar os dados e evitar recriação desnecessária
 
+  // Efeito colateral que atualiza os dados do gráfico quando a área ativa muda
   useEffect(() => {
-    setAnimateData([]);
+    setAnimateData([]); // Reseta os dados animados
     const timer = setTimeout(() => {
-      setAnimateData(expertiseAreas[activeArea].skills);
+      setAnimateData(expertiseAreas[activeArea].skills); // Define os novos dados após um pequeno atraso
     }, 50);
-    return () => clearTimeout(timer);
-  }, [activeArea, expertiseAreas]);
+    return () => clearTimeout(timer); // Limpa o timer quando o componente é desmontado ou o efeito é reexecutado
+  }, [activeArea, expertiseAreas]); // Dependências do efeito: ativa quando activeArea ou expertiseAreas mudam
 
+  // Função para renderizar o gráfico radar
   const renderRadarChart = () => {
     return (
       <ResponsiveContainer width="100%" height={350}> {/* Ajuste a altura do gráfico aqui */}
         <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}>
-          <PolarGrid stroke="#e0e0e0" />
+          <PolarGrid stroke="#e0e0e0" /> {/* Grade do gráfico */}
           <PolarAngleAxis
             dataKey="name"
             stroke="#ffffff"
@@ -93,17 +98,17 @@ const DynamicExpertiseDashboard = () => {
               }
               return value;
             }}
-          />
-          <PolarRadiusAxis angle={55} domain={[0, 100]} stroke="#ffffff" />
-          <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.5} />
+          /> {/* Eixo dos ângulos com formatação dos rótulos */}
+          <PolarRadiusAxis angle={55} domain={[0, 100]} stroke="#ffffff" /> {/* Eixo dos raios */}
+          <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.5} /> {/* Gráfico radar */}
         </RadarChart>
       </ResponsiveContainer>
     );
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="flex justify-center mb-6 flex-wrap">
+    <div className="w-full max-w-4xl mx-auto"> {/* Contêiner principal */}
+      <div className="flex justify-center mb-6 flex-wrap"> {/* Botões para selecionar áreas de expertise */}
         {Object.keys(expertiseAreas).map(areaKey => (
           <button
             key={areaKey}
@@ -118,28 +123,33 @@ const DynamicExpertiseDashboard = () => {
           </button>
         ))}
       </div>
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg transition-all duration-500 transform hover:scale-105">
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg transition-all duration-500 transform hover:scale-105"> {/* Contêiner do gráfico */}
         <h2 className="text-2xl font-bold mb-4 text-center" style={{ color: expertiseAreas[activeArea].color }}>
           {expertiseAreas[activeArea].title}
         </h2>
-        {renderRadarChart()}
+        {renderRadarChart()} {/* Renderiza o gráfico radar */}
       </div>
     </div>
   );
 };
 
+// Componente principal da aplicação
 function App() {
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
+      <Helmet> {/* Define o título da página e as metatags */}
+        <title>InMotion - Consulting</title>
+        <meta name="description" content="Your Daily Toolbox for Business Excellence" />
+      </Helmet>
       <div className="w-full max-w-4xl text-center">
-        <h1 className="text-4xl font-bold mb-4">Solution in Business Management</h1> {/* Reduzi a margem inferior */}
+        <h1 className="text-4xl font-bold mb-4">Solution in Business Management</h1>
         
-        <div className="mb-8 transform hover:scale-105 transition-transform duration-300"> {/* Reduzi a margem inferior */}
-          <img src={logo} alt="InMotion logo" className="mx-auto" />
+        <div className="mb-8 transform hover:scale-105 transition-transform duration-300">
+          <img src={logo} alt="InMotion logo" className="mx-auto" /> {/* Logotipo */}
           <p className="mt-2 text-gray-400">Your Daily Toolbox for Business Excellence</p>
         </div>
         
-        <div className="mb-8"> {/* Reduzi a margem inferior */}
+        <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Our Expertise</h2>
           <p className="leading-relaxed">
             Explore our dynamic range of skills across key business domains. Our expertise is 
@@ -148,11 +158,11 @@ function App() {
           </p>
         </div>
         
-        <DynamicExpertiseDashboard />
+        <DynamicExpertiseDashboard /> {/* Renderiza o componente de expertise */}
         
-        <div className="mt-8"> {/* Reduzi a margem superior */}
+        <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-4">Transform Your Business Today</h2>
-          <div className="flex justify-center space-x-6">
+          <div className="flex justify-center space-x-6"> {/* Links de contato */}
             <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
               <Mail size={24} />
             </a>
@@ -172,4 +182,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; // Exporta o componente App como padrão
