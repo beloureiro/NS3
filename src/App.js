@@ -86,7 +86,7 @@ const DynamicExpertiseDashboard = () => {
     return (
       <ResponsiveContainer width="100%" height={350}> {/* Ajuste a altura do gráfico aqui */}
         <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}>
-          <PolarGrid stroke="#e0e0e0" /> {/* Grade do gráfico */}
+          <PolarGrid stroke="#000000" /> {/* Grade do gráfico em preto */}
           <PolarAngleAxis
             dataKey="name"
             stroke="#ffffff"
@@ -100,7 +100,7 @@ const DynamicExpertiseDashboard = () => {
             }}
           /> {/* Eixo dos ângulos com formatação dos rótulos */}
           <PolarRadiusAxis angle={55} domain={[0, 100]} stroke="#ffffff" /> {/* Eixo dos raios */}
-          <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.5} /> {/* Gráfico radar */}
+          <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.3} /> {/* Gráfico radar */}
         </RadarChart>
       </ResponsiveContainer>
     );
@@ -152,7 +152,7 @@ function App() {
         <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Our Expertise</h2>
           <p className="leading-relaxed">
-            Explore our dynamic range of skills across key business domains. Our expertise is 
+            Explore our dynamic range of skills across key business domains. Our expertise é 
             tailored to elevate your business performance through innovative solutions and 
             strategic insights.
           </p>

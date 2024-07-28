@@ -20,3 +20,16 @@ code {
   alignment-baseline: middle;
   pointer-events: none;
 }
+@keyframes rotate-scale {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating-scale {
+  animation: rotate-scale 10s linear infinite;
+}
+
