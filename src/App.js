@@ -145,7 +145,7 @@ function App() {
         <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Our Expertise</h2>
           <p className="leading-relaxed">
-            Explore our dynamic range of skills across key business domains. Our expertise é 
+            Explore our dynamic range of skills across key business domains. Our expertise is 
             tailored to elevate your business performance through innovative solutions and 
             strategic insights.
           </p>
