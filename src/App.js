@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react'; // Importa o React e alguns hooks para gerenciar estado e efeitos colaterais
-import { Helmet } from 'react-helmet'; // Importa o Helmet para manipular o <head> do documento HTML
-import { Mail, Phone, Linkedin, MessageCircle } from 'lucide-react'; // Importa ícones de contato do pacote lucide-react
-import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts'; // Importa componentes para criar gráficos radar
-import './index.css'; // Importa o arquivo de estilo CSS
-import logo from './assets/rsz_1design_inmotion_181818.png'; // Importa o logotipo do projeto
+import React, { useState, useEffect, useMemo } from 'react';
+import { Helmet } from 'react-helmet';
+import { Mail, Phone, Linkedin, MessageCircle } from 'lucide-react';
+import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
+import './index.css';
+import logo from './assets/rsz_1design_inmotion_181818.png';
 
-// Componente para mostrar diferentes áreas de expertise com gráficos radar
 const DynamicExpertiseDashboard = () => {
-  const [activeArea, setActiveArea] = useState('businessManagement'); // Estado para controlar a área de expertise ativa
-  const [animateData, setAnimateData] = useState([]); // Estado para controlar os dados animados dos gráficos
+  const [activeArea, setActiveArea] = useState('businessManagement');
+  const [animateData, setAnimateData] = useState([]);
 
-  // Define as áreas de expertise e suas respectivas habilidades
   const expertiseAreas = useMemo(() => ({
     businessManagement: {
       title: "Business Management",
@@ -70,74 +68,69 @@ const DynamicExpertiseDashboard = () => {
         { name: "Health & Safety Policies", value: 85 }
       ]
     }
-  }), []); // Use useMemo para memoizar os dados e evitar recriação desnecessária
+  }), []);
 
-  // Efeito colateral que atualiza os dados do gráfico quando a área ativa muda
   useEffect(() => {
-    setAnimateData([]); // Reseta os dados animados
+    setAnimateData([]);
     const timer = setTimeout(() => {
-      setAnimateData(expertiseAreas[activeArea].skills); // Define os novos dados após um pequeno atraso
+      setAnimateData(expertiseAreas[activeArea].skills);
     }, 50);
-    return () => clearTimeout(timer); // Limpa o timer quando o componente é desmontado ou o efeito é reexecutado
-  }, [activeArea, expertiseAreas]); // Dependências do efeito: ativa quando activeArea ou expertiseAreas mudam
+    return () => clearTimeout(timer);
+  }, [activeArea, expertiseAreas]);
 
-  // Função para renderizar o gráfico radar
-  const renderRadarChart = () => {
-    return (
-      <ResponsiveContainer width="100%" height={350}> {/* Ajuste a altura do gráfico aqui */}
-        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}>
-          <PolarGrid stroke="#000000" /> {/* Grade do gráfico em preto */}
-          <PolarAngleAxis
-            dataKey="name"
-            stroke="#ffffff"
-            tick={{ fontSize: 12, wordWrap: 'break-word', whiteSpace: 'pre-wrap', textAlign: 'center' }}
-            tickFormatter={(value) => {
-              const words = value.split(' ');
-              if (words.length > 1) {
-                return `${words[0]}\n${words.slice(1).join(' ')}`;
-              }
-              return value;
-            }}
-          /> {/* Eixo dos ângulos com formatação dos rótulos */}
-          <PolarRadiusAxis angle={55} domain={[0, 100]} stroke="#ffffff" /> {/* Eixo dos raios */}
-          <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.3} /> {/* Gráfico radar */}
-        </RadarChart>
-      </ResponsiveContainer>
-    );
-  };
+  const renderRadarChart = () => (
+    <ResponsiveContainer width="100%" height={350}>
+      <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}>
+        <PolarGrid stroke="#000000" />
+        <PolarAngleAxis
+          dataKey="name"
+          stroke="#ffffff"
+          tick={{ fontSize: 14, wordWrap: 'break-word', whiteSpace: 'pre-wrap', textAlign: 'center' }}
+          tickFormatter={(value) => {
+            const words = value.split(' ');
+            if (words.length > 1) {
+              return `${words[0]}\n${words.slice(1).join(' ')}`;
+            }
+            return value;
+          }}
+        />
+        <PolarRadiusAxis angle={55} domain={[0, 100]} stroke="#4ade80" />
+        <Radar name={expertiseAreas[activeArea].title} dataKey="value" stroke={expertiseAreas[activeArea].color} fill={expertiseAreas[activeArea].color} fillOpacity={0.3} />
+      </RadarChart>
+    </ResponsiveContainer>
+  );
 
   return (
-    <div className="w-full max-w-4xl mx-auto"> {/* Contêiner principal */}
-      <div className="flex justify-center mb-6 flex-wrap"> {/* Botões para selecionar áreas de expertise */}
+    <div className="w-full max-w-4xl mx-auto bg-gray-900 rounded-lg overflow-hidden shadow-xl"> {/* Aqui ajustamos a cor de fundo */}
+      <div className="flex flex-wrap bg-gray-800"> {/* Aqui ajustamos a cor de fundo dos botões */}
         {Object.keys(expertiseAreas).map(areaKey => (
           <button
             key={areaKey}
             onClick={() => setActiveArea(areaKey)}
-            className={`px-4 py-2 mx-2 my-1 rounded transition-all duration-300 transform hover:scale-105 ${
+            className={`flex-1 py-3 px-2 text-sm font-medium transition-all duration-300 ${
               activeArea === areaKey 
-                ? 'bg-black text-white'
-                : 'bg-gray-800 hover:bg-gray-700 text-white'
+                ? `bg-${expertiseAreas[activeArea].color} text-white`
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white'
             }`}
           >
             {expertiseAreas[areaKey].title}
           </button>
         ))}
       </div>
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg transition-all duration-500 transform hover:scale-105"> {/* Contêiner do gráfico */}
+      <div className="p-6 bg-gray-800"> {/* Aqui ajustamos a cor de fundo do gráfico */}
         <h2 className="text-2xl font-bold mb-4 text-center" style={{ color: expertiseAreas[activeArea].color }}>
           {expertiseAreas[activeArea].title}
         </h2>
-        {renderRadarChart()} {/* Renderiza o gráfico radar */}
+        {renderRadarChart()}
       </div>
     </div>
   );
 };
 
-// Componente principal da aplicação
 function App() {
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
-      <Helmet> {/* Define o título da página e as metatags */}
+      <Helmet>
         <title>InMotion - Consulting</title>
         <meta name="description" content="Your Daily Toolbox for Business Excellence" />
       </Helmet>
@@ -145,7 +138,7 @@ function App() {
         <h1 className="text-4xl font-bold mb-4">Solution in Business Management</h1>
         
         <div className="mb-8 transform hover:scale-105 transition-transform duration-300">
-          <img src={logo} alt="InMotion logo" className="mx-auto" /> {/* Logotipo */}
+          <img src={logo} alt="InMotion logo" className="mx-auto" />
           <p className="mt-2 text-gray-400">Your Daily Toolbox for Business Excellence</p>
         </div>
         
@@ -158,11 +151,11 @@ function App() {
           </p>
         </div>
         
-        <DynamicExpertiseDashboard /> {/* Renderiza o componente de expertise */}
+        <DynamicExpertiseDashboard />
         
         <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-4">Transform Your Business Today</h2>
-          <div className="flex justify-center space-x-6"> {/* Links de contato */}
+          <div className="flex justify-center space-x-6">
             <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
               <Mail size={24} />
             </a>
@@ -182,4 +175,4 @@ function App() {
   );
 }
 
-export default App; // Exporta o componente App como padrão
+export default App;
