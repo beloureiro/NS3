@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react'; // Importa bibliotecas e hooks do React.
-import { Helmet } from 'react-helmet'; // Importa o Helmet para manipulação do head do documento.
-import { Mail, Phone, Linkedin, MessageCircle } from 'lucide-react'; // Importa ícones da biblioteca lucide-react.
-import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts'; // Importa componentes do Recharts para criar gráficos.
-import './index.css'; // Importa o arquivo de estilos CSS.
-import logo from './assets/rsz_1design_inmotion_181818.png'; // Importa o logo da aplicação.
+import React, { useState, useEffect, useMemo } from 'react';
+import { Helmet } from 'react-helmet';
+import { Mail, Phone, Linkedin, MessageCircle, Wrench } from 'lucide-react';
+import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import './index.css';
+import logo from './assets/rsz_1design_inmotion_181818.png';
+import ErrorPage from './ErrorPage';
+import DecisionHelper from './QuickTools/DecisionHelper';
 
-const DynamicExpertiseDashboard = () => { // Define um componente funcional chamado DynamicExpertiseDashboard.
-  const [activeArea, setActiveArea] = useState('businessManagement'); // Estado para controlar a área de expertise ativa.
-  const [animateData, setAnimateData] = useState([]); // Estado para controlar os dados do gráfico.
-  const [isMobile, setIsMobile] = useState(false); // Estado para verificar se o dispositivo é mobile.
+const DynamicExpertiseDashboard = () => {
+  const [activeArea, setActiveArea] = useState('businessManagement');
+  const [animateData, setAnimateData] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Define as áreas de expertise e suas habilidades usando useMemo para otimização.
   const expertiseAreas = useMemo(() => ({
     businessManagement: {
       title: "Business Management",
@@ -70,29 +72,29 @@ const DynamicExpertiseDashboard = () => { // Define um componente funcional cham
         { name: "Health & Safety Policies", value: 85 }
       ]
     }
-  }), []); // A lista de áreas de expertise é definida uma vez e memorizada.
+  }), []);
 
-  useEffect(() => { // useEffect para verificar se o dispositivo é mobile.
+  useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768); // Verifica se a largura da janela é menor ou igual a 768px.
+      setIsMobile(window.innerWidth <= 768);
     };
 
-    checkMobile(); // Chama a função checkMobile quando o componente é montado.
-    window.addEventListener('resize', checkMobile); // Adiciona um listener para o evento de redimensionamento da janela.
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
 
-    return () => window.removeEventListener('resize', checkMobile); // Remove o listener quando o componente é desmontado.
-  }, []); // Executa o efeito apenas uma vez quando o componente é montado.
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-  useEffect(() => { // useEffect para animar os dados do gráfico.
-    setAnimateData([]); // Reseta os dados do gráfico.
+  useEffect(() => {
+    setAnimateData([]);
     const timer = setTimeout(() => {
-      setAnimateData(expertiseAreas[activeArea]?.skills || []); // Atualiza os dados do gráfico com base na área ativa após um pequeno atraso.
+      setAnimateData(expertiseAreas[activeArea]?.skills || []);
     }, 50);
-    return () => clearTimeout(timer); // Limpa o timeout quando o componente é desmontado ou o activeArea muda.
-  }, [activeArea, expertiseAreas]); // Executa o efeito quando activeArea ou expertiseAreas muda.
+    return () => clearTimeout(timer);
+  }, [activeArea, expertiseAreas]);
 
-  const renderRadarChart = () => { // Função para renderizar o gráfico de radar.
-    const desktopConfig = { // Configurações para desktop.
+  const renderRadarChart = () => {
+    const desktopConfig = {
       extraRadius: 0,
       adjustmentFactor: 0.5,
       horizontalOffset: 0,
@@ -101,7 +103,7 @@ const DynamicExpertiseDashboard = () => { // Define um componente funcional cham
       lineHeight: 20
     };
 
-    const mobileConfig = { // Configurações para mobile.
+    const mobileConfig = {
       extraRadius: 20,
       adjustmentFactor: 0.3,
       horizontalOffset: 0,
@@ -110,21 +112,21 @@ const DynamicExpertiseDashboard = () => { // Define um componente funcional cham
       lineHeight: 15
     };
 
-    const config = isMobile ? mobileConfig : desktopConfig; // Seleciona a configuração com base no tipo de dispositivo.
+    const config = isMobile ? mobileConfig : desktopConfig;
 
-    const calculateExtraRadius = (angle) => { // Função para calcular o raio extra com base no ângulo.
+    const calculateExtraRadius = (angle) => {
       const normalizedAngle = Math.abs((angle % 180) - 0) / 90;
       return config.extraRadius * (1 - config.adjustmentFactor * normalizedAngle);
     };
 
     return (
-      <ResponsiveContainer width="100%" height={400}> {/* Contêiner responsivo para o gráfico */}
-        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}> {/* Definição do gráfico de radar */}
-          <PolarGrid stroke="#374151" /> {/* Grade polar */}
+      <ResponsiveContainer width="100%" height={400}>
+        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}>
+          <PolarGrid stroke="#374151" />
           <PolarAngleAxis
             dataKey="name"
             stroke="#374151"
-            tick={(props) => { // Customização dos rótulos dos eixos angulares.
+            tick={(props) => {
               const { x, y, payload, cx, cy } = props;
               const words = payload.value.split(' ');
               const radius = Math.sqrt(Math.pow(x - cx, 2) + Math.pow(y - cy, 2));
@@ -155,92 +157,141 @@ const DynamicExpertiseDashboard = () => { // Define um componente funcional cham
               );
             }}
           />
-          <PolarRadiusAxis angle={61} domain={[0, 100]} stroke="#4ade80" /> {/* Eixo radial */}
+          <PolarRadiusAxis angle={61} domain={[0, 100]} stroke="#4ade80" />
           <Radar 
             name={expertiseAreas[activeArea]?.title || ''} 
             dataKey="value" 
             stroke={expertiseAreas[activeArea]?.color || '#FFFFFF'} 
             fill={expertiseAreas[activeArea]?.color || '#FFFFFF'} 
             fillOpacity={0.1} 
-          /> {/* Definição do radar */}
+          />
         </RadarChart>
       </ResponsiveContainer>
     );
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-gray-900 rounded-lg overflow-hidden shadow-xl"> {/* Contêiner principal */}
-      <div className="flex flex-wrap bg-gray-800"> {/* Contêiner dos botões */}
-        {Object.keys(expertiseAreas).map(areaKey => ( // Itera sobre as áreas de expertise para criar botões.
+    <div className="w-full max-w-4xl mx-auto bg-gray-900 rounded-lg overflow-hidden shadow-xl">
+      <div className="flex flex-wrap bg-gray-800">
+        {Object.keys(expertiseAreas).map(areaKey => (
           <button
             key={areaKey}
-            onClick={() => setActiveArea(areaKey)} // Define a área ativa ao clicar no botão.
+            onClick={() => setActiveArea(areaKey)}
             className={`flex-1 py-2 px-2 text-sm font-medium transition-all duration-300 ${
               activeArea === areaKey 
                 ? `bg-${expertiseAreas[areaKey]?.color || 'gray-500'} text-white`
                 : 'bg-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white'
             }`}
           >
-            {expertiseAreas[areaKey]?.title || ''} {/* Título da área */}
+            {expertiseAreas[areaKey]?.title || ''}
           </button>
         ))}
       </div>
-      <div className="p-4 bg-gray-800"> {/* Contêiner do gráfico */}
+      <div className="p-4 bg-gray-800">
         <h2 className="text-xl font-bold mb-2 text-center" style={{ color: expertiseAreas[activeArea]?.color || '#FFFFFF' }}>
-          {expertiseAreas[activeArea]?.title || ''} {/* Título da área ativa */}
+          {expertiseAreas[activeArea]?.title || ''}
         </h2>
-        {renderRadarChart()} {/* Renderiza o gráfico de radar */}
+        {renderRadarChart()}
       </div>
     </div>
   );
 };
 
-function App() { // Componente principal do aplicativo.
+const QuickTools = () => {
+  const tools = [
+    { name: "Decision Helper", path: "/decision-helper" },
+    { name: "Tool 2", path: "/tool2" },
+    { name: "Tool 3", path: "/tool3" },
+    { name: "Tool 4", path: "/tool4" },
+    { name: "Tool 5", path: "/tool5" },
+  ];
+
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4"> {/* Contêiner principal */}
-      <Helmet> {/* Manipulação do head do documento */}
-        <title>InMotion - Consulting</title>
-        <meta name="description" content="Your Daily Toolbox for Business Excellence" />
-      </Helmet>
-      <div className="w-full max-w-4xl text-center"> {/* Contêiner do conteúdo */}
-        <h1 className="text-4xl font-bold mb-2">Solution in Business Management</h1> {/* Título principal */}
-        
-        <div className="mb-4 transform hover:scale-105 transition-transform duration-300"> {/* Contêiner do logo */}
-          <img src={logo} alt="InMotion logo" className="mx-auto" /> {/* Imagem do logo */}
-          <p className="mt-1 text-gray-400">Your Daily Toolbox for Business Excellence</p> {/* Descrição */}
-        </div>
-        
-        <div className="mb-4"> {/* Contêiner da seção "Our Expertise" */}
-          <h2 className="text-2xl font-semibold mb-2">Our Expertise</h2> {/* Título da seção */}
-          <p className="leading-relaxed">
-            Explore our dynamic range of skills across key business domains. Our expertise is 
-            tailored to elevate your business performance through innovative solutions and 
-            strategic insights.
-          </p> {/* Descrição da seção */}
-        </div>
-        
-        <DynamicExpertiseDashboard /> {/* Componente do dashboard de expertise */}
-        
-        <div className="mt-4"> {/* Contêiner da seção de contatos */}
-          <h2 className="text-2xl font-semibold mb-2">Transform Your Business Today</h2> {/* Título da seção */}
-          <div className="flex justify-center space-x-6"> {/* Contêiner dos ícones de contato */}
-            <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
-              <Mail size={24} /> {/* Ícone de email */}
-            </a>
-            <a href="tel:+351915542701" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
-              <Phone size={24} /> {/* Ícone de telefone */}
-            </a>
-            <a href="https://www.linkedin.com/company/inmotionc" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
-              <Linkedin size={24} /> {/* Ícone do LinkedIn */}
-            </a>
-            <a href="https://wa.me/351915542701" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
-              <MessageCircle size={24} /> {/* Ícone do WhatsApp */}
-            </a>
-          </div>
+    <div className="bg-gray-800 p-4 rounded-lg mb-6 transition-all duration-300">
+      <h3 className="text-lg font-semibold mb-3">Quick Tools</h3>
+      <ul className="space-y-2">
+        {tools.map((tool, index) => (
+          <li key={index}>
+            <Link to={tool.path} className="text-green-400 hover:underline">
+              {tool.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+function App() {
+  const [showTools, setShowTools] = useState(false);
+
+  return (
+    <Router>
+      <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
+        <Helmet>
+          <title>InMotion - Consulting</title>
+          <meta name="description" content="Your Daily Toolbox for Business Excellence" />
+        </Helmet>
+        <div className="w-full max-w-4xl text-center">
+          <Routes>
+            <Route path="/" element={
+              <>
+                <h1 className="text-4xl font-bold mb-2">Solution in Business Management</h1>
+                
+                <div className="mb-4 transform hover:scale-105 transition-transform duration-300">
+                  <img src={logo} alt="InMotion logo" className="mx-auto" />
+                  <p className="mt-1 text-gray-400">Your Daily Toolbox for Business Excellence</p>
+                </div>
+                
+                <div className="mb-4">
+                  <h2 className="text-2xl font-semibold mb-2">Our Expertise</h2>
+                  <p className="leading-relaxed">
+                    Explore our dynamic range of skills across key business domains. Our expertise is 
+                    tailored to elevate your business performance through innovative solutions and 
+                    strategic insights.
+                  </p>
+                </div>
+                
+                <DynamicExpertiseDashboard />
+                
+                <div className="mt-6 mb-6">
+                  <button
+                    onClick={() => setShowTools(!showTools)}
+                    className="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-1 px-3 rounded inline-flex items-center transition-colors duration-300"
+                  >
+                    <Wrench className="mr-1" size={16} />
+                    <span>Quick Tools</span>
+                  </button>
+                </div>
+
+                {showTools && <QuickTools />}
+                
+                <div className="mt-4">
+                  <h2 className="text-2xl font-semibold mb-2">Transform Your Business Today</h2>
+                  <div className="flex justify-center space-x-6">
+                    <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
+                      <Mail size={24} />
+                    </a>
+                    <a href="tel:+351915542701" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
+                      <Phone size={24} />
+                    </a>
+                    <a href="https://www.linkedin.com/company/inmotionc" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
+                      <Linkedin size={24} />
+                    </a>
+                    <a href="https://wa.me/351915542701" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
+                      <MessageCircle size={24} />
+                    </a>
+                  </div>
+                </div>
+              </>
+            } />
+            <Route path="/decision-helper" element={<DecisionHelper />} />
+            <Route path="/error" element={<ErrorPage />} />
+          </Routes>
         </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
-export default App; // Exporta o componente principal.
+export default App;
