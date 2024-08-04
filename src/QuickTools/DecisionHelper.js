@@ -188,45 +188,6 @@ const DecisionHelper = () => {
     }
   };
 
-  const renderCalculationDetails = () => {
-    const weightedScores = calculateWeightedScores();
-    const totalWeight = criteria.reduce((acc, crit) => acc + crit.weight, 0);
-
-    return (
-      <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6">
-        <CardHeader>
-          <CardTitle className="text-[#00ff9d]">{t.calculationDetails}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {alternatives.map((alt, index) => (
-            <div key={index} className="mb-4 p-2 border border-[#333333] rounded">
-              <h4 className="text-[#00ff9d] mb-2">{alt.name}</h4>
-              <p className="text-sm text-gray-300">
-                (
-                {alt.scores.map((score, i) => (
-                  <span key={i}>
-                    {i > 0 && ' + '}({score} * {criteria[i].weight})
-                  </span>
-                ))}
-                ) / {totalWeight} = 
-                {' '}
-                (
-                {alt.scores.map((score, i) => (
-                  <span key={i}>
-                    {i > 0 && ' + '}{score * criteria[i].weight}
-                  </span>
-                ))}
-                ) / {totalWeight} = 
-                {' '}
-                {weightedScores[index].score.toFixed(2)}
-              </p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    );
-  };
-
   return (
     <div className="p-4 min-h-screen bg-black text-gray-300 font-sans antialiased">
       <div className="flex justify-between items-center mb-4">
@@ -298,157 +259,158 @@ const DecisionHelper = () => {
               ))}
             </div>
           </CardContent>
-  <CardFooter>
-    <Button 
-      onClick={addCriterion} 
-      className="w-full bg-[#374151] hover:bg-[#00864c] text-white font-medium flex items-center justify-center space-x-2 py-2 px-4 rounded transition-colors duration-300"
-    >
-      <Plus className="h-4 w-4" />
-      <span>{t.addCriterion}</span>
-    </Button>
-  </CardFooter>
-</Card>
-        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mb-6">
-  <CardHeader>
-    <CardTitle className="text-[#00ff9d]">{t.alternatives}</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <div className="space-y-4">
-      {alternatives.map((alt, altIndex) => (
-        <div key={altIndex} className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <span className="text-[#00ff9d] font-bold min-w-[24px]">{altIndex + 1}.</span>
-            <Input
-              className="flex-grow bg-[#111111] text-gray-300 border-[#333333] focus:border-[#00ff9d] focus:ring-[#00864c] rounded-md"
-              placeholder={t.alternativeName}
-              value={alt.name}
-              onChange={(e) => updateAlternative(altIndex, 'name', e.target.value)}
-            />
+          <CardFooter>
             <Button 
-              onClick={() => removeAlternative(altIndex)} 
-              className="bg-red-900 hover:bg-red-800 rounded-full p-2 transition-colors duration-300"
+              onClick={addCriterion} 
+              className="w-full bg-[#374151] hover:bg-[#00864c] text-white font-medium flex items-center justify-center space-x-2 py-2 px-4 rounded transition-colors duration-300"
             >
-              <Trash2 className="h-4 w-4" />
+              <Plus className="h-4 w-4" />
+              <span>{t.addCriterion}</span>
             </Button>
-          </div>
-          <div className="grid grid-cols-2 gap-4 ml-8">
-            {criteria.map((criterion, critIndex) => (
-              <div key={critIndex} className="flex items-center space-x-2">
-                <span className="text-sm text-gray-400">{criterion.name}:</span>
-                <Input
-                  className="flex-grow bg-[#111111] text-gray-300 border-[#333333] focus:border-[#00ff9d] focus:ring-[#00ff9d] rounded-md"
-                  type="number"
-                  placeholder={t.score}
-                  value={alt.scores[critIndex]}
-                  onChange={(e) => updateAlternative(altIndex, critIndex, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  </CardContent>
-  <CardFooter className="flex justify-end items-center space-x-2">
-    <Button
-      onClick={addAlternative}
-      className="bg-[#374151] hover:bg-[#4a5568] text-white font-medium py-2 px-4 rounded transition-colors duration-300 flex items-center"
-    >
-      <Plus className="mr-2 h-4 w-4" /> {t.addAlternative}
-    </Button>
-    <Button
-      onClick={makeDecision}
-      className="bg-[#374151] hover:bg-[#4a5568] text-white font-medium py-2 px-4 rounded transition-colors duration-300"
-    >
-      {t.decide}
-    </Button>
-  </CardFooter>
-</Card>
-<Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mb-6 overflow-hidden">
-  <CardHeader>
-    <CardTitle onClick={() => setShowMatrix(!showMatrix)} className="text-[#00ff9d] flex items-center justify-between cursor-pointer">
-      {t.decisionMatrix}
-      <ChevronDown className={`transition-transform ${showMatrix ? 'rotate-180' : ''}`} />
-    </CardTitle>
-  </CardHeader>
-  {showMatrix && (
-    <CardContent className="p-0">
-      <div className="h-80 w-full relative">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiIGlkPSJncmlkIj48c3RvcCBzdG9wLWNvbG9yPSIjMDBmZjlkIiBzdG9wLW9wYWNpdHk9IjAuMSIgb2Zmc2V0PSIwJSIvPjxzdG9wIHN0b3AtY29sb3I9IiMwMGZmOWQiIHN0b3Atb3BhY2l0eT0iMCIgb2Zmc2V0PSIxMDAlIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20" />
-        <ResponsiveContainer>
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
-            <XAxis 
-              type="number" 
-              dataKey="x" 
-              name="score" 
-              unit="" 
-              stroke="#00ff9d" 
-              tickLine={false} 
-              axisLine={false}
-              label={{ value: 'Score', position: 'bottom', fill: '#00ff9d' }}
-            />
-            <YAxis 
-              type="number" 
-              dataKey="y" 
-              name="weight" 
-              unit="" 
-              stroke="#00ff9d" 
-              tickLine={false} 
-              axisLine={false}
-              label={{ value: 'Weight', angle: -90, position: 'left', fill: '#00ff9d' }}
-            />
-            <ZAxis type="number" dataKey="z" range={[100, 1000]} name="score" unit="" />
-            <Tooltip 
-              cursor={{ strokeDasharray: '3 3' }} 
-              contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', boxShadow: '0 0 10px #00ff9d', color: '#00ff9d' }}
-              itemStyle={{ color: '#00ff9d' }}
-              formatter={(value, name, props) => [value.toFixed(2), props.payload.name]}
-            />
-            <Legend 
-              verticalAlign="bottom" 
-              height={36} 
-              content={({ payload }) => (
-                <div className="flex justify-center space-x-4">
-                  {payload.map((entry, index) => (
-                    <span key={`legend-${index}`} className="text-[#00ff9d] text-xs">
-                      <span className="inline-block w-3 h-3 rounded-full mr-1" style={{backgroundColor: entry.color}}></span>
-                      {entry.value}
-                    </span>
-                  ))}
+          </CardFooter>
+        </Card>
+
+        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mb-6">
+          <CardHeader>
+            <CardTitle className="text-[#00ff9d]">{t.alternatives}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {alternatives.map((alt, altIndex) => (
+                <div key={altIndex} className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[#00ff9d] font-bold min-w-[24px]">{altIndex + 1}.</span>
+                    <Input
+                      className="flex-grow bg-[#111111] text-gray-300 border-[#333333] focus:border-[#00ff9d] focus:ring-[#00864c] rounded-md"
+                      placeholder={t.alternativeName}
+                      value={alt.name}
+                      onChange={(e) => updateAlternative(altIndex, 'name', e.target.value)}
+                    />
+                    <Button 
+                      onClick={() => removeAlternative(altIndex)} 
+                      className="bg-red-900 hover:bg-red-800 rounded-full p-2 transition-colors duration-300"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 ml-8">
+                    {criteria.map((criterion, critIndex) => (
+                      <div key={critIndex} className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-400">{criterion.name}:</span>
+                        <Input
+                          className="flex-grow bg-[#111111] text-gray-300 border-[#333333] focus:border-[#00ff9d] focus:ring-[#00ff9d] rounded-md"
+                          type="number"
+                          placeholder={t.score}
+                          value={alt.scores[critIndex]}
+                          onChange={(e) => updateAlternative(altIndex, critIndex, e.target.value)}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              )}
-            />
-            <Scatter 
-              data={alternatives.map((alt, index) => ({
-                x: calculateWeightedScores()[index].score,
-                y: criteria[0].weight,
-                z: calculateWeightedScores()[index].score * 200,
-                name: alt.name
-              }))} 
-              fill="#00ff9d"
-              shape={(props) => {
-                const { cx, cy, fill, payload } = props;
-                return (
-                  <g>
-                    <circle cx={cx} cy={cy} r={8} fill={fill} fillOpacity={0.6} />
-                    <circle cx={cx} cy={cy} r={8} fill="none" stroke={fill} strokeWidth={2} />
-                    <circle cx={cx} cy={cy} r={12} fill="none" stroke={fill} strokeWidth={1} opacity={0.5}>
-                      <animate attributeName="r" from="8" to="12" dur="1.5s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" from="0.8" to="0" dur="1.5s" repeatCount="indefinite" />
-                    </circle>
-                    <text x={cx} y={cy - 15} textAnchor="middle" fill="#00ff9d" fontSize="10">
-                      {payload.name}
-                    </text>
-                  </g>
-                );
-              }}
-            />
-          </ScatterChart>
-        </ResponsiveContainer>
-      </div>
-    </CardContent>
-  )}
-</Card>
+              ))}
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-end items-center space-x-2">
+            <Button
+              onClick={addAlternative}
+              className="bg-[#374151] hover:bg-[#4a5568] text-white font-medium py-2 px-4 rounded transition-colors duration-300 flex items-center"
+            >
+              <Plus className="mr-2 h-4 w-4" /> {t.addAlternative}
+            </Button>
+            <Button
+              onClick={makeDecision}
+              className="bg-[#374151] hover:bg-[#4a5568] text-white font-medium py-2 px-4 rounded transition-colors duration-300"
+            >
+              {t.decide}
+            </Button>
+          </CardFooter>
+        </Card>
+        <Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mb-6 overflow-hidden">
+          <CardHeader>
+            <CardTitle onClick={() => setShowMatrix(!showMatrix)} className="text-[#00ff9d] flex items-center justify-between cursor-pointer">
+              {t.decisionMatrix}
+              <ChevronDown className={`transition-transform ${showMatrix ? 'rotate-180' : ''}`} />
+            </CardTitle>
+          </CardHeader>
+          {showMatrix && (
+            <CardContent className="p-0">
+              <div className="h-80 w-full relative">
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiIGlkPSJncmlkIj48c3RvcCBzdG9wLWNvbG9yPSIjMDBmZjlkIiBzdG9wLW9wYWNpdHk9IjAuMSIgb2Zmc2V0PSIwJSIvPjxzdG9wIHN0b3AtY29sb3I9IiMwMGZmOWQiIHN0b3Atb3BhY2l0eT0iMCIgb2Zmc2V0PSIxMDAlIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20" />
+                <ResponsiveContainer>
+                  <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
+                    <XAxis 
+                      type="number" 
+                      dataKey="x" 
+                      name="score" 
+                      unit="" 
+                      stroke="#00ff9d" 
+                      tickLine={false} 
+                      axisLine={false}
+                      label={{ value: 'Score', position: 'bottom', fill: '#00ff9d' }}
+                    />
+                    <YAxis 
+                      type="number" 
+                      dataKey="y" 
+                      name="weight" 
+                      unit="" 
+                      stroke="#00ff9d" 
+                      tickLine={false} 
+                      axisLine={false}
+                      label={{ value: 'Weight', angle: -90, position: 'left', fill: '#00ff9d' }}
+                    />
+                    <ZAxis type="number" dataKey="z" range={[100, 1000]} name="score" unit="" />
+                    <Tooltip 
+                      cursor={{ strokeDasharray: '3 3' }} 
+                      contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', boxShadow: '0 0 10px #00ff9d', color: '#00ff9d' }}
+                      itemStyle={{ color: '#00ff9d' }}
+                      formatter={(value, name, props) => [value.toFixed(2), props.payload.name]}
+                    />
+                    <Legend 
+                      verticalAlign="bottom" 
+                      height={36} 
+                      content={({ payload }) => (
+                        <div className="flex justify-center space-x-4">
+                          {payload.map((entry, index) => (
+                            <span key={`legend-${index}`} className="text-[#00ff9d] text-xs">
+                              <span className="inline-block w-3 h-3 rounded-full mr-1" style={{backgroundColor: entry.color}}></span>
+                              {entry.value}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    />
+                    <Scatter 
+                      data={alternatives.map((alt, index) => ({
+                        x: calculateWeightedScores()[index].score,
+                        y: criteria[0].weight,
+                        z: calculateWeightedScores()[index].score * 200,
+                        name: alt.name
+                      }))} 
+                      fill="#00ff9d"
+                      shape={(props) => {
+                        const { cx, cy, fill, payload } = props;
+                        return (
+                          <g>
+                            <circle cx={cx} cy={cy} r={8} fill={fill} fillOpacity={0.6} />
+                            <circle cx={cx} cy={cy} r={8} fill="none" stroke={fill} strokeWidth={2} />
+                            <circle cx={cx} cy={cy} r={12} fill="none" stroke={fill} strokeWidth={1} opacity={0.5}>
+                              <animate attributeName="r" from="8" to="12" dur="1.5s" repeatCount="indefinite" />
+                              <animate attributeName="opacity" from="0.8" to="0" dur="1.5s" repeatCount="indefinite" />
+                            </circle>
+                            <text x={cx} y={cy - 15} textAnchor="middle" fill="#00ff9d" fontSize="10">
+                              {payload.name}
+                            </text>
+                          </g>
+                        );
+                      }}
+                    />
+                  </ScatterChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          )}
+        </Card>
 
         {decision && (
           <Alert className="mt-6 bg-[#1a1a1a] border-[#00ff9d] text-[#00ff9d]">
