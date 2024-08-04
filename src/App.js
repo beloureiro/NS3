@@ -8,6 +8,7 @@ import logo from './assets/rsz_1design_inmotion_181818.png';
 import ErrorPage from './ErrorPage';
 import DecisionHelper from './QuickTools/DecisionHelper';
 
+
 const DynamicExpertiseDashboard = () => {
   const [activeArea, setActiveArea] = useState('businessManagement');
   const [animateData, setAnimateData] = useState([]);
@@ -226,7 +227,7 @@ function App() {
   const [showTools, setShowTools] = useState(false);
 
   return (
-    <Router>
+    <Router basename="/NS3">
       <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
         <Helmet>
           <title>InMotion - Consulting</title>
