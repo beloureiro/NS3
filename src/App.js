@@ -7,7 +7,7 @@ import './index.css';
 import logo from './assets/rsz_1design_inmotion_181818.png';
 import ErrorPage from './ErrorPage';
 import DecisionHelper from './QuickTools/DecisionHelper';
-
+import ActionPlanApp from './QuickTools/5w2h'; // Importando o componente ActionPlanApp
 
 const DynamicExpertiseDashboard = () => {
   const [activeArea, setActiveArea] = useState('businessManagement');
@@ -201,7 +201,7 @@ const DynamicExpertiseDashboard = () => {
 const QuickTools = () => {
   const tools = [
     { name: "Decision Helper", path: "/decision-helper" },
-    { name: "Tool 2", path: "/tool2" },
+    { name: "Action Plan", path: "/5w2h" }, // Adicionando link para o 5W2H
     { name: "Tool 3", path: "/tool3" },
     { name: "Tool 4", path: "/tool4" },
     { name: "Tool 5", path: "/tool5" },
@@ -287,6 +287,7 @@ function App() {
               </>
             } />
             <Route path="/decision-helper" element={<DecisionHelper />} />
+            <Route path="/5w2h" element={<ActionPlanApp />} /> {/* Adicionando a rota para o 5W2H */}
             <Route path="/error" element={<ErrorPage />} />
           </Routes>
         </div>
