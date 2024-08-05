@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Send, Brain, ChevronDown, Globe } from 'lucide-react';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { Legend } from 'recharts';
 import { Link } from 'react-router-dom';
+import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Simplified UI components
 const Button = ({ children, onClick, className }) => (
@@ -32,7 +31,6 @@ const Alert = ({ children, className }) => (
 const AlertTitle = ({ children }) => <h4 className="font-bold mb-2">{children}</h4>;
 const AlertDescription = ({ children }) => <p>{children}</p>;
 
-// Translations
 const translations = {
   en: {
     title: "Advanced Decision Matrix",
@@ -58,6 +56,9 @@ const translations = {
     disclaimerText: "By proceeding, you acknowledge that the decision and its consequences are solely your responsibility. This tool is designed to assist in decision-making but does not guarantee outcomes.",
     agree: "I Understand and Agree",
     cancel: "Cancel",
+    weightedScore: 'Weighted Score',
+    avgCriterionWeight: 'Avg. Criterion Weight',
+    name: 'Name'
   },
   pt: {
     title: "Matriz de Decisão Avançada",
@@ -83,10 +84,12 @@ const translations = {
     disclaimerText: "Ao prosseguir, você reconhece que a decisão e suas consequências são de sua exclusiva responsabilidade. Esta ferramenta foi projetada para auxiliar na tomada de decisões, mas não garante resultados.",
     agree: "Eu Entendo e Concordo",
     cancel: "Cancelar",
+    weightedScore: 'Pontuação Ponderada',
+    avgCriterionWeight: 'Peso Médio do Critério',
+    name: 'Nome'
   },
 };
 
-// New DisclaimerModal component
 const DisclaimerModal = ({ isOpen, onClose, onConfirm, language }) => {
   if (!isOpen) return null;
 
@@ -106,6 +109,87 @@ const DisclaimerModal = ({ isOpen, onClose, onConfirm, language }) => {
           </Button>
         </div>
       </div>
+    </div>
+  );
+};
+
+const ImprovedScatterChart = ({ alternatives, criteria, calculateWeightedScores, language }) => {
+  const t = translations[language];
+
+  const data = alternatives.map((alt, index) => {
+    const weightedScore = calculateWeightedScores()[index].score;
+    return {
+      x: weightedScore,
+      y: criteria.reduce((acc, criterion) => acc + criterion.weight * alt.scores[criteria.indexOf(criterion)], 0) / criteria.length,
+      z: weightedScore * 200,
+      name: alt.name
+    };
+  });
+
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className="custom-tooltip" style={{ backgroundColor: '#1a1a1a', padding: '10px', border: '1px solid #00ff9d' }}>
+          <p className="label" style={{ color: '#00ff9d' }}>{`${t.name}: ${data.name}`}</p>
+          <p style={{ color: '#00ff9d' }}>{`${t.score}: ${data.x.toFixed(2)}`}</p>
+          <p style={{ color: '#00ff9d' }}>{`${t.avgCriterionWeight}: ${data.y.toFixed(2)}`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <div className="h-80 w-full relative">
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiIGlkPSJncmlkIj48c3RvcCBzdG9wLWNvbG9yPSIjMDBmZjlkIiBzdG9wLW9wYWNpdHk9IjAuMSIgb2Zmc2V0PSIwJSIvPjxzdG9wIHN0b3AtY29sb3I9IiMwMGZmOWQiIHN0b3Atb3BhY2l0eT0iMCIgb2Zmc2V0PSIxMDAlIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20" />
+      <ResponsiveContainer>
+        <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
+          <XAxis
+            type="number"
+            dataKey="x"
+            name="score"
+            unit=""
+            stroke="#00ff9d"
+            tickLine={false}
+            axisLine={false}
+            label={{ value: t.weightedScore, position: 'bottom', fill: '#00ff9d' }}
+          />
+          <YAxis
+            type="number"
+            dataKey="y"
+            name="weight"
+            unit=""
+            stroke="#00ff9d"
+            tickLine={false}
+            axisLine={false}
+            label={{ value: t.avgCriterionWeight, angle: -90, position: 'left', fill: '#00ff9d' }}
+          />
+          <ZAxis type="number" dataKey="z" range={[100, 1000]} name="score" unit="" />
+          <Tooltip content={<CustomTooltip />} />
+          <Scatter
+            data={data}
+            fill="#00ff9d"
+            shape={(props) => {
+              const { cx, cy, fill, payload } = props;
+              const size = (payload.z / 200) * 5;
+              return (
+                <g>
+                  <circle cx={cx} cy={cy} r={size} fill={fill} fillOpacity={0.6} />
+                  <circle cx={cx} cy={cy} r={size} fill="none" stroke={fill} strokeWidth={2} />
+                  <circle cx={cx} cy={cy} r={size * 1.5} fill="none" stroke={fill} strokeWidth={1} opacity={0.5}>
+                    <animate attributeName="r" from={size} to={size * 1.5} dur="1.5s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" from="0.8" to="0" dur="1.5s" repeatCount="indefinite" />
+                  </circle>
+                  <text x={cx} y={cy - size - 5} textAnchor="middle" fill="#00ff9d" fontSize="10">
+                    {payload.name}
+                  </text>
+                </g>
+              );
+            }}
+          />
+        </ScatterChart>
+      </ResponsiveContainer>
     </div>
   );
 };
@@ -377,79 +461,12 @@ const DecisionHelper = () => {
           </CardHeader>
           {showMatrix && (
             <CardContent className="p-0">
-              <div className="h-80 w-full relative">
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiIGlkPSJncmlkIj48c3RvcCBzdG9wLWNvbG9yPSIjMDBmZjlkIiBzdG9wLW9wYWNpdHk9IjAuMSIgb2Zmc2V0PSIwJSIvPjxzdG9wIHN0b3AtY29sb3I9IiMwMGZmOWQiIHN0b3Atb3BhY2l0eT0iMCIgb2Zmc2V0PSIxMDAlIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20" />
-                <ResponsiveContainer>
-                  <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
-                    <XAxis 
-                      type="number" 
-                      dataKey="x" 
-                      name="score" 
-                      unit="" 
-                      stroke="#00ff9d" 
-                      tickLine={false} 
-                      axisLine={false}
-                      label={{ value: 'Score', position: 'bottom', fill: '#00ff9d' }}
-                    />
-                    <YAxis 
-                      type="number" 
-                      dataKey="y" 
-                      name="weight" 
-                      unit="" 
-                      stroke="#00ff9d" 
-                      tickLine={false} 
-                      axisLine={false}
-                      label={{ value: 'Weight', angle: -90, position: 'left', fill: '#00ff9d' }}
-                    />
-                    <ZAxis type="number" dataKey="z" range={[100, 1000]} name="score" unit="" />
-                    <Tooltip 
-                      cursor={{ strokeDasharray: '3 3' }} 
-                      contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', boxShadow: '0 0 10px #00ff9d', color: '#00ff9d' }}
-                      itemStyle={{ color: '#00ff9d' }}
-                      formatter={(value, name, props) => [value.toFixed(2), props.payload.name]}
-                    />
-                    <Legend 
-                      verticalAlign="bottom" 
-                      height={36} 
-                      content={({ payload }) => (
-                        <div className="flex justify-center space-x-4">
-                          {payload.map((entry, index) => (
-                            <span key={`legend-${index}`} className="text-[#00ff9d] text-xs">
-                              <span className="inline-block w-3 h-3 rounded-full mr-1" style={{backgroundColor: entry.color}}></span>
-                              {entry.value}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    />
-                    <Scatter 
-                      data={alternatives.map((alt, index) => ({
-                        x: calculateWeightedScores()[index].score,
-                        y: criteria[0].weight,
-                        z: calculateWeightedScores()[index].score * 200,
-                        name: alt.name
-                      }))} 
-                      fill="#00ff9d"
-                      shape={(props) => {
-                        const { cx, cy, fill, payload } = props;
-                        return (
-                          <g>
-                            <circle cx={cx} cy={cy} r={8} fill={fill} fillOpacity={0.6} />
-                            <circle cx={cx} cy={cy} r={8} fill="none" stroke={fill} strokeWidth={2} />
-                            <circle cx={cx} cy={cy} r={12} fill="none" stroke={fill} strokeWidth={1} opacity={0.5}>
-                              <animate attributeName="r" from="8" to="12" dur="1.5s" repeatCount="indefinite" />
-                              <animate attributeName="opacity" from="0.8" to="0" dur="1.5s" repeatCount="indefinite" />
-                            </circle>
-                            <text x={cx} y={cy - 15} textAnchor="middle" fill="#00ff9d" fontSize="10">
-                              {payload.name}
-                            </text>
-                          </g>
-                        );
-                      }}
-                    />
-                  </ScatterChart>
-                </ResponsiveContainer>
-              </div>
+              <ImprovedScatterChart
+                alternatives={alternatives}
+                criteria={criteria}
+                calculateWeightedScores={calculateWeightedScores}
+                language={language}
+              />
             </CardContent>
           )}
         </Card>
