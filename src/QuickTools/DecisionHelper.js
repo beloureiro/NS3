@@ -38,7 +38,7 @@ const translations = {
     title: "Advanced Decision Matrix",
     subtitle: "Wisdom lies in weighing all variables before deciding",
     describeDilemma: "Describe your dilemma",
-    dilemmaPlaceholder: "Ex: Should I choose between buying a more expensive new car or a cheaper used one",
+    dilemmaPlaceholder: "Ex: Should I start my own business, or invest in a promising startup, or put my money in low-risk traditional investments",
     analyzeOptions: "Analyze Options",
     decisionCriteria: "Decision Criteria",
     criterionName: "Criterion name",
@@ -54,12 +54,16 @@ const translations = {
     addTwoAlternatives: "Add at least two alternatives to make a decision.",
     bestAlternative: "The best alternative is: {name} with a score of {score}",
     calculationDetails: "Calculation Details",
+    disclaimerTitle: "Disclaimer",
+    disclaimerText: "By proceeding, you acknowledge that the decision and its consequences are solely your responsibility. This tool is designed to assist in decision-making but does not guarantee outcomes.",
+    agree: "I Understand and Agree",
+    cancel: "Cancel",
   },
   pt: {
     title: "Matriz de Decisão Avançada",
     subtitle: "A sabedoria está em ponderar todas as variáveis antes de decidir",
     describeDilemma: "Descreva seu dilema",
-    dilemmaPlaceholder: "Ex: Devo escolher entre comprar um carro novo que é mais caro ou um usado mais barato",
+    dilemmaPlaceholder: "Ex: Devo abrir meu próprio negócio, ou investir em uma startup promissora, ou aplicar meu capital em investimentos tradicionais de baixo risco",
     analyzeOptions: "Analisar Opções",
     decisionCriteria: "Critérios de Decisão",
     criterionName: "Nome do critério",
@@ -75,7 +79,35 @@ const translations = {
     addTwoAlternatives: "Adicione pelo menos duas alternativas para tomar uma decisão.",
     bestAlternative: "A melhor alternativa é: {name} com uma pontuação de {score}",
     calculationDetails: "Detalhes do Cálculo",
+    disclaimerTitle: "Aviso Legal",
+    disclaimerText: "Ao prosseguir, você reconhece que a decisão e suas consequências são de sua exclusiva responsabilidade. Esta ferramenta foi projetada para auxiliar na tomada de decisões, mas não garante resultados.",
+    agree: "Eu Entendo e Concordo",
+    cancel: "Cancelar",
   },
+};
+
+// New DisclaimerModal component
+const DisclaimerModal = ({ isOpen, onClose, onConfirm, language }) => {
+  if (!isOpen) return null;
+
+  const t = translations[language];
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-[#1a1a1a] p-6 rounded-lg max-w-md w-full">
+        <h2 className="text-xl font-bold mb-4 text-[#00ff9d]">{t.disclaimerTitle}</h2>
+        <p className="mb-6 text-gray-300">{t.disclaimerText}</p>
+        <div className="flex justify-end space-x-4">
+          <Button onClick={onClose} className="bg-gray-600 hover:bg-gray-700">
+            {t.cancel}
+          </Button>
+          <Button onClick={onConfirm} className="bg-[#00864c] hover:bg-[#00ff9d] text-black">
+            {t.agree}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const DecisionHelper = () => {
@@ -88,6 +120,7 @@ const DecisionHelper = () => {
   ]);
   const [showMatrix, setShowMatrix] = useState(false);
   const [language, setLanguage] = useState('en');
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
 
   const t = translations[language];
 
@@ -186,6 +219,15 @@ const DecisionHelper = () => {
     if (suggestedCriteria.length > 0) {
       setCriteria([...criteria, ...suggestedCriteria.map(name => ({ name, weight: 3 }))]);
     }
+  };
+
+  const handleDecideClick = () => {
+    setIsDisclaimerOpen(true);
+  };
+
+  const handleDisclaimerConfirm = () => {
+    setIsDisclaimerOpen(false);
+    makeDecision();
   };
 
   return (
@@ -319,7 +361,7 @@ const DecisionHelper = () => {
               <Plus className="mr-2 h-4 w-4" /> {t.addAlternative}
             </Button>
             <Button
-              onClick={makeDecision}
+              onClick={handleDecideClick}
               className="bg-[#374151] hover:bg-[#4a5568] text-white font-medium py-2 px-4 rounded transition-colors duration-300"
             >
               {t.decide}
@@ -419,6 +461,13 @@ const DecisionHelper = () => {
           </Alert>
         )}
       </div>
+
+      <DisclaimerModal
+        isOpen={isDisclaimerOpen}
+        onClose={() => setIsDisclaimerOpen(false)}
+        onConfirm={handleDisclaimerConfirm}
+        language={language}
+      />
     </div>
   );
 };
