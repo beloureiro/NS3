@@ -93,7 +93,7 @@ const translations = {
             "Inteligência de Negócios", "Microsoft Power BI", "Modelagem de Dados", "Programação em Python", "Excel Avançado", "Inteligência Artificial"
           ],
           consultingTeaching: [
-            "Consultoria Empresarial", "Treinamento em Resolução de Problemas", "Treinamento Financeiro", "Gestão de Processos Lean", "Planejamento Estratégico", "Desenvolvimento de Soluções"
+            "Consultoria Empresarial", "Treinamento em Resolução de Problemas", "Treinamento Financeiro", "Processos Lean", "Planejamento Estratégico", "Desenvolvimento de Soluções"
           ],
           designInnovation: [
             "Design", "Inovação", "Criatividade", "Desenvolvimento de Produtos", "Soluções Inovadoras"
