@@ -17,17 +17,29 @@ const Textarea = ({ className, ...props }) => (
 );
 
 const Card = ({ children, className }) => (
-  <div className={`border rounded-lg overflow-hidden ${className}`}>{children}</div>
+  <div className={`border border-gray-700 rounded-lg overflow-hidden ${className}`}>{children}</div>
 );
 
-const CardHeader = ({ children }) => <div className="p-4 border-b">{children}</div>;
-const CardContent = ({ children }) => <div className="p-4">{children}</div>;
-const CardFooter = ({ children }) => <div className="p-4 border-t">{children}</div>;
-const CardTitle = ({ children, className, onClick }) => <h3 className={`text-lg font-semibold cursor-pointer ${className}`} onClick={onClick}>{children}</h3>;
+const CardHeader = ({ children }) => (
+  <div className="p-4 border-b border-gray-700">{children}</div>
+);
+
+const CardContent = ({ children }) => (
+  <div className="p-4 border-b border-gray-700">{children}</div>
+);
+
+const CardFooter = ({ children }) => (
+  <div className="p-4 border-t border-gray-700">{children}</div>
+);
+
+const CardTitle = ({ children, className, onClick }) => (
+  <h3 className={`text-lg font-semibold cursor-pointer ${className}`} onClick={onClick}>{children}</h3>
+);
 
 const Alert = ({ children, className }) => (
-  <div className={`p-4 rounded-lg ${className}`}>{children}</div>
+  <div className={`p-4 rounded-lg border border-gray-700 ${className}`}>{children}</div>
 );
+
 const AlertTitle = ({ children }) => <h4 className="font-bold mb-2">{children}</h4>;
 const AlertDescription = ({ children }) => <p>{children}</p>;
 
