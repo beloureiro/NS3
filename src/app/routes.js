@@ -1,6 +1,6 @@
 import React from 'react'; // Importa a biblioteca React para criar componentes
 import { Route, Routes } from 'react-router-dom'; // Importa componentes para definir rotas no React
-import { Wrench, Globe, Mail, Phone, Linkedin, MessageCircle, Import } from 'lucide-react'; // Importa ícones do Lucide React
+import { Wrench, Globe, Mail, Phone, Linkedin, MessageCircle } from 'lucide-react'; // Importa ícones do Lucide React
 import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard'; // Importa o componente de dashboard dinâmico
 import QuickTools from '../AppComponents/QuickTools'; // Importa o componente de ferramentas rápidas
 import ErrorPage from '../AppComponents/ErrorPage'; // Importa o componente de página de erro
