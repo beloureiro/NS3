@@ -1,6 +1,6 @@
 import React from 'react'; // Importa a biblioteca React para criar componentes
-import { Route, Routes } from 'react-router-dom'; // Importa componentes para definir rotas no React
-import { Wrench, Globe, Mail, Phone, Linkedin, MessageCircle } from 'lucide-react'; // Importa ícones do Lucide React
+import { Route, Routes } from 'react-router-dom'; // Importa Route e Routes do React Router para definir as rotas no React
+import { Wrench, Globe, Mail, Phone, Linkedin, MessageCircle } from 'lucide-react'; // Importa ícones do Lucide React para serem usados na interface
 import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard'; // Importa o componente de dashboard dinâmico
 import QuickTools from '../AppComponents/QuickTools'; // Importa o componente de ferramentas rápidas
 import ErrorPage from '../AppComponents/ErrorPage'; // Importa o componente de página de erro
@@ -118,8 +118,8 @@ const AppRoutes = ({ language, toggleLanguage, showTools, setShowTools, t, logo 
     <Route path="/process-flow" element={<ProcessFlowDiagramApp />} />
     {/* Rota para a ferramenta de fluxo de processo */}
 
-    <Route path="/error" element={<ErrorPage />} />
-    {/* Rota para a página de erro */}
+    <Route path="*" element={<ErrorPage />} />
+    {/* Rota curinga para capturar todas as outras rotas e exibir a página de erro */}
   </Routes>
 );
 
