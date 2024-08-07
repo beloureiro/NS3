@@ -16,9 +16,9 @@ const translations = {
         // Seção de ferramentas rápidas
         title: "Quick Tools",
         // Título da seção
-        decisionHelper: "Decision Helper",
+        decisionHelper: "Decision Matrix",
         // Nome da ferramenta de auxílio à decisão
-        actionPlan: "Action Plan (5W2H)",
+        actionPlan: "Action Plan",
         // Nome da ferramenta de plano de ação 5W2H
         processFlow: "Process Flow"
         // Nome da ferramenta de fluxo de processo
@@ -68,9 +68,9 @@ const translations = {
         // Seção de ferramentas rápidas
         title: "Ferramentas Rápidas",
         // Título da seção
-        decisionHelper: "Auxílio à Decisão",
+        decisionHelper: "Matriz de Decisão",
         // Nome da ferramenta de auxílio à decisão
-        actionPlan: "Plano de Ação (5W2H)",
+        actionPlan: "Plano de Ação",
         // Nome da ferramenta de plano de ação 5W2H
         processFlow: "Fluxo de Processo"
         // Nome da ferramenta de fluxo de processo

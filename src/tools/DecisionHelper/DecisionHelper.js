@@ -1,237 +1,66 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, Send, Brain, ChevronDown, Globe } from 'lucide-react';
+// Importa o React e o hook useState, que permite gerenciar o estado dentro do componente.
+
 import { Link } from 'react-router-dom';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer } from 'recharts';
+// Importa o componente Link do react-router-dom para navegação entre páginas.
 
-// Simplified UI components
-const Button = ({ children, onClick, className }) => (
-  <button onClick={onClick} className={`px-4 py-2 rounded ${className}`}>{children}</button>
-);
+import { Globe, Brain, ChevronDown, Plus, Trash2, Send } from 'lucide-react';
+// Importa ícones específicos do pacote lucide-react para usar no design do componente.
 
-const Input = ({ className, ...props }) => (
-  <input className={`p-2 rounded ${className}`} {...props} />
-);
+import {
+  Button, Input, Textarea, Card, CardHeader, CardContent, CardFooter, CardTitle,
+  Alert, AlertTitle, AlertDescription, DisclaimerModal, translations
+} from './HelperComponents';
+// Importa vários componentes personalizados e traduções de um arquivo auxiliar.
 
-const Textarea = ({ className, ...props }) => (
-  <textarea className={`p-2 rounded ${className}`} {...props} />
-);
-
-const Card = ({ children, className }) => (
-  <div className={`border border-gray-700 rounded-lg overflow-hidden ${className}`}>{children}</div>
-);
-
-const CardHeader = ({ children }) => (
-  <div className="p-4 border-b border-gray-700">{children}</div>
-);
-
-const CardContent = ({ children }) => (
-  <div className="p-4 border-b border-gray-700">{children}</div>
-);
-
-const CardFooter = ({ children }) => (
-  <div className="p-4 border-t border-gray-700">{children}</div>
-);
-
-const CardTitle = ({ children, className, onClick }) => (
-  <h3 className={`text-lg font-semibold cursor-pointer ${className}`} onClick={onClick}>{children}</h3>
-);
-
-const Alert = ({ children, className }) => (
-  <div className={`p-4 rounded-lg border border-gray-700 ${className}`}>{children}</div>
-);
-
-const AlertTitle = ({ children }) => <h4 className="font-bold mb-2">{children}</h4>;
-const AlertDescription = ({ children }) => <p>{children}</p>;
-
-const translations = {
-  en: {
-    title: "Advanced Decision Matrix",
-    subtitle: "Wisdom lies in weighing all variables before deciding",
-    describeDilemma: "Describe your dilemma",
-    dilemmaPlaceholder: "Ex: Should I start my own business, or invest in a promising startup, or put my money in low-risk traditional investments",
-    analyzeOptions: "Analyze Options",
-    decisionCriteria: "Decision Criteria",
-    criterionName: "Criterion name",
-    weight: "Weight",
-    addCriterion: "Add Criterion",
-    alternatives: "Alternatives",
-    alternativeName: "Alternative name",
-    score: "Score",
-    addAlternative: "Add Alternative",
-    decide: "Decide",
-    decisionMatrix: "Decision Matrix",
-    finalDecision: "Final Decision",
-    addTwoAlternatives: "Add at least two alternatives to make a decision.",
-    bestAlternative: "The best alternative is: {name} with a score of {score}",
-    calculationDetails: "Calculation Details",
-    disclaimerTitle: "Disclaimer",
-    disclaimerText: "By proceeding, you acknowledge that the decision and its consequences are solely your responsibility. This tool is designed to assist in decision-making but does not guarantee outcomes.",
-    agree: "I Understand and Agree",
-    cancel: "Cancel",
-    weightedScore: 'Weighted Score',
-    avgCriterionWeight: 'Avg. Criterion Weight',
-    name: 'Name'
-  },
-  pt: {
-    title: "Matriz de Decisão Avançada",
-    subtitle: "A sabedoria está em ponderar todas as variáveis antes de decidir",
-    describeDilemma: "Descreva seu dilema",
-    dilemmaPlaceholder: "Ex: Devo abrir meu próprio negócio, ou investir em uma startup promissora, ou aplicar meu capital em investimentos tradicionais de baixo risco",
-    analyzeOptions: "Analisar Opções",
-    decisionCriteria: "Critérios de Decisão",
-    criterionName: "Nome do critério",
-    weight: "Peso",
-    addCriterion: "Adicionar Critério",
-    alternatives: "Alternativas",
-    alternativeName: "Nome da alternativa",
-    score: "Pontuação",
-    addAlternative: "Adicionar Alternativa",
-    decide: "Decidir",
-    decisionMatrix: "Matriz de Decisão",
-    finalDecision: "Decisão Final",
-    addTwoAlternatives: "Adicione pelo menos duas alternativas para tomar uma decisão.",
-    bestAlternative: "A melhor alternativa é: {name} com uma pontuação de {score}",
-    calculationDetails: "Detalhes do Cálculo",
-    disclaimerTitle: "Aviso Legal",
-    disclaimerText: "Ao prosseguir, você reconhece que a decisão e suas consequências são de sua exclusiva responsabilidade. Esta ferramenta foi projetada para auxiliar na tomada de decisões, mas não garante resultados.",
-    agree: "Eu Entendo e Concordo",
-    cancel: "Cancelar",
-    weightedScore: 'Pontuação Ponderada',
-    avgCriterionWeight: 'Peso Médio do Critério',
-    name: 'Nome'
-  },
-};
-
-const DisclaimerModal = ({ isOpen, onClose, onConfirm, language }) => {
-  if (!isOpen) return null;
-
-  const t = translations[language];
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#1a1a1a] p-6 rounded-lg max-w-md w-full">
-        <h2 className="text-xl font-bold mb-4 text-[#00ff9d]">{t.disclaimerTitle}</h2>
-        <p className="mb-6 text-gray-300">{t.disclaimerText}</p>
-        <div className="flex justify-end space-x-4">
-          <Button onClick={onClose} className="bg-gray-600 hover:bg-gray-700">
-            {t.cancel}
-          </Button>
-          <Button onClick={onConfirm} className="bg-[#00864c] hover:bg-[#00ff9d] text-black">
-            {t.agree}
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ImprovedScatterChart = ({ alternatives, criteria, calculateWeightedScores, language }) => {
-  const t = translations[language];
-
-  const data = alternatives.map((alt, index) => {
-    const weightedScore = calculateWeightedScores()[index].score;
-    return {
-      x: weightedScore,
-      y: criteria.reduce((acc, criterion) => acc + criterion.weight * alt.scores[criteria.indexOf(criterion)], 0) / criteria.length,
-      z: weightedScore * 200,
-      name: alt.name
-    };
-  });
-
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="custom-tooltip" style={{ backgroundColor: '#1a1a1a', padding: '10px', border: '1px solid #00ff9d' }}>
-          <p className="label" style={{ color: '#00ff9d' }}>{`${t.name}: ${data.name}`}</p>
-          <p style={{ color: '#00ff9d' }}>{`${t.score}: ${data.x.toFixed(2)}`}</p>
-          <p style={{ color: '#00ff9d' }}>{`${t.avgCriterionWeight}: ${data.y.toFixed(2)}`}</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
-  return (
-    <div className="h-80 w-full relative">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiIGlkPSJncmlkIj48c3RvcCBzdG9wLWNvbG9yPSIjMDBmZjlkIiBzdG9wLW9wYWNpdHk9IjAuMSIgb2Zmc2V0PSIwJSIvPjxzdG9wIHN0b3AtY29sb3I9IiMwMGZmOWQiIHN0b3Atb3BhY2l0eT0iMCIgb2Zmc2V0PSIxMDAlIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20" />
-      <ResponsiveContainer>
-        <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
-          <XAxis
-            type="number"
-            dataKey="x"
-            name="score"
-            unit=""
-            stroke="#00ff9d"
-            tickLine={false}
-            axisLine={false}
-            label={{ value: t.weightedScore, position: 'bottom', fill: '#00ff9d' }}
-          />
-          <YAxis
-            type="number"
-            dataKey="y"
-            name="weight"
-            unit=""
-            stroke="#00ff9d"
-            tickLine={false}
-            axisLine={false}
-            label={{ value: t.avgCriterionWeight, angle: -90, position: 'left', fill: '#00ff9d' }}
-          />
-          <ZAxis type="number" dataKey="z" range={[100, 1000]} name="score" unit="" />
-          <Tooltip content={<CustomTooltip />} />
-          <Scatter
-            data={data}
-            fill="#00ff9d"
-            shape={(props) => {
-              const { cx, cy, fill, payload } = props;
-              const size = (payload.z / 200) * 5;
-              return (
-                <g>
-                  <circle cx={cx} cy={cy} r={size} fill={fill} fillOpacity={0.6} />
-                  <circle cx={cx} cy={cy} r={size} fill="none" stroke={fill} strokeWidth={2} />
-                  <circle cx={cx} cy={cy} r={size * 1.5} fill="none" stroke={fill} strokeWidth={1} opacity={0.5}>
-                    <animate attributeName="r" from={size} to={size * 1.5} dur="1.5s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" from="0.8" to="0" dur="1.5s" repeatCount="indefinite" />
-                  </circle>
-                  <text x={cx} y={cy - size - 5} textAnchor="middle" fill="#00ff9d" fontSize="10">
-                    {payload.name}
-                  </text>
-                </g>
-              );
-            }}
-          />
-        </ScatterChart>
-      </ResponsiveContainer>
-    </div>
-  );
-};
+import { calculateWeightedScores, ImprovedScatterChart } from './DecisionLogic';
+// Importa uma função de cálculo de pontuações ponderadas e um gráfico personalizado de um arquivo de lógica de decisão.
 
 const DecisionHelper = () => {
+  // Define o componente funcional DecisionHelper.
+
   const [alternatives, setAlternatives] = useState([]);
+  // Estado para armazenar as alternativas que o usuário irá adicionar.
+
   const [decision, setDecision] = useState(null);
+  // Estado para armazenar a decisão final calculada.
+
   const [userInput, setUserInput] = useState('');
+  // Estado para armazenar a entrada de texto do usuário sobre o dilema.
+
   const [criteria, setCriteria] = useState([
     { name: 'Importance', weight: 5 },
     { name: 'Urgency', weight: 4 },
   ]);
+  // Estado para armazenar os critérios que serão usados na decisão, com valores padrão.
+
   const [showMatrix, setShowMatrix] = useState(false);
+  // Estado para controlar a exibição da matriz de decisão.
+
   const [language, setLanguage] = useState('en');
+  // Estado para armazenar a linguagem atual do aplicativo.
+
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
+  // Estado para controlar a visibilidade do modal de isenção de responsabilidade.
 
   const t = translations[language];
+  // Variável para acessar as traduções baseadas na linguagem selecionada.
 
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
   };
+  // Função para alternar entre inglês e português.
 
   const addAlternative = () => {
     setAlternatives([...alternatives, { name: '', scores: criteria.map(() => 0) }]);
   };
+  // Função para adicionar uma nova alternativa à lista de alternativas.
 
   const removeAlternative = (index) => {
     const newAlternatives = alternatives.filter((_, i) => i !== index);
     setAlternatives(newAlternatives);
   };
+  // Função para remover uma alternativa específica da lista.
 
   const updateAlternative = (index, field, value) => {
     const newAlternatives = [...alternatives];
@@ -242,16 +71,19 @@ const DecisionHelper = () => {
     }
     setAlternatives(newAlternatives);
   };
+  // Função para atualizar o nome ou as pontuações de uma alternativa específica.
 
   const addCriterion = () => {
     setCriteria([...criteria, { name: '', weight: 3 }]);
   };
+  // Função para adicionar um novo critério à lista de critérios.
 
   const updateCriterion = (index, field, value) => {
     const newCriteria = [...criteria];
     newCriteria[index][field] = field === 'weight' ? parseFloat(value) : value;
     setCriteria(newCriteria);
   };
+  // Função para atualizar o nome ou o peso de um critério específico.
 
   const removeCriterion = (index) => {
     const newCriteria = criteria.filter((_, i) => i !== index);
@@ -261,13 +93,7 @@ const DecisionHelper = () => {
       scores: alt.scores.filter((_, i) => i !== index)
     })));
   };
-
-  const calculateWeightedScores = () => {
-    return alternatives.map(alt => ({
-      name: alt.name,
-      score: alt.scores.reduce((acc, score, index) => acc + score * criteria[index].weight, 0) / criteria.reduce((acc, crit) => acc + crit.weight, 0)
-    }));
-  };
+  // Função para remover um critério específico e atualizar as alternativas para refletir essa remoção.
 
   const makeDecision = () => {
     if (alternatives.length < 2) {
@@ -275,13 +101,14 @@ const DecisionHelper = () => {
       return;
     }
 
-    const weightedScores = calculateWeightedScores();
+    const weightedScores = calculateWeightedScores(alternatives, criteria);
     const bestAlternative = weightedScores.reduce((prev, current) => 
       (current.score > prev.score) ? current : prev
     );
 
     setDecision(t.bestAlternative.replace('{name}', bestAlternative.name).replace('{score}', bestAlternative.score.toFixed(2)));
   };
+  // Função para calcular e determinar a melhor alternativa com base nas pontuações ponderadas dos critérios.
 
   const processUserInput = () => {
     const words = userInput.toLowerCase().split(/\s+/);
@@ -306,6 +133,7 @@ const DecisionHelper = () => {
     setUserInput('');
     suggestCriteria(words);
   };
+  // Função para processar a entrada do usuário e extrair alternativas com pontuações geradas aleatoriamente.
 
   const suggestCriteria = (words) => {
     const commonCriteria = ['cost', 'time', 'quality', 'risk', 'benefit', 'impact', 'viability', 'durability', 'satisfaction', 'innovation',
@@ -316,31 +144,41 @@ const DecisionHelper = () => {
       setCriteria([...criteria, ...suggestedCriteria.map(name => ({ name, weight: 3 }))]);
     }
   };
+  // Função para sugerir critérios com base nas palavras encontradas na entrada do usuário.
 
   const handleDecideClick = () => {
     setIsDisclaimerOpen(true);
   };
+  // Função para abrir o modal de isenção de responsabilidade antes de tomar uma decisão.
 
   const handleDisclaimerConfirm = () => {
     setIsDisclaimerOpen(false);
     makeDecision();
   };
+  // Função para confirmar a isenção de responsabilidade e prosseguir com a tomada de decisão.
 
   return (
     <div className="p-4 min-h-screen bg-black text-gray-300 font-sans antialiased">
+      {/* Contêiner principal com estilos de fundo, cor do texto e fonte */}
       <div className="flex justify-between items-center mb-4">
+        {/* Barra de navegação com link para a página inicial e botão para alternar idioma */}
         <Link to="/" className="text-[#00ff9d] hover:underline">&larr; Back to home</Link>
+        {/* Link para a página inicial */}
         <Button onClick={toggleLanguage} className="bg-[#f1f5f9] hover:bg-[#00864c] text-black">
           <Globe className="mr-2 h-4 w-4 inline" /> {language === 'en' ? 'PT' : 'EN'}
         </Button>
+        {/* Botão para alternar entre inglês e português */}
       </div>
       <div className="max-w-4xl mx-auto">
+        {/* Contêiner centralizado com largura máxima */}
         <div className="text-center mb-8">
+          {/* Título e subtítulo */}
           <h1 className="text-3xl font-bold mb-2 text-[#f1f5f9]">{t.title}</h1>
           <p className="text-lg text-[#f1f5f9] italic">{t.subtitle}</p>
         </div>
 
         <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6">
+          {/* Card para descrever o dilema */}
           <CardHeader>
             <CardTitle className="text-[#f1f5f9] flex items-center">
               <Brain className="mr-2" /> {t.describeDilemma}
@@ -353,6 +191,7 @@ const DecisionHelper = () => {
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
             />
+            {/* Textarea para o usuário descrever seu dilema */}
           </CardContent>
           <CardFooter>
             <Button 
@@ -362,10 +201,12 @@ const DecisionHelper = () => {
               <Send className="h-4 w-4" />
               <span>{t.analyzeOptions}</span>
             </Button>
+            {/* Botão para processar a entrada do usuário */}
           </CardFooter>
         </Card>
 
         <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6">
+          {/* Card para gerenciar os critérios de decisão */}
           <CardHeader>
             <CardTitle className="text-[#f1f5f9]">{t.decisionCriteria}</CardTitle>
           </CardHeader>
@@ -393,6 +234,7 @@ const DecisionHelper = () => {
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
+                  {/* Cada critério possui um campo de nome, um campo de peso e um botão de exclusão */}
                 </div>
               ))}
             </div>
@@ -405,10 +247,12 @@ const DecisionHelper = () => {
               <Plus className="h-4 w-4" />
               <span>{t.addCriterion}</span>
             </Button>
+            {/* Botão para adicionar um novo critério */}
           </CardFooter>
         </Card>
 
         <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mb-6">
+          {/* Card para gerenciar as alternativas */}
           <CardHeader>
             <CardTitle className="text-[#00ff9d]">{t.alternatives}</CardTitle>
           </CardHeader>
@@ -430,6 +274,7 @@ const DecisionHelper = () => {
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
+                    {/* Cada alternativa possui um campo de nome e um botão de exclusão */}
                   </div>
                   <div className="grid grid-cols-2 gap-4 ml-8">
                     {criteria.map((criterion, critIndex) => (
@@ -442,6 +287,7 @@ const DecisionHelper = () => {
                           value={alt.scores[critIndex]}
                           onChange={(e) => updateAlternative(altIndex, critIndex, e.target.value)}
                         />
+                        {/* Cada critério de cada alternativa possui um campo para pontuação */}
                       </div>
                     ))}
                   </div>
@@ -462,9 +308,12 @@ const DecisionHelper = () => {
             >
               {t.decide}
             </Button>
+            {/* Botões para adicionar nova alternativa e tomar a decisão */}
           </CardFooter>
         </Card>
+
         <Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mb-6 overflow-hidden">
+          {/* Card para exibir a matriz de decisão */}
           <CardHeader>
             <CardTitle onClick={() => setShowMatrix(!showMatrix)} className="text-[#00ff9d] flex items-center justify-between cursor-pointer">
               {t.decisionMatrix}
@@ -479,6 +328,7 @@ const DecisionHelper = () => {
                 calculateWeightedScores={calculateWeightedScores}
                 language={language}
               />
+              {/* Componente de gráfico personalizado que exibe a matriz de decisão */}
             </CardContent>
           )}
         </Card>
@@ -489,6 +339,7 @@ const DecisionHelper = () => {
             <AlertDescription className="text-[#00ff9d]">{decision}</AlertDescription>
           </Alert>
         )}
+        {/* Exibe um alerta com a decisão final */}
       </div>
 
       <DisclaimerModal
@@ -497,8 +348,10 @@ const DecisionHelper = () => {
         onConfirm={handleDisclaimerConfirm}
         language={language}
       />
+      {/* Modal de isenção de responsabilidade que deve ser confirmado antes da tomada de decisão */}
     </div>
   );
 };
 
 export default DecisionHelper;
+// Exporta o componente para ser utilizado em outras partes da aplicação.
