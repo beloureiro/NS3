@@ -10,7 +10,7 @@ const Card = ({ children, className }) => (
 
 const CardHeader = ({ children }) => <div className="p-4 border-b border-[#333333]">{children}</div>;
 const CardContent = ({ children }) => <div className="p-4">{children}</div>;
-const CardFooter = ({ children }) => <div className="p-4 border-t border-[#333333]">{children}</div>;
+//const CardFooter = ({ children }) => <div className="p-4 border-t border-[#333333]">{children}</div>;
 const CardTitle = ({ children }) => <h2 className="text-xl font-bold text-[#f1f5f9]">{children}</h2>;
 
 const Input = ({ ...props }) => (
