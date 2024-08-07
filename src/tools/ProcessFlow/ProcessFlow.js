@@ -1,75 +1,77 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { PlusCircle, Edit2, FlowChart } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, Globe } from 'lucide-react';
 
 const ProcessBox = ({ level, name, children }) => {
   const getStyle = () => {
     switch(level) {
-      case '1': return 'bg-green-700';
-      case '2': return 'bg-green-600';
-      case '3': return 'bg-green-500';
-      case '4': return 'bg-green-400';
-      case '5': return 'bg-green-300';
-      default: return 'bg-green-200';
+      case '1': return 'bg-gray-700 text-white font-bold';
+      case '2': return 'bg-gray-600 text-white';
+      case '3': return 'bg-gray-500 text-white';
+      case '4': return 'bg-gray-400 text-white';
+      case '5': return 'bg-gray-300 text-black';
+      default: return 'bg-gray-200 text-black';
     }
   };
 
   return (
     <div className="flex flex-col items-center">
-      <div className={`${getStyle()} text-white p-3 rounded min-w-[150px] text-center shadow-md backdrop-blur-sm bg-opacity-80 mb-2`}>
+      <div className={`p-2 mb-2 text-center ${getStyle()} rounded min-w-[120px] shadow-md`}>
         {name}
       </div>
-      {children}
+      {children && (
+        <div className="flex flex-col items-center">
+          <VerticalLine />
+          {children}
+        </div>
+      )}
     </div>
   );
 };
 
-const Connector = ({ direction = 'right' }) => (
-  <div className={`flex justify-center ${direction === 'down' ? 'h-8 w-0.5' : 'w-8 h-0.5'} bg-green-400`}></div>
+const ArrowRight = () => (
+  <div className="flex items-center mx-2">
+    <div className="w-8 h-0.5 bg-green-500"></div>
+    <div className="w-0 h-0 border-t-4 border-t-transparent border-b-4 border-b-transparent border-l-8 border-l-green-500"></div>
+  </div>
+);
+
+const VerticalLine = () => (
+  <div className="w-0.5 h-4 bg-green-500 my-1"></div>
+);
+
+const ArrowDown = () => (
+  <div className="flex flex-col items-center">
+    <div className="w-0.5 h-4 bg-green-500 my-1"></div>
+    <div className="w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-8 border-t-green-500"></div>
+  </div>
 );
 
 const ProcessLevel = ({ processes, level }) => (
-  <div className={`flex ${['4', '5'].includes(level) ? 'flex-col' : 'flex-row'} items-start gap-4`}>
+  <div className={`relative ${parseInt(level) <= 3 ? 'flex flex-row items-start' : 'flex flex-col items-center'}`}>
     {processes.map((process, index) => (
       <React.Fragment key={index}>
         <ProcessBox level={level} name={process.name}>
           {process.children && process.children.length > 0 && (
-            <>
-              <Connector direction={['4', '5'].includes(level) ? 'down' : 'right'} />
+            <div className="flex flex-col items-center">
+              <ArrowDown />
               <ProcessLevel processes={process.children} level={(parseInt(level) + 1).toString()} />
-            </>
+            </div>
           )}
         </ProcessBox>
-        {index < processes.length - 1 && !['4', '5'].includes(level) && <Connector direction="right" />}
+        {index < processes.length - 1 && parseInt(level) <= 3 && <ArrowRight />}
       </React.Fragment>
     ))}
   </div>
 );
 
 const ProcessFlowDiagramApp = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [isTitleSet, setIsTitleSet] = useState(false);
   const [processes, setProcesses] = useState([]);
   const [currentLevel, setCurrentLevel] = useState('1');
   const [processName, setProcessName] = useState('');
   const [parentProcess, setParentProcess] = useState('');
   const [error, setError] = useState('');
-
-  const setProcessTitle = () => {
-    if (title.trim()) {
-      setIsTitleSet(true);
-    }
-  };
-
-  const editTitle = () => {
-    setIsTitleSet(false);
-  };
+  const [language, setLanguage] = useState('en');
 
   const addProcess = () => {
     setError('');
@@ -139,114 +141,101 @@ const ProcessFlowDiagramApp = () => {
     });
   };
 
+  const toggleLanguage = () => {
+    setLanguage(lang => lang === 'en' ? 'pt' : 'en');
+  };
+
+  const translations = {
+    en: {
+      backToHome: "Back to home",
+      title: "Process Flow Diagram Builder",
+      subtitle: "Design your process in a structured way.",
+      placeholder: "name...",
+      addProcess: "Add",
+      selectParent: "Select parent stage",
+    },
+    pt: {
+      backToHome: "Voltar",
+      title: "Contrutor de Fluxo de Processo",
+      subtitle: "Desenhe seu processo de forma estruturada.",
+      placeholder: "nome...",
+      addProcess: "Ad",
+      selectParent: "Selecione o parente da etapa",
+    },
+  };
+
+  const t = translations[language];
+
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black text-gray-100 min-h-screen p-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-2 text-green-400 flex items-center justify-center">
-          <FlowChart className="mr-2" /> Process Flow Diagram Builder
-        </h1>
-        <p className="text-gray-400 mb-8 italic text-center">Visualize your business processes with ease</p>
-        
-        {!isTitleSet ? (
-          <Card className="bg-gray-800 bg-opacity-50 border-gray-700 backdrop-blur-sm mb-6">
-            <CardHeader className="border-b border-gray-700">
-              <h2 className="text-2xl font-semibold text-green-300">Name your process</h2>
-            </CardHeader>
-            <CardContent>
-              <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter process title"
-                className="bg-gray-700 bg-opacity-50 border-gray-600 text-white mb-4"
-              />
-              <Textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Enter process description (optional)"
-                className="bg-gray-700 bg-opacity-50 border-gray-600 text-white mb-4"
-              />
-              <Button onClick={setProcessTitle} className="bg-green-600 hover:bg-green-700 text-white">
-                Set Title
-              </Button>
-            </CardContent>
-          </Card>
-        ) : null}
+    <div className="bg-black text-white min-h-screen p-8">
+      <div className="flex items-center justify-between mb-4">
+        <Link to="/" className="text-green-500 hover:underline flex items-center">
+          <ChevronLeft className="mr-2" /> {t.backToHome}
+        </Link>
+        <div className="text-center flex-1">
+          <h1 className="text-3xl font-bold mb-2">{t.title}</h1>
+          <p className="text-lg italic mb-8">{t.subtitle}</p>
+        </div>
+        <button onClick={toggleLanguage} className="flex items-center bg-gray-800 text-white p-2 rounded">
+          <Globe className="mr-2" /> {language.toUpperCase()}
+        </button>
+      </div>
 
-        <Card className="bg-gray-800 bg-opacity-50 border-gray-700 backdrop-blur-sm mb-6">
-          <CardHeader className="border-b border-gray-700">
-            <h2 className="text-2xl font-semibold text-green-300">Add Process Steps</h2>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-4 mb-4">
-              <Select value={currentLevel} onValueChange={(value) => {
-                setCurrentLevel(value);
-                setParentProcess('');
-                setError('');
-              }}>
-                <SelectTrigger className="bg-gray-700 bg-opacity-50 border-gray-600 text-white">
-                  <SelectValue placeholder="Select level" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-700">
-                  <SelectItem value="1">1. Business Process (Macroprocess)</SelectItem>
-                  <SelectItem value="2">2. Process</SelectItem>
-                  <SelectItem value="3">3. Sub-Process</SelectItem>
-                  <SelectItem value="4">4. Activity</SelectItem>
-                  <SelectItem value="5">5. Task</SelectItem>
-                </SelectContent>
-              </Select>
-              
-              {currentLevel !== '1' && (
-                <Select value={parentProcess} onValueChange={setParentProcess}>
-                  <SelectTrigger className="bg-gray-700 bg-opacity-50 border-gray-600 text-white">
-                    <SelectValue placeholder="Select parent process" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-800 border-gray-700">
-                    {getEligibleParents().map((process, index) => (
-                      <SelectItem key={index} value={process.name}>{process.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-              
-              <div className="flex gap-2">
-                <Input
-                  value={processName}
-                  onChange={(e) => setProcessName(e.target.value)}
-                  placeholder="Enter process name"
-                  className="bg-gray-700 bg-opacity-50 border-gray-600 text-white flex-grow"
-                />
-                <Button onClick={addProcess} className="bg-green-600 hover:bg-green-700 text-white" disabled={currentLevel !== '1' && !parentProcess}>
-                  <PlusCircle className="mr-2 h-4 w-4" /> Add
-                </Button>
-              </div>
-            </div>
-            
-            {error && (
-              <Alert variant="destructive" className="mb-4 bg-red-900 bg-opacity-50 border-red-700 text-red-200">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gray-800 bg-opacity-50 border-gray-700 backdrop-blur-sm">
-          {isTitleSet && (
-            <CardHeader className="border-b border-gray-700 flex justify-between items-center">
-              <div className="flex items-center">
-                <FlowChart className="mr-2 text-green-400" />
-                <h2 className="text-2xl font-semibold text-green-300">{title}</h2>
-              </div>
-              <Button onClick={editTitle} variant="ghost" size="sm" className="text-green-400 hover:text-green-300">
-                <Edit2 className="h-4 w-4 mr-2" /> Edit
-              </Button>
-            </CardHeader>
-          )}
-          <CardContent className="overflow-x-auto p-8">
-            <div className="flex justify-center">
-              <ProcessLevel processes={processes} level="1" />
-            </div>
-          </CardContent>
-        </Card>
+      <div className="w-full max-w-6xl mx-auto bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+        <div className="mb-4">
+          <select
+            value={currentLevel}
+            onChange={(e) => {
+              setCurrentLevel(e.target.value);
+              setParentProcess('');
+              setError('');
+            }}
+            className="bg-gray-700 text-white border border-gray-600 p-2 rounded"
+          >
+            <option value="1">1. Business Process (Macroprocess)</option>
+            <option value="2">2. Process</option>
+            <option value="3">3. Sub-Process</option>
+            <option value="4">4. Activity</option>
+            <option value="5">5. Task</option>
+          </select>
+        </div>
+        {currentLevel !== '1' && (
+          <div className="mb-4">
+            <select
+              value={parentProcess}
+              onChange={(e) => setParentProcess(e.target.value)}
+              className="bg-gray-700 text-white border border-gray-600 p-2 rounded"
+            >
+              <option value="">{t.selectParent}</option>
+              {getEligibleParents().map((process, index) => (
+                <option key={index} value={process.name}>{process.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
+        <div className="flex mb-4">
+          <input
+            value={processName}
+            onChange={(e) => setProcessName(e.target.value)}
+            placeholder={t.placeholder}
+            className="mr-2 bg-gray-700 text-white border border-gray-600 p-2 rounded flex-1"
+          />
+          <button
+            onClick={addProcess}
+            disabled={currentLevel !== '1' && !parentProcess}
+            className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded"
+          >
+            {t.addProcess}
+          </button>
+        </div>
+        {error && (
+          <div className="mb-4 bg-red-900 border border-red-700 text-white p-2 rounded">
+            {error}
+          </div>
+        )}
+        <div className="mt-8 overflow-x-auto">
+          <ProcessLevel processes={processes} level="1" />
+        </div>
       </div>
     </div>
   );

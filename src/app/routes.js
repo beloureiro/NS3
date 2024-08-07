@@ -1,11 +1,12 @@
 import React from 'react'; // Importa a biblioteca React para criar componentes
 import { Route, Routes } from 'react-router-dom'; // Importa componentes para definir rotas no React
-import { Wrench, Globe, Mail, Phone, Linkedin, MessageCircle } from 'lucide-react'; // Importa ícones do Lucide React
+import { Wrench, Globe, Mail, Phone, Linkedin, MessageCircle, Import } from 'lucide-react'; // Importa ícones do Lucide React
 import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard'; // Importa o componente de dashboard dinâmico
 import QuickTools from '../AppComponents/QuickTools'; // Importa o componente de ferramentas rápidas
 import ErrorPage from '../AppComponents/ErrorPage'; // Importa o componente de página de erro
 import DecisionHelper from '../tools/DecisionHelper/DecisionHelper'; // Importa a ferramenta de auxílio à decisão
 import ActionPlanApp from '../tools/ActionPlan/ActionPlan'; // Importa a ferramenta de plano de ação
+import ProcessFlowDiagramApp from '../tools/ProcessFlow/ProcessFlow'; // Importa a ferramenta de fluxo de processo
 
 // Função Header para criar o cabeçalho com título e botão de troca de idioma
 function Header({ title, language, toggleLanguage }) {
@@ -113,6 +114,9 @@ const AppRoutes = ({ language, toggleLanguage, showTools, setShowTools, t, logo 
 
     <Route path="/5w2h" element={<ActionPlanApp />} />
     {/* Rota para a ferramenta de plano de ação */}
+
+    <Route path="/process-flow" element={<ProcessFlowDiagramApp />} />
+    {/* Rota para a ferramenta de fluxo de processo */}
 
     <Route path="/error" element={<ErrorPage />} />
     {/* Rota para a página de erro */}

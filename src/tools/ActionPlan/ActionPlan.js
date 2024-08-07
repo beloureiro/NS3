@@ -80,7 +80,6 @@ const ActionPlanChart = ({ data }) => {
         <YAxis dataKey="importance" type="number" domain={[0, 6]} ticks={[1, 3, 5]} />
         <ZAxis dataKey="z" range={[100, 500]} />
         <Tooltip content={<CustomTooltip />} />
-        {/* Referência para os quadrantes */}
         <ReferenceArea x1={0} x2={2} y1={0} y2={2} fill="rgba(255, 0, 0, 0.1)" />
         <ReferenceArea x1={0} x2={2} y1={2} y2={4} fill="rgba(255, 255, 0, 0.1)" />
         <ReferenceArea x1={0} x2={2} y1={4} y2={6} fill="rgba(0, 255, 0, 0.1)" />
@@ -267,6 +266,18 @@ const ActionPlanApp = () => {
   const deletePlan = (indexToRemove) => {
     const updatedPlans = plans.filter((_, index) => index !== indexToRemove);
     setPlans(updatedPlans);
+    if (currentPlan >= updatedPlans.length) {
+      setCurrentPlan(Math.max(0, updatedPlans.length - 1));
+    }
+    if (updatedPlans.length === 0) {
+      setPlans([{
+        what: '', why: '', where: '', when: '', who: '', how: '', howMuch: '',
+        urgency: 5, importance: 5
+      }]);
+      setCurrentPlan(0);
+      setCurrentQuestion(0);
+      setIsComplete(false);
+    }
   };
 
   const getChartData = () => {
