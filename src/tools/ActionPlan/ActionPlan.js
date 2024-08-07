@@ -304,12 +304,11 @@ const ActionPlanApp = () => {
           <Link to="/" className="text-[#00ff9d] hover:underline flex items-center">
             <ChevronLeft className="mr-2 text-[#00ff9d]" /> {t.backToHome}
           </Link>
+          <h1 className="text-3xl font-bold text-[#f1f5f9] text-center flex-grow">{t.title}</h1>
           <Button onClick={toggleLanguage}>
             <Globe className="mr-2" /> {language === 'en' ? 'PT' : 'EN'}
           </Button>
         </div>
-
-        <h1 className="text-3xl font-bold mb-2 text-[#f1f5f9] text-center">{t.title}</h1>
         <p className="text-lg text-[#f1f5f9] italic text-center mb-8">{t.subtitle}</p>
 
         <Card className="mb-6">
