@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 // Importa o componente Link do react-router-dom para navegação entre páginas.
 
-import { Globe, Brain, ChevronDown, Plus, Trash2, Send } from 'lucide-react';
+import { Globe, Brain, ChevronDown, Plus, Trash2, Send, CheckCircle } from 'lucide-react';
 // Importa ícones específicos do pacote lucide-react para usar no design do componente.
 
 import {
@@ -295,18 +295,18 @@ const DecisionHelper = () => {
               ))}
             </div>
           </CardContent>
-          <CardFooter className="flex justify-end items-center space-x-2">
+          <CardFooter className="flex justify-between items-center space-x-4">
             <Button
               onClick={addAlternative}
-              className="bg-[#374151] hover:bg-[#4a5568] text-white font-medium py-2 px-4 rounded transition-colors duration-300 flex items-center"
+              className="flex items-center text-white hover:text-[#00ff9d] hover:underline cursor-pointer"
             >
               <Plus className="mr-2 h-4 w-4" /> {t.addAlternative}
             </Button>
             <Button
               onClick={handleDecideClick}
-              className="bg-[#374151] hover:bg-[#4a5568] text-white font-medium py-2 px-4 rounded transition-colors duration-300"
+              className="mx-auto w-1/2 bg-[#00864c] hover:bg-[#00ff9d] text-black font-medium py-3 px-6 rounded transition-colors duration-300 flex items-center justify-center"
             >
-              {t.decide}
+              <CheckCircle className="mr-2 h-5 w-5" /> {t.decide}
             </Button>
             {/* Botões para adicionar nova alternativa e tomar a decisão */}
           </CardFooter>
