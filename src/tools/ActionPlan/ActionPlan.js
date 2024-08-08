@@ -1,172 +1,12 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, Globe, Check, RotateCcw, PlusCircle, AlertCircle, Trash2 } from 'lucide-react';
-import { ResponsiveContainer, ComposedChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Cell, ReferenceArea } from 'recharts';
-
-const Card = ({ children, className }) => (
-  <div className={`bg-[#1a1a1a] border border-[#333333] rounded-lg shadow-lg ${className}`}>{children}</div>
-);
-
-const CardHeader = ({ children }) => <div className="p-4 border-b border-[#333333]">{children}</div>;
-const CardContent = ({ children }) => <div className="p-4">{children}</div>;
-//const CardFooter = ({ children }) => <div className="p-4 border-t border-[#333333]">{children}</div>;
-const CardTitle = ({ children }) => <h2 className="text-xl font-bold text-[#f1f5f9]">{children}</h2>;
-
-const Input = ({ ...props }) => (
-  <input
-    {...props}
-    className="w-full bg-[#111111] text-gray-300 border border-[#333333] focus:border-[#00ff9d] focus:ring-[#00ff9d] rounded-md p-2"
-  />
-);
-
-const DateInput = ({ ...props }) => (
-  <input
-    {...props}
-    type="date"
-    className="w-full bg-[#111111] text-gray-300 border border-[#333333] focus:border-[#00ff9d] focus:ring-[#00ff9d] rounded-md p-2"
-  />
-);
-
-const Button = ({ children, selected, ...props }) => (
-  <button
-    {...props}
-    className={`bg-[#374151] hover:bg-[#00864c] text-white font-medium py-2 px-4 rounded transition-colors duration-300 flex items-center ${
-      selected ? 'bg-[#00ff9d] text-black' : ''
-    }`}
-  >
-    {children}
-  </button>
-);
-
-const Timeline = ({ currentQuestion, questions }) => (
-  <div className="flex justify-between mb-4">
-    {questions.map((_, index) => (
-      <div
-        key={index}
-        className={`w-8 h-8 rounded-full flex items-center justify-center ${
-          index <= currentQuestion ? 'bg-[#00ff9d] text-black' : 'bg-gray-600 text-white'
-        }`}
-      >
-        {index + 1}
-      </div>
-    ))}
-  </div>
-);
-
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div className="custom-tooltip" style={{ backgroundColor: '#1a1a1a', border: '1px solid #00ff9d', padding: '10px', borderRadius: '5px' }}>
-        <p className="label" style={{ color: '#00ff9d' }}>{`${data.name}`}</p>
-        <p style={{ color: '#fff' }}>{`Urgency: ${data.urgency}`}</p>
-        <p style={{ color: '#fff' }}>{`Importance: ${data.importance}`}</p>
-        <p style={{ color: '#fff' }}>{`Days to Complete: ${data.daysToComplete}`}</p>
-      </div>
-    );
-  }
-  return null;
-};
-
-const ActionPlanChart = ({ data }) => {
-  return (
-    <ResponsiveContainer width="100%" height={400}>
-      <ComposedChart
-        data={data}
-        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-      >
-        <XAxis dataKey="urgency" type="number" domain={[0, 6]} ticks={[1, 3, 5]} />
-        <YAxis dataKey="importance" type="number" domain={[0, 6]} ticks={[1, 3, 5]} />
-        <ZAxis dataKey="z" range={[100, 500]} />
-        <Tooltip content={<CustomTooltip />} />
-        <ReferenceArea x1={0} x2={2} y1={0} y2={2} fill="rgba(255, 0, 0, 0.1)" />
-        <ReferenceArea x1={0} x2={2} y1={2} y2={4} fill="rgba(255, 255, 0, 0.1)" />
-        <ReferenceArea x1={0} x2={2} y1={4} y2={6} fill="rgba(0, 255, 0, 0.1)" />
-        <ReferenceArea x1={2} x2={4} y1={0} y2={2} fill="rgba(255, 255, 0, 0.1)" />
-        <ReferenceArea x1={2} x2={4} y1={2} y2={4} fill="rgba(255, 255, 0, 0.1)" />
-        <ReferenceArea x1={2} x2={4} y1={4} y2={6} fill="rgba(0, 255, 0, 0.1)" />
-        <ReferenceArea x1={4} x2={6} y1={0} y2={2} fill="rgba(255, 255, 0, 0.1)" />
-        <ReferenceArea x1={4} x2={6} y1={2} y2={4} fill="rgba(255, 255, 0, 0.1)" />
-        <ReferenceArea x1={4} x2={6} y1={4} y2={6} fill="rgba(0, 255, 0, 0.1)" />
-        <Scatter dataKey="importance" fill="#00ff9d">
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill="#00ff9d">
-              <text x={entry.x} y={entry.y} dy={-10} fill="#ffffff" fontSize={14} textAnchor="middle">
-                {entry.z}
-              </text>
-            </Cell>
-          ))}
-        </Scatter>
-      </ComposedChart>
-    </ResponsiveContainer>
-  );
-};
-
-const translations = {
-  en: {
-    title: "Action Plan",
-    subtitle: "Plan your actions in a structured and efficient way",
-    questions: [
-      { key: 'what', question: 'What will be done?' },
-      { key: 'why', question: 'Why will it be done?' },
-      { key: 'where', question: 'Where will it be done?' },
-      { key: 'when', question: 'When will it be done?' },
-      { key: 'who', question: 'Who will do it?' },
-      { key: 'how', question: 'How will it be done?' },
-      { key: 'howMuch', question: 'How much will it cost?' },
-      { key: 'urgency', question: 'How urgent is it?' },
-      { key: 'importance', question: 'How important is it?' }
-    ],
-    previous: "Previous",
-    next: "Next",
-    addNewAction: "Add New Action",
-    complete: "Complete",
-    restart: "Restart",
-    actionPlan: "Action Plan",
-    backToHome: "Back to home",
-    totalActions: "Total Actions",
-    actionOverview: "Action Overview",
-    urgency: "Urgency",
-    importance: "Importance",
-    urgencyLevels: ['Low', 'Medium', 'High'],
-    importanceLevels: ['Low', 'Medium', 'High'],
-    fieldRequired: "This field is required",
-    invalidDate: "Please enter a valid future date"
-  },
-  pt: {
-    title: "Plano de Ação",
-    subtitle: "Planeje suas ações de forma estruturada e eficiente",
-    questions: [
-      { key: 'what', question: 'O que será feito?' },
-      { key: 'why', question: 'Por que será feito?' },
-      { key: 'where', question: 'Onde será feito?' },
-      { key: 'when', question: 'Quando será feito?' },
-      { key: 'who', question: 'Quem fará?' },
-      { key: 'how', question: 'Como será feito?' },
-      { key: 'howMuch', question: 'Quanto custará?' },
-      { key: 'urgency', question: 'Qual a urgência?' },
-      { key: 'importance', question: 'Qual a importância?' }
-    ],
-    previous: "Anterior",
-    next: "Próxima",
-    addNewAction: "Adicionar Nova Ação",
-    complete: "Concluir",
-    restart: "Recomeçar",
-    actionPlan: "Plano de Ação",
-    backToHome: "Voltar para a página inicial",
-    totalActions: "Total de Ações",
-    actionOverview: "Visão Geral das Ações",
-    urgency: "Urgência",
-    importance: "Importância",
-    urgencyLevels: ['Baixa', 'Média', 'Alta'],
-    importanceLevels: ['Baixa', 'Média', 'Alta'],
-    fieldRequired: "Este campo é obrigatório",
-    invalidDate: "Por favor, insira uma data futura válida"
-  }
-};
+import { motion } from 'framer-motion';
+import { Card, CardHeader, CardContent, CardTitle, Input, DateInput, Button, Timeline, ActionPlanChart } from './components';
+import translations from './translations';
 
 const ActionPlanApp = () => {
+  // Gerencia o estado da questão atual, plano atual, se o plano está completo, o idioma e os erros.
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [plans, setPlans] = useState([{
     what: '', why: '', where: '', when: '', who: '', how: '', howMuch: '',
@@ -177,8 +17,10 @@ const ActionPlanApp = () => {
   const [language, setLanguage] = useState('en');
   const [errors, setErrors] = useState({});
 
+  // Obtém as traduções com base no idioma selecionado.
   const t = translations[language];
 
+  // Atualiza o estado do plano com base na entrada do usuário e limpa os erros correspondentes.
   const handleInputChange = (key, value) => {
     const updatedPlans = [...plans];
     updatedPlans[currentPlan] = {
@@ -186,12 +28,13 @@ const ActionPlanApp = () => {
       [key]: value
     };
     setPlans(updatedPlans);
-    
+
     if (errors[key]) {
       setErrors(prev => ({...prev, [key]: ''}));
     }
   };
 
+  // Valida os campos obrigatórios e garante que as datas inseridas sejam válidas.
   const validateField = (key, value) => {
     if (key === 'what' && !value.trim()) {
       return t.fieldRequired;
@@ -206,10 +49,11 @@ const ActionPlanApp = () => {
     return '';
   };
 
+  // Navega para a próxima pergunta, validando o campo atual antes de continuar.
   const handleNext = () => {
     const currentKey = t.questions[currentQuestion].key;
     const error = validateField(currentKey, plans[currentPlan][currentKey]);
-    
+
     if (error) {
       setErrors(prev => ({...prev, [currentKey]: error}));
       return;
@@ -222,12 +66,14 @@ const ActionPlanApp = () => {
     }
   };
 
+  // Retorna à pergunta anterior.
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
     }
   };
 
+  // Adiciona um novo plano à lista e reinicia o formulário.
   const addNewPlan = () => {
     const currentPlanData = plans[currentPlan];
     if (!currentPlanData.what.trim() || !currentPlanData.when.trim()) {
@@ -248,6 +94,7 @@ const ActionPlanApp = () => {
     setErrors({});
   };
 
+  // Reinicia o plano de ação atual.
   const handleRestart = () => {
     setPlans([{
       what: '', why: '', where: '', when: '', who: '', how: '', howMuch: '',
@@ -259,10 +106,12 @@ const ActionPlanApp = () => {
     setErrors({});
   };
 
+  // Alterna entre os idiomas.
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
   };
 
+  // Exclui um plano específico da lista.
   const deletePlan = (indexToRemove) => {
     const updatedPlans = plans.filter((_, index) => index !== indexToRemove);
     setPlans(updatedPlans);
@@ -280,13 +129,14 @@ const ActionPlanApp = () => {
     }
   };
 
+  // Prepara os dados para serem exibidos no gráfico.
   const getChartData = () => {
     const today = new Date();
     return plans
       .filter(plan => plan.when && plan.what)
       .map((plan, index) => {
         const endDate = new Date(plan.when);
-        const daysToComplete = Math.max(0, Math.ceil((endDate - today) / (1000 * 60 * 60 * 24)));
+        const daysToComplete = Math.max(0, Math.ceil((endDate - today) / (1000 * 600 * 60 * 24)));
         return {
           name: plan.what || `${t.action} ${index + 1}`,
           urgency: plan.urgency,
@@ -298,8 +148,10 @@ const ActionPlanApp = () => {
   };
 
   return (
+    // Estrutura principal do aplicativo com diversos componentes filhos para exibir e interagir com os dados.
     <div className="min-h-screen bg-black text-gray-300 p-4 font-sans antialiased">
       <div className="max-w-4xl mx-auto">
+        {/* Cabeçalho do aplicativo com título e opção de alternância de idioma */}
         <div className="flex justify-between items-center mb-4">
           <Link to="/" className="text-[#00ff9d] hover:underline flex items-center">
             <ChevronLeft className="mr-2 text-[#00ff9d]" /> {t.backToHome}
@@ -311,11 +163,13 @@ const ActionPlanApp = () => {
         </div>
         <p className="text-lg text-[#f1f5f9] italic text-center mb-8">{t.subtitle}</p>
 
+        {/* Card principal onde as perguntas e entradas são exibidas */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>{t.questions[currentQuestion].question}</CardTitle>
           </CardHeader>
           <CardContent>
+            {/* Linha do tempo mostrando o progresso através das perguntas */}
             <Timeline currentQuestion={currentQuestion} questions={t.questions} />
             <motion.div
               key={currentQuestion}
@@ -324,6 +178,7 @@ const ActionPlanApp = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
+              {/* Renderiza diferentes tipos de entrada com base na pergunta atual */}
               {t.questions[currentQuestion].key === 'when' ? (
                 <DateInput
                   value={plans[currentPlan][t.questions[currentQuestion].key]}
@@ -355,15 +210,17 @@ const ActionPlanApp = () => {
                   type="text"
                   value={plans[currentPlan][t.questions[currentQuestion].key]}
                   onChange={(e) => handleInputChange(t.questions[currentQuestion].key, e.target.value)}
-                  placeholder="Digite sua resposta..."
+                  placeholder={t.inputPlaceholder}
                 />
               )}
+              {/* Exibe mensagem de erro se houver */}
               {errors[t.questions[currentQuestion].key] && (
                 <p className="text-red-500 mt-2 flex items-center">
                   <AlertCircle className="mr-2" size={16} />
                   {errors[t.questions[currentQuestion].key]}
                 </p>
               )}
+              {/* Botões para navegar entre perguntas, adicionar novos planos ou reiniciar */}
               <div className="flex justify-between mt-4">
                 <Button onClick={handlePrevious} disabled={currentQuestion === 0}>{t.previous}</Button>
                 <div className="flex space-x-2">
@@ -385,7 +242,8 @@ const ActionPlanApp = () => {
             </motion.div>
           </CardContent>
         </Card>
-        
+
+        {/* Card para exibir a tabela com todas as ações planejadas */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>{t.actionPlan}</CardTitle>
@@ -429,6 +287,7 @@ const ActionPlanApp = () => {
           </CardContent>
         </Card>
 
+        {/* Card que exibe o gráfico de resumo das ações planejadas */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>{t.actionOverview}</CardTitle>
@@ -438,37 +297,31 @@ const ActionPlanApp = () => {
             <div className="h-96">
               <ActionPlanChart data={getChartData()} />
             </div>
-            <div className="flex justify-center mt-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">{t.urgency}</h3>
-                  <ul>
-                    {t.urgencyLevels.map((level, index) => (
-                      <li key={index} className="flex items-center">
-                        <span className="w-4 h-4 bg-[#00ff9d] opacity-30 mr-2"></span>
-                        {level}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">{t.importance}</h3>
-                  <ul>
-                    {t.importanceLevels.map((level, index) => (
-                      <li key={index} className="flex items-center">
-                        <span className="w-4 h-4 bg-[#00ff9d] opacity-30 mr-2"></span>
-                        {level}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <p className="mt-4 text-center text-gray-400">{t.chartDescription}</p>
+            <Legend />
           </CardContent>
         </Card>
       </div>
     </div>
   );
 };
+
+// Componente Legend mostra a legenda do gráfico com as cores e seus significados.
+const Legend = () => (
+  <div className="flex justify-center mt-4">
+    <div className="flex items-center mr-4">
+      <div className="w-4 h-4 bg-red-500 mr-2"></div>
+      <span className="text-white">Urgency 1, Importance 1</span>
+    </div>
+    <div className="flex items-center mr-4">
+      <div className="w-4 h-4 bg-yellow-500 mr-2"></div>
+      <span className="text-white">Other</span>
+    </div>
+    <div className="flex items-center">
+      <div className="w-4 h-4 bg-green-500 mr-2"></div>
+      <span className="text-white">Urgency 5, Importance 5</span>
+    </div>
+  </div>
+);
 
 export default ActionPlanApp;
