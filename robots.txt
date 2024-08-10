@@ -1,3 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
 Disallow:
+
+# Autoria e Propriedade
+# Este site é mantido por Bernardo Carvalho da InMotion Consulting - Software e Management Company.
+# Website: https://inmotion.today
+# Contato: bc@inmotion.today
