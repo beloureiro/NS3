@@ -4,6 +4,9 @@ import React from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer } from 'recharts';
 // Importa componentes específicos do Recharts para construir o gráfico de dispersão.
 
+import { translations } from './translation';
+// Importa as traduções do arquivo de traduções.
+
 export const calculateWeightedScores = (alternatives, criteria) => {
   // Função para calcular as pontuações ponderadas de cada alternativa com base nos critérios.
 
@@ -128,19 +131,3 @@ export const ImprovedScatterChart = ({ alternatives, criteria, calculateWeighted
     </div>
   );
 };
-
-const translations = {
-  en: {
-    weightedScore: 'Weighted Score',
-    avgCriterionWeight: 'Avg. Criterion Weight',
-    name: 'Name',
-    score: 'Score'
-  },
-  pt: {
-    weightedScore: 'Pontuação Ponderada',
-    avgCriterionWeight: 'Peso Médio do Critério',
-    name: 'Nome',
-    score: 'Pontuação'
-  }
-};
-// Objeto de traduções para suportar múltiplos idiomas (inglês e português).
