@@ -248,11 +248,13 @@ const ProcessFlowDiagramApp = () => {
       )}
 
       {/* Renderiza o componente ProcessLevel para exibir o diagrama de fluxo de processos */}
-      <div className="w-full max-w-6xl mx-auto bg-gray-800 text-white p-6 rounded-lg shadow-lg">
-        <div className="mt-8 overflow-x-auto">
-          <ProcessLevel processes={processes} level="1" /> {/* Renderiza os processos a partir do nível 1 */}
+      {isTitleSet && ( // Conditionally render this section based on isTitleSet
+        <div className="w-full max-w-6xl mx-auto bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+          <div className="mt-8 overflow-x-auto">
+            <ProcessLevel processes={processes} level="1" /> {/* Renderiza os processos a partir do nível 1 */}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
