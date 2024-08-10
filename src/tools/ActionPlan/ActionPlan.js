@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, Globe, Check, RotateCcw, PlusCircle, AlertCircle, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Card, CardHeader, CardContent, CardTitle, Input, DateInput, Button, Timeline, ActionPlanChart } from './components';
+import { Card, CardHeader, CardContent, CardTitle, Input, DateInput, Button, Timeline } from './components';
+import QuadrantChart from './QuadrantChart'; // Importação do novo componente QuadrantChart
 import translations from './translations';
 
 const ActionPlanApp = () => {
-  // Gerencia o estado da questão atual, plano atual, se o plano está completo, o idioma e os erros.
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [plans, setPlans] = useState([{
     what: '', why: '', where: '', when: '', who: '', how: '', howMuch: '',
@@ -17,10 +17,8 @@ const ActionPlanApp = () => {
   const [language, setLanguage] = useState('en');
   const [errors, setErrors] = useState({});
 
-  // Obtém as traduções com base no idioma selecionado.
   const t = translations[language];
 
-  // Atualiza o estado do plano com base na entrada do usuário e limpa os erros correspondentes.
   const handleInputChange = (key, value) => {
     const updatedPlans = [...plans];
     updatedPlans[currentPlan] = {
@@ -34,7 +32,6 @@ const ActionPlanApp = () => {
     }
   };
 
-  // Valida os campos obrigatórios e garante que as datas inseridas sejam válidas.
   const validateField = (key, value) => {
     if (key === 'what' && !value.trim()) {
       return t.fieldRequired;
@@ -49,7 +46,6 @@ const ActionPlanApp = () => {
     return '';
   };
 
-  // Navega para a próxima pergunta, validando o campo atual antes de continuar.
   const handleNext = () => {
     const currentKey = t.questions[currentQuestion].key;
     const error = validateField(currentKey, plans[currentPlan][currentKey]);
@@ -66,14 +62,12 @@ const ActionPlanApp = () => {
     }
   };
 
-  // Retorna à pergunta anterior.
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
     }
   };
 
-  // Adiciona um novo plano à lista e reinicia o formulário.
   const addNewPlan = () => {
     const currentPlanData = plans[currentPlan];
     if (!currentPlanData.what.trim() || !currentPlanData.when.trim()) {
@@ -94,7 +88,6 @@ const ActionPlanApp = () => {
     setErrors({});
   };
 
-  // Reinicia o plano de ação atual.
   const handleRestart = () => {
     setPlans([{
       what: '', why: '', where: '', when: '', who: '', how: '', howMuch: '',
@@ -106,12 +99,10 @@ const ActionPlanApp = () => {
     setErrors({});
   };
 
-  // Alterna entre os idiomas.
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
   };
 
-  // Exclui um plano específico da lista.
   const deletePlan = (indexToRemove) => {
     const updatedPlans = plans.filter((_, index) => index !== indexToRemove);
     setPlans(updatedPlans);
@@ -129,14 +120,13 @@ const ActionPlanApp = () => {
     }
   };
 
-  // Prepara os dados para serem exibidos no gráfico.
   const getChartData = () => {
     const today = new Date();
     return plans
-      .filter(plan => plan.when && plan.what)
+      .filter(plan => plan.when && plan.what && plan.urgency !== undefined && plan.importance !== undefined)
       .map((plan, index) => {
         const endDate = new Date(plan.when);
-        const daysToComplete = Math.max(0, Math.ceil((endDate - today) / (1000 * 600 * 60 * 24)));
+        const daysToComplete = Math.max(0, Math.ceil((endDate - today) / (1000 * 60 * 60 * 24)));
         return {
           name: plan.what || `${t.action} ${index + 1}`,
           urgency: plan.urgency,
@@ -148,10 +138,8 @@ const ActionPlanApp = () => {
   };
 
   return (
-    // Estrutura principal do aplicativo com diversos componentes filhos para exibir e interagir com os dados.
     <div className="min-h-screen bg-black text-gray-300 p-4 font-sans antialiased">
       <div className="max-w-4xl mx-auto">
-        {/* Cabeçalho do aplicativo com título e opção de alternância de idioma */}
         <div className="flex justify-between items-center mb-4">
           <Link to="/" className="text-[#00ff9d] hover:underline flex items-center">
             <ChevronLeft className="mr-2 text-[#00ff9d]" /> {t.backToHome}
@@ -163,13 +151,11 @@ const ActionPlanApp = () => {
         </div>
         <p className="text-lg text-[#f1f5f9] italic text-center mb-8">{t.subtitle}</p>
 
-        {/* Card principal onde as perguntas e entradas são exibidas */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>{t.questions[currentQuestion].question}</CardTitle>
           </CardHeader>
           <CardContent>
-            {/* Linha do tempo mostrando o progresso através das perguntas */}
             <Timeline currentQuestion={currentQuestion} questions={t.questions} />
             <motion.div
               key={currentQuestion}
@@ -178,7 +164,6 @@ const ActionPlanApp = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              {/* Renderiza diferentes tipos de entrada com base na pergunta atual */}
               {t.questions[currentQuestion].key === 'when' ? (
                 <DateInput
                   value={plans[currentPlan][t.questions[currentQuestion].key]}
@@ -213,14 +198,12 @@ const ActionPlanApp = () => {
                   placeholder={t.inputPlaceholder}
                 />
               )}
-              {/* Exibe mensagem de erro se houver */}
               {errors[t.questions[currentQuestion].key] && (
                 <p className="text-red-500 mt-2 flex items-center">
                   <AlertCircle className="mr-2" size={16} />
                   {errors[t.questions[currentQuestion].key]}
                 </p>
               )}
-              {/* Botões para navegar entre perguntas, adicionar novos planos ou reiniciar */}
               <div className="flex justify-between mt-4">
                 <Button onClick={handlePrevious} disabled={currentQuestion === 0}>{t.previous}</Button>
                 <div className="flex space-x-2">
@@ -243,7 +226,6 @@ const ActionPlanApp = () => {
           </CardContent>
         </Card>
 
-        {/* Card para exibir a tabela com todas as ações planejadas */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>{t.actionPlan}</CardTitle>
@@ -287,7 +269,6 @@ const ActionPlanApp = () => {
           </CardContent>
         </Card>
 
-        {/* Card que exibe o gráfico de resumo das ações planejadas */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>{t.actionOverview}</CardTitle>
@@ -295,7 +276,7 @@ const ActionPlanApp = () => {
           <CardContent>
             <p className="mb-4">{t.totalActions}: {plans.length}</p>
             <div className="h-96">
-              <ActionPlanChart data={getChartData()} />
+              <QuadrantChart actions={getChartData()} />
             </div>
             <p className="mt-4 text-center text-gray-400">{t.chartDescription}</p>
             <Legend />
@@ -306,22 +287,22 @@ const ActionPlanApp = () => {
   );
 };
 
-// Componente Legend mostra a legenda do gráfico com as cores e seus significados.
 const Legend = () => (
   <div className="flex justify-center mt-4">
     <div className="flex items-center mr-4">
-      <div className="w-4 h-4 bg-red-500 mr-2"></div>
+      <div className="w-4 h-4 mr-2" style={{ backgroundColor: '#ff6347', opacity: '0.6' }}></div>
       <span className="text-white">Urgency 1, Importance 1</span>
     </div>
     <div className="flex items-center mr-4">
-      <div className="w-4 h-4 bg-yellow-500 mr-2"></div>
+      <div className="w-4 h-4 mr-2" style={{ backgroundColor: '#ffd700', opacity: '0.6' }}></div>
       <span className="text-white">Other</span>
     </div>
     <div className="flex items-center">
-      <div className="w-4 h-4 bg-green-500 mr-2"></div>
+      <div className="w-4 h-4 mr-2" style={{ backgroundColor: '#98fb98', opacity: '0.6' }}></div>
       <span className="text-white">Urgency 5, Importance 5</span>
     </div>
   </div>
 );
+
 
 export default ActionPlanApp;
