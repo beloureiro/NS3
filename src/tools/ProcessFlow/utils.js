@@ -37,7 +37,7 @@ export const flattenProcesses = (processes) => {
   export const translations = {
     // Objeto que contém traduções para a interface do usuário em diferentes idiomas
     en: {
-      backToHome: "Back to home", // Tradução para "Voltar para o início"
+      backToHome: "Back", // Tradução para "Voltar para o início"
       title: "Process Flow Diagram Builder", // Tradução para o título "Construtor de Diagrama de Fluxo de Processo"
       subtitle: "Design your process in a structured way.", // Tradução para o subtítulo
       placeholder: "name...", // Texto placeholder para campos de entrada de nome

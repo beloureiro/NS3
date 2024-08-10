@@ -16,6 +16,9 @@ import translations from '../AppComponents/translations';
 // Importa o logotipo da aplicação que será exibido na interface
 import logo from '../assets/rsz_1design_inmotion_181818.png';
 
+// Importa o componente de rodapé
+import Footer from '../AppComponents/Footer';
+
 // Importa o arquivo CSS que contém os estilos globais da aplicação
 import '../index.css';
 
@@ -47,7 +50,7 @@ function App() {
           <meta name="description" content={t.description} />
         </Helmet>
         {/* Div que centraliza o conteúdo e define uma largura máxima para manter o layout responsivo */}
-        <div className="w-full max-w-4xl text-center">
+        <div className="w-full max-w-4xl text-center flex flex-col">
           {/* Componente AppRoutes que gerencia as rotas da aplicação */}
           {/* Passa para o componente AppRoutes os estados e funções necessários, como idioma, alternância de idioma, visibilidade das ferramentas rápidas, etc. */}
           <AppRoutes 
@@ -58,6 +61,8 @@ function App() {
             t={t}                          // Passa o objeto de traduções atual baseado no idioma selecionado
             logo={logo}                    // Passa o logotipo da aplicação para ser utilizado no layout
           />
+          {/* Adiciona o rodapé global à aplicação */}
+          <Footer language={language} />
         </div>
       </div>
     </Router>

@@ -113,7 +113,10 @@ const translations = {
           "Health & Safety Policies" // Políticas de Saúde e Segurança
         ]
       }
-    }
+    },
+
+    // Texto para o rodapé em inglês
+    footerText: "© InMotion Consulting - Technology and Management Services"
   },
   
   pt: {
@@ -228,7 +231,10 @@ const translations = {
           "Políticas de Saúde e Segurança" // Health & Safety Policies
         ]
       }
-    }
+    },
+
+    // Texto para o rodapé em português
+    footerText: "© InMotion Consulting - Tecnologia e Serviços de Gestão"
   }
 };
 
