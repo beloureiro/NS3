@@ -123,7 +123,7 @@ const DecisionHelper = () => {
   return (
     <div className="p-4 min-h-screen bg-black text-gray-300 font-sans antialiased">
       <div className="flex justify-between items-center mb-4">
-        <Link to="/" className="text-[#00ff9d] hover:underline">&larr; Back to home</Link>
+        <Link to="/" className="text-[#00ff9d] hover:underline">&larr; Back</Link>
         <h1 className="text-3xl font-bold text-[#f1f5f9]">{t.title}</h1>
         <Button onClick={toggleLanguage} className="bg-[#f1f5f9] hover:bg-[#00864c] text-black">
           <Globe className="mr-2 h-4 w-4 inline" /> {language === 'en' ? 'PT' : 'EN'}
