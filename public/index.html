@@ -23,21 +23,131 @@
 
     <title>InMotion - Consulting</title>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRVRG1D2CP"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <!-- Estilos para o banner e modal de configuração de cookies -->
+    <style>
+      .cookie-consent-banner {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #2c2f33; /* Cor de fundo combinando com o tema escuro */
+        color: #ffffff; /* Texto branco */
+        padding: 15px;
+        text-align: center;
+        z-index: 1000;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Sombra suave */
+        font-family: 'Arial', sans-serif; /* Fonte limpa e legível */
+      }
+      .cookie-consent-banner button {
+        margin-left: 10px;
+        padding: 8px 15px;
+        background-color: #43b581; /* Verde combinando com os elementos do site */
+        color: #000000;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px; /* Borda arredondada */
+        transition: background-color 0.3s;
+      }
+      .cookie-consent-banner button:hover {
+        background-color: #3ea769; /* Tom mais escuro no hover */
+      }
+      .cookie-settings-modal {
+        position: fixed;
+        bottom: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        background-color: #23272a; /* Cor de fundo escura */
+        color: #ffffff; /* Texto branco */
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Sombra mais pronunciada */
+        z-index: 1001;
+        display: none;
+        border-radius: 8px; /* Borda arredondada */
+        font-family: 'Arial', sans-serif;
+      }
+      .cookie-settings-modal h2 {
+        margin-top: 0;
+        color: #43b581; /* Título verde */
+        font-size: 20px;
+      }
+      .cookie-settings-modal label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      .cookie-settings-modal button {
+        margin-top: 10px;
+        padding: 8px 15px;
+        background-color: #43b581;
+        color: #050505;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+      .cookie-settings-modal button:hover {
+        background-color: #3ea769;
+      }
+    </style>
 
-      gtag('config', 'G-VRVRG1D2CP');
+    <!-- Script para manipulação do consentimento de cookies -->
+    <script>
+      function acceptAllCookies() {
+        document.cookie = "functionalCookies=true; path=/";
+        document.cookie = "performanceCookies=true; path=/";
+        document.cookie = "marketingCookies=true; path=/";
+        document.getElementById('cookie-consent-banner').style.display = 'none';
+        loadGoogleAnalytics();
+      }
+
+      function showCookieSettings() {
+        document.getElementById('cookie-settings-modal').style.display = 'block';
+      }
+
+      function closeCookieSettings() {
+        document.getElementById('cookie-settings-modal').style.display = 'none';
+      }
+
+      function saveCookieSettings() {
+        var performanceCookies = document.getElementById('performance-cookies').checked;
+        var marketingCookies = document.getElementById('marketing-cookies').checked;
+
+        document.cookie = "functionalCookies=true; path=/";
+        document.cookie = "performanceCookies=" + performanceCookies + "; path=/";
+        document.cookie = "marketingCookies=" + marketingCookies + "; path=/";
+        
+        document.getElementById('cookie-consent-banner').style.display = 'none';
+        document.getElementById('cookie-settings-modal').style.display = 'none';
+
+        if (performanceCookies) {
+          loadGoogleAnalytics();
+        }
+      }
+
+      function loadGoogleAnalytics() {
+        var script = document.createElement('script');
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-VRVRG1D2CP";
+        script.async = true;
+        document.head.appendChild(script);
+
+        script = document.createElement('script');
+        script.innerHTML = "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-VRVRG1D2CP');";
+        document.head.appendChild(script);
+      }
+
+      window.onload = function() {
+        if (!document.cookie.includes('functionalCookies=true')) {
+          document.getElementById('cookie-consent-banner').style.display = 'block';
+        } else {
+          if (document.cookie.includes('performanceCookies=true')) {
+            loadGoogleAnalytics();
+          }
+        }
+      }
     </script>
 
     <!-- Start Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
       (function(l) {
         if (l.search[1] === '/' ) {
           var decoded = l.search.slice(1).split('&').map(function(s) { 
@@ -54,5 +164,34 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+    <!-- Banner de Consentimento de Cookies -->
+    <div id="cookie-consent-banner" class="cookie-consent-banner" style="display: none;">
+      This site uses cookies to improve your experience. Please review and manage your preferences.
+      <button onclick="showCookieSettings()">Manage Cookies</button>
+      <button onclick="acceptAllCookies()">Accept All</button>
+    </div>
+
+    <!-- Modal de Configurações de Cookies -->
+    <div id="cookie-settings-modal" class="cookie-settings-modal">
+      <h2>Cookie Preferences</h2>
+      <p>Select which cookies you want to accept:</p>
+      <form id="cookie-settings-form">
+        <label>
+          <input type="checkbox" id="functional-cookies" checked disabled>
+          Functional Cookies (Required)
+        </label><br>
+        <label>
+          <input type="checkbox" id="performance-cookies">
+          Performance Cookies (Google Analytics)
+        </label><br>
+        <label>
+          <input type="checkbox" id="marketing-cookies">
+          Marketing Cookies
+        </label><br><br>
+        <button type="button" onclick="saveCookieSettings()">Save Preferences</button>
+        <button type="button" onclick="closeCookieSettings()">Cancel</button>
+      </form>
+    </div>
   </body>
 </html>
