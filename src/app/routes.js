@@ -4,7 +4,7 @@ import { Wrench, Globe, Mail, Phone, Linkedin, MessageCircle } from 'lucide-reac
 import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard'; // Importa o componente de dashboard dinâmico
 import QuickTools from '../AppComponents/QuickTools'; // Importa o componente de ferramentas rápidas
 import ErrorPage from '../AppComponents/ErrorPage'; // Importa o componente de página de erro
-import DecisionHelper from '../tools/DecisionHelper/DecisionHelper'; // Importa a ferramenta de auxílio à decisão
+import DecisionHelper from '../tools/DecisionMatrix/DecisionMatrix'; // Importa a ferramenta de auxílio à decisão
 import ActionPlanApp from '../tools/ActionPlan/ActionPlan'; // Importa a ferramenta de plano de ação
 import ProcessFlowDiagramApp from '../tools/ProcessFlow/ProcessFlow'; // Importa a ferramenta de fluxo de processo
 
@@ -13,7 +13,6 @@ function Header({ title, language, toggleLanguage }) {
   return (
     <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:items-center mb-4 relative">
       {/* Div principal que organiza o layout de título e botão, centralizando ambos */}
-
       <h1 className="text-2xl sm:text-4xl font-bold text-center w-full sm:w-auto">
         {/* Título da página, centralizado em todas as telas */}
         {title}
@@ -67,10 +66,10 @@ const AppRoutes = ({ language, toggleLanguage, showTools, setShowTools, t, logo 
         <DynamicExpertiseDashboard language={language} />
         {/* Componente que exibe o dashboard dinâmico de expertise, adaptado ao idioma atual */}
 
-        <div className="mt-6 mb-6 text-center">
+        <div className="mt-2 mb-2 text-center">
           <button
             onClick={() => setShowTools(!showTools)} 
-            className="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-1 px-3 rounded inline-flex items-center transition-colors duration-300"
+            className="bg-[#00864c] hover:bg-[#00ff9d] text-black text-sm font-medium py-1 px-3 rounded inline-flex items-center transition-colors duration-300"
           >
             <Wrench className="mr-1" size={16} />
             {/* Ícone de chave inglesa para indicar ferramentas */}
@@ -82,7 +81,7 @@ const AppRoutes = ({ language, toggleLanguage, showTools, setShowTools, t, logo 
         {showTools && <QuickTools language={language} />}
         {/* Renderiza o componente de ferramentas rápidas se o estado showTools for verdadeiro */}
 
-        <div className="mt-4">
+        <div className="mt-2 mb-2">
           {/* Div que exibe a seção de contatos com ícones para interações rápidas */}
           <h2 className="text-2xl font-semibold mb-2 text-center">{t.transformBusiness}</h2>
           {/* Título da seção de contatos, centralizado */}

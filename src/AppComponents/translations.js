@@ -116,7 +116,7 @@ const translations = {
     },
 
     // Texto para o rodapé em inglês
-    footerText: "© InMotion Consulting - Technology and Management Services"
+    footerText: "© InMotion - Technology and Management Services"
   },
   
   pt: {
@@ -234,7 +234,7 @@ const translations = {
     },
 
     // Texto para o rodapé em português
-    footerText: "© InMotion Consulting - Tecnologia e Serviços de Gestão"
+    footerText: "© InMotion - Tecnologia e Serviços de Gestão"
   }
 };
 
