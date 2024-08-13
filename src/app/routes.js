@@ -69,7 +69,7 @@ const AppRoutes = ({ language, toggleLanguage, showTools, setShowTools, t, logo 
         <div className="mt-2 mb-2 text-center">
           <button
             onClick={() => setShowTools(!showTools)} 
-            className="bg-[#00864c] hover:bg-[#00ff9d] text-black text-sm font-medium py-1 px-3 rounded inline-flex items-center transition-colors duration-300"
+            className="bg-[#00cc7d] hover:bg-[#00ff9d] text-black text-sm font-medium py-1.5 px-5 rounded inline-flex items-center transition-colors duration-300"
           >
             <Wrench className="mr-1" size={16} />
             {/* Ícone de chave inglesa para indicar ferramentas */}
