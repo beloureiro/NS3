@@ -1,61 +1,89 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
-import translations from './translations'; // Importando as traduções
+import translations from './translations'; // Importando as traduções para diferentes idiomas
 
+// Componente principal que representa o dashboard dinâmico de expertise
 const DynamicExpertiseDashboard = ({ language }) => {
+  // Obtém as traduções específicas da linguagem para as áreas de expertise
   const t = translations[language].expertiseAreas;
+  
+  // Estado para controlar a área ativa selecionada pelo usuário
   const [activeArea, setActiveArea] = useState('businessManagement');
+  
+  // Estado para armazenar os dados animados a serem exibidos no gráfico
   const [animateData, setAnimateData] = useState([]);
+  
+  // Estado para verificar se o dispositivo é móvel
   const [isMobile, setIsMobile] = useState(false);
 
+  // useMemo para memorizar as áreas de expertise e suas propriedades, evitando recalcular quando não necessário
   const expertiseAreas = useMemo(() => ({
     businessManagement: {
-      title: t.businessManagement,
-      color: "#ADFF2F",
-      skills: t.skills.businessManagement.map((skill, index) => ({ name: skill, value: [90, 85, 75, 75, 85, 80][index] }))
+      title: t.businessManagement, // Título da área
+      color: "#ADFF2F", // Cor associada à área
+      skills: t.skills.businessManagement.map((skill, index) => ({ 
+        name: skill, // Nome da habilidade
+        value: [90, 85, 75, 75, 85, 80][index] // Valor associado à habilidade
+      }))
     },
     dataAnalysis: {
       title: t.dataAnalysis,
       color: "#4ECDC4",
-      skills: t.skills.dataAnalysis.map((skill, index) => ({ name: skill, value: [85, 95, 90, 75, 75, 85][index] }))
+      skills: t.skills.dataAnalysis.map((skill, index) => ({ 
+        name: skill,
+        value: [85, 95, 90, 75, 75, 85][index] 
+      }))
     },
     consultingTeaching: {
       title: t.consultingTeaching,
       color: "#FFA62B",
-      skills: t.skills.consultingTeaching.map((skill, index) => ({ name: skill, value: [90, 95, 80, 75, 80, 85][index] }))
+      skills: t.skills.consultingTeaching.map((skill, index) => ({ 
+        name: skill, 
+        value: [90, 95, 80, 75, 80, 85][index] 
+      }))
     },
     designInnovation: {
       title: t.designInnovation,
       color: "#FF6B6B",
-      skills: t.skills.designInnovation.map((skill, index) => ({ name: skill, value: [85, 90, 80, 75, 85][index] }))
+      skills: t.skills.designInnovation.map((skill, index) => ({ 
+        name: skill, 
+        value: [85, 90, 80, 75, 85][index] 
+      }))
     },
     healthLeadership: {
       title: t.healthLeadership,
       color: "#1E90FF",
-      skills: t.skills.healthLeadership.map((skill, index) => ({ name: skill, value: [90, 95, 90, 75, 85][index] }))
+      skills: t.skills.healthLeadership.map((skill, index) => ({ 
+        name: skill, 
+        value: [90, 95, 90, 75, 85][index] 
+      }))
     }
-  }), [t]);
+  }), [t]); // Recalcula apenas quando 't' muda
 
+  // useEffect para monitorar a largura da janela e definir se o dispositivo é móvel
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 768); // Define isMobile como true se a largura da janela for menor ou igual a 768px
     };
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    checkMobile(); // Verifica inicialmente
+    window.addEventListener('resize', checkMobile); // Adiciona um event listener para resize
 
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile); // Remove o listener ao desmontar o componente
   }, []);
 
+  // useEffect para animar os dados ao alterar a área ativa
   useEffect(() => {
-    setAnimateData([]);
+    setAnimateData([]); // Limpa os dados de animação inicialmente
     const timer = setTimeout(() => {
-      setAnimateData(expertiseAreas[activeArea]?.skills || []);
+      setAnimateData(expertiseAreas[activeArea]?.skills || []); // Define os dados da nova área ativa após um breve delay
     }, 50);
-    return () => clearTimeout(timer);
-  }, [activeArea, expertiseAreas]);
+    return () => clearTimeout(timer); // Limpa o timeout ao desmontar ou atualizar o componente
+  }, [activeArea, expertiseAreas]); // Executa quando activeArea ou expertiseAreas mudam
 
+  // Função para renderizar o gráfico de radar
   const renderRadarChart = () => {
+    // Configurações para dispositivos desktop
     const desktopConfig = {
       extraRadius: 0,
       adjustmentFactor: 0.5,
@@ -65,6 +93,7 @@ const DynamicExpertiseDashboard = ({ language }) => {
       lineHeight: 20
     };
 
+    // Configurações para dispositivos móveis
     const mobileConfig = {
       extraRadius: 20,
       adjustmentFactor: 0.3,
@@ -74,8 +103,10 @@ const DynamicExpertiseDashboard = ({ language }) => {
       lineHeight: 15
     };
 
+    // Escolhe a configuração apropriada com base no dispositivo
     const config = isMobile ? mobileConfig : desktopConfig;
 
+    // Função para calcular o raio extra para ajustar o posicionamento das labels
     const calculateExtraRadius = (angle) => {
       const normalizedAngle = Math.abs((angle % 180) - 0) / 90;
       return config.extraRadius * (1 - config.adjustmentFactor * normalizedAngle);

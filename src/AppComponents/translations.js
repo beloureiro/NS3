@@ -1,5 +1,5 @@
 // O objeto 'translations' contém todas as traduções para os idiomas suportados pelo aplicativo.
-// Cada chave (por exemplo, 'en', 'pt') representa um idioma e contém um conjunto de traduções específicas para aquele idioma.
+// Cada chave (por exemplo, 'en', 'pt', 'fr') representa um idioma e contém um conjunto de traduções específicas para aquele idioma.
 const translations = {
   en: {
     // Esta seção contém as traduções para o idioma inglês.
@@ -235,6 +235,124 @@ const translations = {
 
     // Texto para o rodapé em português
     footerText: "© InMotion - Tecnologia e Serviços de Gestão"
+  },
+
+  fr: {
+    // Cette section contient les traductions en français.
+    
+    // Titre principal affiché sur la page d'accueil de l'application.
+    title: "Solutions en Gestion d'Entreprise",
+
+    // Description de l'application, qui apparaît dans les meta tags pour le SEO et peut également être utilisée ailleurs.
+    description: "Votre Boîte à Outils Quotidienne pour l'Excellence en Affaires",
+
+    // Titre d'une section qui décrit les domaines d'expertise de l'entreprise.
+    ourExpertise: "Notre Expertise",
+
+    // Description détaillée de la section qui parle de l'expertise de l'entreprise, mettant en avant les domaines d'activité et les compétences offertes.
+    expertiseDescription: "Explorez notre gamme dynamique de compétences dans les domaines clés de l'entreprise. Notre expertise est conçue pour améliorer la performance de votre entreprise grâce à des solutions innovantes et des perspectives stratégiques.",
+
+    // Texte d'incitation à l'action, encourageant les visiteurs à transformer leur entreprise.
+    transformBusiness: "Transformez Votre Entreprise Aujourd'hui",
+
+    // Section contenant les outils rapides disponibles dans l'application.
+    quickTools: {
+      // Titre de la section des outils rapides.
+      title: "Outils Rapides",
+
+      // Nom du premier outil, qui aide à prendre des décisions à l'aide d'une matrice de décision.
+      decisionHelper: "Matrice de Décision",
+
+      // Nom du deuxième outil, qui est un plan d'action structuré (méthode 5W2H).
+      actionPlan: "Plan d'Action",
+
+      // Nom du troisième outil, qui décrit le flux de processus dans une entreprise.
+      processFlow: "Flux de Processus",
+
+      // Phrase courte associée à l'outil "Flux de Processus", qui aide les utilisateurs à comprendre l'objectif de l'outil.
+      phraseProcessFlow: "Où suis-je?",
+
+      // Phrase courte associée à l'outil "Matrice de Décision", pour guider les utilisateurs sur ce à quoi s'attendre.
+      phraseDecisionMatrix: "Où devrais-je aller?",
+
+      // Phrase courte associée à l'outil "Plan d'Action", qui guide les utilisateurs sur la manière d'utiliser l'outil.
+      phraseActionPlan: "Comment vais-je y arriver?",
+    },
+
+    // Texte apparaissant sur le bouton qui ouvre la section des outils rapides.
+    quickToolsButton: "Outils Rapides",
+
+    // Section répertoriant les différents domaines d'expertise de l'entreprise.
+    expertiseAreas: {
+      // Premier domaine d'expertise: Gestion d'Entreprise.
+      businessManagement: "Gestion d'Entreprise",
+
+      // Deuxième domaine d'expertise: Analyse des Données et Technologie.
+      dataAnalysis: "Analyse des Données & Technologie",
+
+      // Troisième domaine d'expertise: Conseil et Enseignement.
+      consultingTeaching: "Conseil & Enseignement",
+
+      // Quatrième domaine d'expertise: Design et Innovation.
+      designInnovation: "Design & Innovation",
+
+      // Cinquième domaine d'expertise: Leadership Sain.
+      healthLeadership: "Leadership Sain",
+
+      // Sous-section décrivant les compétences spécifiques dans chaque domaine d'expertise.
+      skills: {
+        // Compétences dans le domaine de la Gestion d'Entreprise.
+        businessManagement: [
+          "Gestion Opérationnelle", // Operational Management
+          "Amélioration des Processus", // Process Improvement
+          "Planification Stratégique", // Strategic Planning
+          "Analyse Financière", // Financial Analysis
+          "Gestion de Projet", // Project Management
+          "Satisfaction du Client" // Customer Satisfaction
+        ],
+
+        // Compétences dans le domaine de l'Analyse des Données et Technologie.
+        dataAnalysis: [
+          "Business Intelligence", // Intelligence d'Affaires
+          "Microsoft Power BI", // Outil d'analyse de données Power BI
+          "Modélisation des Données", // Data Modeling
+          "Programmation Python", // Python Programming
+          "Excel Avancé", // Advanced Excel
+          "Intelligence Artificielle" // Artificial Intelligence
+        ],
+
+        // Compétences dans le domaine du Conseil et Enseignement.
+        consultingTeaching: [
+          "Conseil en Entreprise", // Business Consulting
+          "Formation à la Résolution de Problèmes", // Problem-Solving Training
+          "Formation Financière", // Financial Training
+          "Gestion des Processus Lean", // Lean Process Management
+          "Planification Stratégique", // Strategic Planning
+          "Développement de Solutions" // Solution Development
+        ],
+
+        // Compétences dans le domaine du Design et Innovation.
+        designInnovation: [
+          "Design", // Design
+          "Innovation", // Innovation
+          "Créativité", // Creativity
+          "Développement de Produits", // Product Development
+          "Solutions Innovantes" // Innovative Solutions
+        ],
+
+        // Compétences dans le domaine du Leadership Sain.
+        healthLeadership: [
+          "Leadership", // Leadership
+          "Inclusion & Diversité", // Inclusion & Diversity
+          "Intelligence Émotionnelle", // Emotional Intelligence
+          "Programmes de Bien-Être", // Wellness Programs
+          "Politiques de Santé et Sécurité" // Health & Safety Policies
+        ]
+      }
+    },
+
+    // Texte pour le pied de page en français
+    footerText: "© InMotion - Services de Technologie et de Gestion"
   }
 };
 

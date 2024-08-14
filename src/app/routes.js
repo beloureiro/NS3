@@ -1,49 +1,36 @@
-import React from 'react'; // Importa a biblioteca React para criar componentes
-import { Route, Routes } from 'react-router-dom'; // Importa Route e Routes do React Router para definir as rotas no React
-import { Wrench, Globe, Mail, Phone, Linkedin, MessageCircle } from 'lucide-react'; // Importa ícones do Lucide React para serem usados na interface
-import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard'; // Importa o componente de dashboard dinâmico
-import QuickTools from '../AppComponents/QuickTools'; // Importa o componente de ferramentas rápidas
-import ErrorPage from '../AppComponents/ErrorPage'; // Importa o componente de página de erro
-import DecisionHelper from '../tools/DecisionMatrix/DecisionMatrix'; // Importa a ferramenta de auxílio à decisão
-import ActionPlanApp from '../tools/ActionPlan/ActionPlan'; // Importa a ferramenta de plano de ação
-import ProcessFlowDiagramApp from '../tools/ProcessFlow/ProcessFlow'; // Importa a ferramenta de fluxo de processo
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { Wrench, Mail, Phone, Linkedin, MessageCircle } from 'lucide-react';
+import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard';
+import QuickTools from '../AppComponents/QuickTools';
+import ErrorPage from '../AppComponents/ErrorPage';
+import DecisionHelper from '../tools/DecisionMatrix/DecisionMatrix';
+import ActionPlanApp from '../tools/ActionPlan/ActionPlan';
+import ProcessFlowDiagramApp from '../tools/ProcessFlow/ProcessFlow';
 
-// Função Header para criar o cabeçalho com título e botão de troca de idioma
-function Header({ title, language, toggleLanguage }) {
+// Função Header simplificada para criar o cabeçalho apenas com o título
+function Header({ title }) {
   return (
     <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:items-center mb-4 relative">
-      {/* Div principal que organiza o layout de título e botão, centralizando ambos */}
+      {/* Div principal que organiza o layout do título, centralizando-o */}
       <h1 className="text-2xl sm:text-4xl font-bold text-center w-full sm:w-auto">
         {/* Título da página, centralizado em todas as telas */}
         {title}
       </h1>
-
-      <div className="mt-2 sm:mt-0 sm:absolute sm:right-0">
-        {/* Div que contém o botão de troca de idioma, posicionado abaixo do título em mobile e à direita em desktop */}
-        <button 
-          onClick={toggleLanguage} 
-          className="bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium py-1 px-3 rounded inline-flex items-center transition-colors duration-300"
-        >
-          <Globe className="mr-1" size={16} />
-          {/* Ícone de globo para simbolizar a troca de idioma */}
-          <span>{language === 'en' ? 'PT' : 'EN'}</span>
-          {/* Texto do botão que muda conforme o idioma atual */}
-        </button>
-      </div>
     </div>
   );
 }
 
 // Função principal que define as rotas e renderiza os componentes da aplicação
-const AppRoutes = ({ language, toggleLanguage, showTools, setShowTools, t, logo }) => (
+const AppRoutes = ({ language, showTools, setShowTools, t, logo }) => (
   <Routes>
     {/* Define as rotas da aplicação */}
     <Route path="/" element={
       <>
         {/* Rota principal que exibe o conteúdo da página inicial */}
 
-        <Header title={t.title} language={language} toggleLanguage={toggleLanguage} />
-        {/* Renderiza o cabeçalho com título e botão de troca de idioma */}
+        <Header title={t.title} />
+        {/* Renderiza o cabeçalho apenas com o título */}
 
         <div className="mb-4 transform hover:scale-105 transition-transform duration-300 text-center">
           {/* Div que exibe o logotipo da empresa e uma breve descrição */}
