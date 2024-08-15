@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import { Mail, Phone, Linkedin, MessageCircle } from 'lucide-react';
 import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard';
 import QuickTools from '../AppComponents/QuickTools';
@@ -20,8 +21,8 @@ function Header({ title }) {
 }
 
 const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) => {
-  const location = useLocation();
-
+  // const location = useLocation();
+  
   return (
     <Routes>
       <Route path="/" element={
@@ -46,7 +47,7 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
 
           <DynamicExpertiseDashboard language={language} />
 
-          {/* Comentando o bloco responsável pelo botão "Quick Tools"
+          {/* Commenting out the Quick Tools button temporarily
           {location.pathname === "/" && (
             <div className="mt-2 mb-2 text-center">
               <button
