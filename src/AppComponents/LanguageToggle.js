@@ -1,18 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Globe } from 'lucide-react';
 
+// Componente LanguageToggle para alternar entre idiomas
 const LanguageToggle = ({ language, setLanguage }) => {
+  // Estado para controlar se o dropdown está aberto ou fechado
   const [isOpen, setIsOpen] = useState(false);
+  
+  // Refs para o dropdown e o botão, usados para detectar cliques fora do componente
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
+  // Função para alternar o estado do dropdown
   const toggleDropdown = () => setIsOpen(!isOpen);
 
+  // Função para mudar o idioma e fechar o dropdown
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     setIsOpen(false);
   };
 
+  // Effect para lidar com cliques fora do componente
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target) &&
@@ -21,9 +28,14 @@ const LanguageToggle = ({ language, setLanguage }) => {
       }
     };
 
+    // Adiciona o event listener quando o componente monta
     document.addEventListener('mousedown', handleClickOutside);
+    // Remove o event listener quando o componente desmonta
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Array de idiomas suportados
+  const supportedLanguages = ['pt', 'en', 'fr', 'nl', 'es'];
 
   return (
     <div className="relative inline-block">
@@ -43,7 +55,7 @@ const LanguageToggle = ({ language, setLanguage }) => {
           ref={dropdownRef}
           className="absolute z-10 w-20 mt-1 bg-gray-800 rounded-md shadow-lg"
         >
-          {['pt', 'en', 'fr'].map((lang) => (
+          {supportedLanguages.map((lang) => (
             <button
               key={lang}
               onClick={() => handleLanguageChange(lang)}

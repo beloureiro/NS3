@@ -1,5 +1,5 @@
 // O objeto 'translations' contém todas as traduções para os idiomas suportados pelo aplicativo.
-// Cada chave (por exemplo, 'en', 'pt', 'fr') representa um idioma e contém um conjunto de traduções específicas para aquele idioma.
+// Cada chave (por exemplo, 'en', 'pt', 'fr', 'nl', 'es') representa um idioma e contém um conjunto de traduções específicas para aquele idioma.
 const translations = {
   en: {
     // Esta seção contém as traduções para o idioma inglês.
@@ -83,8 +83,8 @@ const translations = {
       actionPlan: "Plano de Ação",
       processFlow: "Fluxo de Processo",
       phraseProcessFlow: "Onde estou?",
-      phraseDecisionMatrix: "Para onde devo ir?", // Ajustado para melhor correspondência com o inglês
-      phraseActionPlan: "Como chegarei lá?", // Ajustado para melhor correspondência com o inglês
+      phraseDecisionMatrix: "Para onde devo ir?",
+      phraseActionPlan: "Como chegarei lá?",
     },
     quickToolsButton: "Ferramentas Rápidas",
     expertiseAreas: {
@@ -114,7 +114,7 @@ const translations = {
           "Consultoria Empresarial",
           "Treinamento em Resolução de Problemas",
           "Treinamento Financeiro",
-          "Processos Lean", // Ajustado para melhor correspondência com o inglês
+          "Processos Lean",
           "Planejamento Estratégico",
           "Desenvolvimento de Soluções"
         ],
@@ -158,7 +158,7 @@ const translations = {
     expertiseAreas: {
       businessManagement: "Gestion d'Entreprise",
       dataAnalysis: "Analyse des Données & Technologie",
-      consultingTeaching: "Conseil & Formation", // Ajustado para melhor correspondência com o inglês
+      consultingTeaching: "Conseil & Formation",
       designInnovation: "Design & Innovation",
       healthLeadership: "Leadership Sain",
       skills: {
@@ -203,6 +203,142 @@ const translations = {
       }
     },
     footerText: "© InMotion - Services de Technologie et de Gestion"
+  },
+
+  nl: {
+    // Deze sectie bevat de vertalingen voor de Nederlandse taal.
+    
+    title: "Bedrijfsmanagement Oplossingen", // Título encurtado
+    description: "Uw Dagelijkse Toolkit voor Zakelijke Uitmuntendheid",
+    ourExpertise: "Onze Expertise",
+    expertiseDescription: "Verken ons dynamische scala aan vaardigheden in belangrijke bedrijfsdomeinen. Onze expertise is op maat gemaakt om uw bedrijfsprestaties te verbeteren door middel van innovatieve oplossingen en strategische inzichten.",
+    transformBusiness: "Transformeer Uw Bedrijf Vandaag",
+    quickTools: {
+      title: "Snelle Tools",
+      decisionHelper: "Beslissingsmatrix",
+      actionPlan: "Actieplan",
+      processFlow: "Processtroomschema",
+      phraseProcessFlow: "Waar ben ik?",
+      phraseDecisionMatrix: "Waar moet ik heen?",
+      phraseActionPlan: "Hoe kom ik daar?",
+    },
+    quickToolsButton: "Snelle Tools",
+    expertiseAreas: {
+      businessManagement: "Bedrijfsmanagement",
+      dataAnalysis: "Gegevensanalyse & Technologie",
+      consultingTeaching: "Consulting & Training",
+      designInnovation: "Design & Innovatie",
+      healthLeadership: "Gezond Leiderschap",
+      skills: {
+        businessManagement: [
+          "Operationeel Management",
+          "Procesverbetering",
+          "Strategische Planning",
+          "Financiële Analyse",
+          "Projectmanagement",
+          "Klanttevredenheid"
+        ],
+        dataAnalysis: [
+          "Business Intelligence",
+          "Microsoft Power BI",
+          "Gegevensmodellering",
+          "Python Programmering",
+          "Geavanceerde Excel",
+          "Kunstmatige Intelligentie"
+        ],
+        consultingTeaching: [
+          "Bedrijfsconsultancy",
+          "Training in Probleemoplossing",
+          "Financiële Training",
+          "Lean Procesmanagement",
+          "Strategische Planning",
+          "Oplossingsontwikkeling"
+        ],
+        designInnovation: [
+          "Design",
+          "Innovatie",
+          "Creativiteit",
+          "Productontwikkeling",
+          "Innovatieve Oplossingen"
+        ],
+        healthLeadership: [
+          "Leiderschap",
+          "Inclusie & Diversiteit",
+          "Emotionele Intelligentie",
+          "Welzijnsprogramma's",
+          "Gezondheids- en Veiligheidsbeleid"
+        ]
+      }
+    },
+    footerText: "© InMotion - Technologie en Managementdiensten"
+  },
+
+  es: {
+    // Esta sección contiene las traducciones para el idioma español.
+    
+    title: "Soluciones de Gestión Empresarial",
+    description: "Su Caja de Herramientas para la Excelencia Empresarial",
+    ourExpertise: "Nuestra Experiencia",
+    expertiseDescription: "Explore nuestra gama de habilidades en áreas clave de negocios. Nuestra experiencia eleva el rendimiento de su empresa con soluciones innovadoras y perspectivas estratégicas.",
+    transformBusiness: "Transforme Su Negocio Hoy",
+    quickTools: {
+      title: "Herramientas Rápidas",
+      decisionHelper: "Matriz de Decisión",
+      actionPlan: "Plan de Acción",
+      processFlow: "Flujo de Proceso",
+      phraseProcessFlow: "¿Dónde estoy?",
+      phraseDecisionMatrix: "¿Adónde ir?",
+      phraseActionPlan: "¿Cómo llegar?",
+    },
+    quickToolsButton: "Herramientas",
+    expertiseAreas: {
+      businessManagement: "Gestión Empresarial",
+      dataAnalysis: "Análisis y Tecnología",
+      consultingTeaching: "Consultoría y Enseñanza",
+      designInnovation: "Diseño e Innovación",
+      healthLeadership: "Liderazgo Saludable",
+      skills: {
+        businessManagement: [
+          "Gestión Operativa",
+          "Mejora de Procesos",
+          "Planificación Estratégica",
+          "Análisis Financiero",
+          "Gestión de Proyectos",
+          "Satisfacción del Cliente"
+        ],
+        dataAnalysis: [
+          "Inteligencia de Negocios",
+          "Microsoft Power BI",
+          "Modelado de Datos",
+          "Programación Python",
+          "Excel Avanzado",
+          "Inteligencia Artificial"
+        ],
+        consultingTeaching: [
+          "Consultoría Empresarial",
+          "Resolución de Problemas",
+          "Formación Financiera",
+          "Gestión Lean",
+          "Planeación Estratégica",
+          "Desarrollo de Soluciones"
+        ],
+        designInnovation: [
+          "Diseño",
+          "Innovación",
+          "Creatividad",
+          "Desarrollo de Productos",
+          "Soluciones Innovadoras"
+        ],
+        healthLeadership: [
+          "Liderazgo",
+          "Inclusión y Diversidad",
+          "Inteligencia Emocional",
+          "Programas de Bienestar",
+          "Políticas de Salud y Seguridad"
+        ]
+      }
+    },
+    footerText: "© InMotion - Servicios de Tecnología y Gestión"
   }
 };
 
