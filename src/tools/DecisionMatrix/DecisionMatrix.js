@@ -21,7 +21,7 @@ import { translations } from './translation';
 
 const DecisionHelper = () => {
   // Componente principal para o helper de decisão.
-  
+
   // Definição dos estados locais do componente
   const [alternatives, setAlternatives] = useState([]);
   const [decision, setDecision] = useState(null);
@@ -94,7 +94,7 @@ const DecisionHelper = () => {
     }
 
     const weightedScores = calculateWeightedScores(alternatives, criteria);
-    const bestAlternative = weightedScores.reduce((prev, current) => 
+    const bestAlternative = weightedScores.reduce((prev, current) =>
       (current.score > prev.score) ? current : prev
     );
 
@@ -131,7 +131,7 @@ const DecisionHelper = () => {
     const commonCriteria = ['cost', 'time', 'quality', 'risk', 'benefit', 'impact', 'viability', 'durability', 'satisfaction', 'innovation',
                             'custo', 'tempo', 'qualidade', 'risco', 'benefício', 'impacto', 'viabilidade', 'durabilidade', 'satisfação', 'inovação'];
     const suggestedCriteria = commonCriteria.filter(criterion => words.includes(criterion));
-    
+
     if (suggestedCriteria.length > 0) {
       setCriteria([...criteria, ...suggestedCriteria.map(name => ({ name, weight: 3 }))]);
     }
@@ -158,11 +158,11 @@ const DecisionHelper = () => {
           <Globe className="mr-2 h-4 w-4 inline" /> {language === 'en' ? 'PT' : 'EN'}
         </Button> {/* Botão para alternar entre idiomas */}
       </div>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-full w-full md:max-w-4xl mx-auto">
         <p className="text-lg text-[#f1f5f9] italic text-center mb-8">{t.subtitle}</p> {/* Subtítulo traduzido */}
 
         {/* Cartão para descrever o dilema */}
-        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6">
+        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6 w-full">
           <CardHeader>
             <CardTitle className="text-[#f1f5f9] flex items-center">
               <Brain className="mr-2" /> {t.describeDilemma}
@@ -177,8 +177,8 @@ const DecisionHelper = () => {
             />
           </CardContent>
           <CardFooter>
-            <Button 
-              onClick={processUserInput} 
+            <Button
+              onClick={processUserInput}
               className="w-full bg-[#374151] hover:bg-[#00864c] text-white font-medium flex items-center justify-center space-x-2 py-2 px-4 rounded transition-colors duration-300"
             >
               <Send className="h-4 w-4" />
@@ -188,7 +188,7 @@ const DecisionHelper = () => {
         </Card>
 
         {/* Cartão para adicionar e gerenciar critérios de decisão */}
-        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6">
+        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6 w-full">
           <CardHeader>
             <CardTitle className="text-[#f1f5f9]">{t.decisionCriteria}</CardTitle>
           </CardHeader>
@@ -210,8 +210,8 @@ const DecisionHelper = () => {
                     value={criterion.weight}
                     onChange={(e) => updateCriterion(index, 'weight', e.target.value)}
                   />
-                  <Button 
-                    onClick={() => removeCriterion(index)} 
+                  <Button
+                    onClick={() => removeCriterion(index)}
                     className="bg-red-900 hover:bg-red-800 rounded-full p-2 transition-colors duration-300"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -221,8 +221,8 @@ const DecisionHelper = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button 
-              onClick={addCriterion} 
+            <Button
+              onClick={addCriterion}
               className="w-full bg-[#374151] hover:bg-[#00864c] text-white font-medium flex items-center justify-center space-x-2 py-2 px-4 rounded transition-colors duration-300"
             >
               <Plus className="h-4 w-4" />
@@ -232,7 +232,7 @@ const DecisionHelper = () => {
         </Card>
 
         {/* Cartão para adicionar e gerenciar alternativas */}
-        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mb-6">
+        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mb-6 w-full">
           <CardHeader>
             <CardTitle className="text-[#00ff9d]">{t.alternatives}</CardTitle>
           </CardHeader>
@@ -248,8 +248,8 @@ const DecisionHelper = () => {
                       value={alt.name}
                       onChange={(e) => updateAlternative(altIndex, 'name', e.target.value)}
                     />
-                    <Button 
-                      onClick={() => removeAlternative(altIndex)} 
+                    <Button
+                      onClick={() => removeAlternative(altIndex)}
                       className="bg-red-900 hover:bg-red-800 rounded-full p-2 transition-colors duration-300"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -290,7 +290,7 @@ const DecisionHelper = () => {
         </Card>
 
         {/* Cartão que exibe a matriz de decisão em um gráfico */}
-        <Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mb-6 overflow-hidden">
+        <Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mb-6 overflow-hidden w-full">
           <CardHeader>
             <CardTitle onClick={() => setShowMatrix(!showMatrix)} className="text-[#00ff9d] flex items-center justify-between cursor-pointer">
               {t.decisionMatrix}
