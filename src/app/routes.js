@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { Wrench, Mail, Phone, Linkedin, MessageCircle } from 'lucide-react';
 import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard';
 import QuickTools from '../AppComponents/QuickTools';
@@ -7,6 +7,7 @@ import ErrorPage from '../AppComponents/ErrorPage';
 import DecisionHelper from '../tools/DecisionMatrix/DecisionMatrix';
 import ActionPlanApp from '../tools/ActionPlan/ActionPlan';
 import ProcessFlowDiagramApp from '../tools/ProcessFlow/ProcessFlow';
+import LanguageToggle from '../AppComponents/LanguageToggle';
 
 // Função Header simplificada para criar o cabeçalho apenas com o título
 function Header({ title }) {
@@ -22,91 +23,93 @@ function Header({ title }) {
 }
 
 // Função principal que define as rotas e renderiza os componentes da aplicação
-const AppRoutes = ({ language, showTools, setShowTools, t, logo }) => (
-  <Routes>
-    {/* Define as rotas da aplicação */}
-    <Route path="/" element={
-      <>
-        {/* Rota principal que exibe o conteúdo da página inicial */}
+const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) => {
+  const location = useLocation(); // Captura a localização atual da rota
 
-        <Header title={t.title} />
-        {/* Renderiza o cabeçalho apenas com o título */}
+  return (
+    <Routes>
+      <Route path="/" element={
+        <>
+          {/* Rota principal que exibe o conteúdo da página inicial */}
 
-        <div className="mb-4 transform hover:scale-105 transition-transform duration-300 text-center">
-          {/* Div que exibe o logotipo da empresa e uma breve descrição */}
-          <img src={logo} alt="InMotion logo" className="mx-auto" />
-          {/* Logotipo centralizado */}
-          <p className="mt-1 text-gray-400">{t.description}</p>
-          {/* Descrição do logotipo abaixo do logotipo */}
-        </div>
-
-        <div className="mb-4">
-          {/* Div que exibe o título e a descrição da expertise da empresa */}
-          <h2 className="text-2xl font-semibold mb-2 text-center">{t.ourExpertise}</h2>
-          {/* Título da seção de expertise, centralizado */}
-          <p className="leading-relaxed text-center">
-            {t.expertiseDescription}
-            {/* Descrição da expertise da empresa */}
-          </p>
-        </div>
-
-        <DynamicExpertiseDashboard language={language} />
-        {/* Componente que exibe o dashboard dinâmico de expertise, adaptado ao idioma atual */}
-
-        <div className="mt-2 mb-2 text-center">
-          <button
-            onClick={() => setShowTools(!showTools)} 
-            className="bg-[#00cc7d] hover:bg-[#00ff9d] text-black text-sm font-medium py-1.5 px-5 rounded inline-flex items-center transition-colors duration-300"
-          >
-            <Wrench className="mr-1" size={16} />
-            {/* Ícone de chave inglesa para indicar ferramentas */}
-            <span>{t.quickToolsButton}</span>
-            {/* Texto do botão de ferramentas rápidas */}
-          </button>
-        </div>
-
-        {showTools && <QuickTools language={language} />}
-        {/* Renderiza o componente de ferramentas rápidas se o estado showTools for verdadeiro */}
-
-        <div className="mt-2 mb-2">
-          {/* Div que exibe a seção de contatos com ícones para interações rápidas */}
-          <h2 className="text-2xl font-semibold mb-2 text-center">{t.transformBusiness}</h2>
-          {/* Título da seção de contatos, centralizado */}
-          <div className="flex justify-center space-x-6">
-            {/* Div que centraliza os ícones de contato */}
-            <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
-              <Mail size={24} />
-              {/* Link de email */}
-            </a>
-            <a href="tel:+351915542701" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
-              <Phone size={24} />
-              {/* Link para telefone */}
-            </a>
-            <a href="https://www.linkedin.com/company/inmotionc" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
-              <Linkedin size={24} />
-              {/* Link para o perfil no LinkedIn */}
-            </a>
-            <a href="https://wa.me/351915542701" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
-              <MessageCircle size={24} />
-              {/* Link para contato via WhatsApp */}
-            </a>
+          <Header title={t.title} />
+          {/* Renderiza o cabeçalho apenas com o título */}
+          
+          {/* Renderiza o botão de alternância de idioma condicionalmente */}
+          <div className="w-full mb-4 sm:mb-0 sm:absolute sm:top-0 sm:right-0 sm:w-auto">
+            <LanguageToggle language={language} setLanguage={setLanguage} />
           </div>
-        </div>
-      </>
-    } />
-    
-    <Route path="/decision-helper" element={<DecisionHelper />} />
-    {/* Rota para a ferramenta de auxílio à decisão */}
 
-    <Route path="/5w2h" element={<ActionPlanApp />} />
-    {/* Rota para a ferramenta de plano de ação */}
+          <div className="mb-4 transform hover:scale-105 transition-transform duration-300 text-center">
+            {/* Div que exibe o logotipo da empresa e uma breve descrição */}
+            <img src={logo} alt="InMotion logo" className="mx-auto" />
+            {/* Logotipo centralizado */}
+            <p className="mt-1 text-gray-400">{t.description}</p>
+            {/* Descrição do logotipo abaixo do logotipo */}
+          </div>
 
-    <Route path="/process-flow" element={<ProcessFlowDiagramApp />} />
-    {/* Rota para a ferramenta de fluxo de processo */}
+          <div className="mb-4">
+            {/* Div que exibe o título e a descrição da expertise da empresa */}
+            <h2 className="text-2xl font-semibold mb-2 text-center">{t.ourExpertise}</h2>
+            {/* Título da seção de expertise, centralizado */}
+            <p className="leading-relaxed text-center">
+              {t.expertiseDescription}
+              {/* Descrição da expertise da empresa */}
+            </p>
+          </div>
 
-    <Route path="*" element={<ErrorPage />} />
-    {/* Rota curinga para capturar todas as outras rotas e exibir a página de erro */}
-  </Routes>
-);
+          <DynamicExpertiseDashboard language={language} />
+          {/* Componente que exibe o dashboard dinâmico de expertise, adaptado ao idioma atual */}
+
+          <div className="mt-2 mb-2 text-center">
+            <button
+              onClick={() => setShowTools(!showTools)} 
+              className="bg-[#00cc7d] hover:bg-[#00ff9d] text-black text-sm font-medium py-1.5 px-5 rounded inline-flex items-center transition-colors duration-300"
+            >
+              <Wrench className="mr-1" size={16} />
+              {/* Ícone de chave inglesa para indicar ferramentas */}
+              <span>{t.quickToolsButton}</span>
+              {/* Texto do botão de ferramentas rápidas */}
+            </button>
+          </div>
+
+          {showTools && <QuickTools language={language} />}
+          {/* Renderiza o componente de ferramentas rápidas se o estado showTools for verdadeiro */}
+
+          <div className="mt-2 mb-2">
+            {/* Div que exibe a seção de contatos com ícones para interações rápidas */}
+            <h2 className="text-2xl font-semibold mb-2 text-center">{t.transformBusiness}</h2>
+            {/* Título da seção de contatos, centralizado */}
+            <div className="flex justify-center space-x-6">
+              {/* Div que centraliza os ícones de contato */}
+              <a href="mailto:bc@inmotion.today" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
+                <Mail size={24} />
+                {/* Link de email */}
+              </a>
+              <a href="tel:+351915542701" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
+                <Phone size={24} />
+                {/* Link para telefone */}
+              </a>
+              <a href="https://www.linkedin.com/company/inmotionc" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
+                <Linkedin size={24} />
+                {/* Link para o perfil no LinkedIn */}
+              </a>
+              <a href="https://wa.me/351915542701" className="hover:text-green-400 transition-colors duration-300 transform hover:scale-110">
+                <MessageCircle size={24} />
+                {/* Link para contato via WhatsApp */}
+              </a>
+            </div>
+          </div>
+        </>
+      } />
+
+      {/* Outras rotas */}
+      <Route path="/decision-helper" element={<DecisionHelper />} />
+      <Route path="/5w2h" element={<ActionPlanApp />} />
+      <Route path="/process-flow" element={<ProcessFlowDiagramApp />} />
+      <Route path="*" element={<ErrorPage />} />
+    </Routes>
+  );
+};
 
 export default AppRoutes;

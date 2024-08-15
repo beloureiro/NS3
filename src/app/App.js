@@ -5,7 +5,6 @@ import AppRoutes from './routes';
 import translations from '../AppComponents/translations';
 import logo from '../assets/rsz_1design_inmotion_181818.png';
 import Footer from '../AppComponents/Footer';
-import LanguageToggle from '../AppComponents/LanguageToggle';
 import '../index.css';
 
 // Componente principal App
@@ -20,7 +19,6 @@ function App() {
   const t = translations[language];
   
   return (
-    // Router com um caminho base '/NS3'
     <Router basename="/NS3">
       {/* Container principal com estilos Tailwind CSS */}
       <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
@@ -32,11 +30,6 @@ function App() {
         
         {/* Container de conteúdo central */}
         <div className="w-full max-w-4xl text-center flex flex-col items-center relative">
-          {/* Componente de alternância de idioma 
-              Posicionado absolutamente no desktop, como bloco no mobile */}
-          <div className="w-full mb-4 sm:mb-0 sm:absolute sm:top-0 sm:right-0 sm:w-auto">
-            <LanguageToggle language={language} setLanguage={setLanguage} />
-          </div>
           
           {/* Rotas principais do aplicativo */}
           <AppRoutes
@@ -45,6 +38,7 @@ function App() {
             setShowTools={setShowTools}
             t={t}
             logo={logo}
+            setLanguage={setLanguage} // Passa a função setLanguage para o componente AppRoutes
           />
           
           {/* Componente de rodapé */}
