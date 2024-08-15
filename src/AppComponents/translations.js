@@ -208,8 +208,8 @@ const translations = {
   nl: {
     // Deze sectie bevat de vertalingen voor de Nederlandse taal.
     
-    title: "Bedrijfsmanagement Oplossingen", // Título encurtado
-    description: "Uw Dagelijkse Toolkit voor Zakelijke Uitmuntendheid",
+    title: "Bedrijfsmanagement Oplossingen",
+    description: "Uw Dagelijkse Toolkit voor Zakelijke Excellentie",
     ourExpertise: "Onze Expertise",
     expertiseDescription: "Verken ons dynamische scala aan vaardigheden in belangrijke bedrijfsdomeinen. Onze expertise is op maat gemaakt om uw bedrijfsprestaties te verbeteren door middel van innovatieve oplossingen en strategische inzichten.",
     transformBusiness: "Transformeer Uw Bedrijf Vandaag",
@@ -217,22 +217,22 @@ const translations = {
       title: "Snelle Tools",
       decisionHelper: "Beslissingsmatrix",
       actionPlan: "Actieplan",
-      processFlow: "Processtroomschema",
-      phraseProcessFlow: "Waar ben ik?",
-      phraseDecisionMatrix: "Waar moet ik heen?",
+      processFlow: "Processchema",
+      phraseProcessFlow: "Waar sta ik?",
+      phraseDecisionMatrix: "Waar moet ik naartoe?",
       phraseActionPlan: "Hoe kom ik daar?",
     },
     quickToolsButton: "Snelle Tools",
     expertiseAreas: {
       businessManagement: "Bedrijfsmanagement",
-      dataAnalysis: "Gegevensanalyse & Technologie",
-      consultingTeaching: "Consulting & Training",
+      dataAnalysis: "Data-analyse & Technologie",
+      consultingTeaching: "Consultancy & Training",
       designInnovation: "Design & Innovatie",
       healthLeadership: "Gezond Leiderschap",
       skills: {
         businessManagement: [
           "Operationeel Management",
-          "Procesverbetering",
+          "Procesoptimalisatie",
           "Strategische Planning",
           "Financiële Analyse",
           "Projectmanagement",
@@ -241,14 +241,14 @@ const translations = {
         dataAnalysis: [
           "Business Intelligence",
           "Microsoft Power BI",
-          "Gegevensmodellering",
+          "Datamodellering",
           "Python Programmering",
-          "Geavanceerde Excel",
-          "Kunstmatige Intelligentie"
+          "Geavanceerd Excel",
+          "Artificial Intelligence"
         ],
         consultingTeaching: [
-          "Bedrijfsconsultancy",
-          "Training in Probleemoplossing",
+          "Bedrijfsadvies",
+          "Probleemoplossing Training",
           "Financiële Training",
           "Lean Procesmanagement",
           "Strategische Planning",
@@ -265,13 +265,14 @@ const translations = {
           "Leiderschap",
           "Inclusie & Diversiteit",
           "Emotionele Intelligentie",
-          "Welzijnsprogramma's",
+          "Wellness Programma's",
           "Gezondheids- en Veiligheidsbeleid"
         ]
       }
     },
     footerText: "© InMotion - Technologie en Managementdiensten"
   },
+
 
   es: {
     // Esta sección contiene las traducciones para el idioma español.
