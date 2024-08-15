@@ -61,17 +61,20 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           <DynamicExpertiseDashboard language={language} />
           {/* Componente que exibe o dashboard dinâmico de expertise, adaptado ao idioma atual */}
 
-          <div className="mt-2 mb-2 text-center">
-            <button
-              onClick={() => setShowTools(!showTools)} 
-              className="bg-[#00cc7d] hover:bg-[#00ff9d] text-black text-sm font-medium py-1.5 px-5 rounded inline-flex items-center transition-colors duration-300"
-            >
-              <Wrench className="mr-1" size={16} />
-              {/* Ícone de chave inglesa para indicar ferramentas */}
-              <span>{t.quickToolsButton}</span>
-              {/* Texto do botão de ferramentas rápidas */}
-            </button>
-          </div>
+          {/* Condicional para renderizar o botão "master" apenas na página inicial */}
+          {location.pathname === "/" && (
+            <div className="mt-2 mb-2 text-center">
+              <button
+                onClick={() => setShowTools(!showTools)} 
+                className="bg-[#00cc7d] hover:bg-[#00ff9d] text-black text-sm font-medium py-1.5 px-5 rounded inline-flex items-center transition-colors duration-300"
+              >
+                <Wrench className="mr-1" size={16} />
+                {/* Ícone de chave inglesa para indicar ferramentas */}
+                <span>{t.quickToolsButton}</span>
+                {/* Texto do botão de ferramentas rápidas */}
+              </button>
+            </div>
+          )}
 
           {showTools && <QuickTools language={language} />}
           {/* Renderiza o componente de ferramentas rápidas se o estado showTools for verdadeiro */}
