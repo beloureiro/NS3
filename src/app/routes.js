@@ -9,6 +9,7 @@ import DecisionHelper from '../tools/DecisionMatrix/DecisionMatrix';
 import ActionPlanApp from '../tools/ActionPlan/ActionPlan';
 import ProcessFlowDiagramApp from '../tools/ProcessFlow/ProcessFlow';
 import LanguageToggle from '../AppComponents/LanguageToggle';
+import IndependentWidthPage from '../tools/WidthPage/IndependentWidthPage';
 
 function Header({ title }) {
   return (
@@ -86,6 +87,7 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
       <Route path="/decision-helper" element={<DecisionHelper />} />
       <Route path="/5w2h" element={<ActionPlanApp />} />
       <Route path="/process-flow" element={<ProcessFlowDiagramApp />} />
+      <Route path="/independent-width" element={<IndependentWidthPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
