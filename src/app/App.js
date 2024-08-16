@@ -42,7 +42,7 @@ function AppContent() {
           setShowTools={setShowTools}
           t={t}
           logo={logo}
-          setLanguage={setLanguage} // Passa a função setLanguage para o componente AppRoutes
+          setLanguage={setLanguage}
         />
         
         {/* Componente de rodapé */}

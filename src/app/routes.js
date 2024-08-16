@@ -1,7 +1,6 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom';
-import { Mail, Phone, Linkedin, MessageCircle } from 'lucide-react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { Mail, Phone, Linkedin, MessageCircle, Wrench } from 'lucide-react';
 import DynamicExpertiseDashboard from '../AppComponents/DynamicExpertiseDashboard';
 import QuickTools from '../AppComponents/QuickTools';
 import ErrorPage from '../AppComponents/ErrorPage';
@@ -22,7 +21,7 @@ function Header({ title }) {
 }
 
 const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) => {
-  // const location = useLocation();
+  const location = useLocation();
   
   return (
     <Routes>
@@ -48,7 +47,6 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
 
           <DynamicExpertiseDashboard language={language} />
 
-          {/* Commenting out the Quick Tools button temporarily
           {location.pathname === "/" && (
             <div className="mt-2 mb-2 text-center">
               <button
@@ -60,7 +58,6 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
               </button>
             </div>
           )}
-          */}
 
           {showTools && <QuickTools language={language} />}
 
