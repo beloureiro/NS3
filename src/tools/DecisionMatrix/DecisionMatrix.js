@@ -9,7 +9,6 @@ import { calculateWeightedScores, ImprovedScatterChart } from './DecisionLogic';
 import { translations } from './translation';
 
 const DecisionHelper = () => {
-  // Estados do componente (mantidos sem alterações)
   const [alternatives, setAlternatives] = useState([]);
   const [decision, setDecision] = useState(null);
   const [userInput, setUserInput] = useState('');
@@ -23,7 +22,6 @@ const DecisionHelper = () => {
 
   const t = translations[language];
 
-  // Funções do componente (mantidas sem alterações)
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
   };
@@ -124,26 +122,24 @@ const DecisionHelper = () => {
   };
 
   return (
-    // Container principal com largura total e estilos básicos
-    <div className="p-4 min-h-screen bg-black text-gray-300 font-sans antialiased">
-      {/* Cabeçalho do componente */}
-      <div className="flex justify-between items-center mb-4">
-        <Link to="/" className="text-[#00ff9d] hover:underline">{t.back}</Link>
-        <h1 className="text-3xl font-bold text-[#f1f5f9]">{t.title}</h1>
-        <Button onClick={toggleLanguage} className="bg-[#f1f5f9] hover:bg-[#00864c] text-black">
-          <Globe className="mr-2 h-4 w-4 inline" /> {language === 'en' ? 'PT' : 'EN'}
-        </Button>
-      </div>
-      
-      {/* Container do conteúdo principal - usa largura total com padding responsivo */}
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        {/* Subtítulo centralizado com largura máxima para melhor legibilidade */}
-        <p className="text-lg text-[#f1f5f9] italic text-center mb-8 max-w-3xl mx-auto">{t.subtitle}</p>
+    <div className="w-full min-h-screen bg-black text-gray-300 font-sans antialiased">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Cabeçalho do componente */}
+        <div className="flex justify-between items-center py-6">
+          <Link to="/" className="text-[#00ff9d] hover:underline">{t.back}</Link>
+          <h1 className="text-3xl font-bold text-[#f1f5f9]">{t.title}</h1>
+          <Button onClick={toggleLanguage} className="bg-[#f1f5f9] hover:bg-[#00864c] text-black">
+            <Globe className="mr-2 h-4 w-4 inline" /> {language === 'en' ? 'PT' : 'EN'}
+          </Button>
+        </div>
+        
+        {/* Subtítulo centralizado */}
+        <p className="text-lg text-[#f1f5f9] italic text-center mb-8">{t.subtitle}</p>
   
-        {/* Grid layout para organizar os cartões em telas maiores */}
+        {/* Grid layout para organizar os cartões */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Cartão para descrever o dilema */}
-          <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6">
+          <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20">
             <CardHeader>
               <CardTitle className="text-[#f1f5f9] flex items-center">
                 <Brain className="mr-2" /> {t.describeDilemma}
@@ -169,7 +165,7 @@ const DecisionHelper = () => {
           </Card>
   
           {/* Cartão para adicionar e gerenciar critérios de decisão */}
-          <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20 mb-6">
+          <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20">
             <CardHeader>
               <CardTitle className="text-[#f1f5f9]">{t.decisionCriteria}</CardTitle>
             </CardHeader>
@@ -214,7 +210,7 @@ const DecisionHelper = () => {
         </div>
   
         {/* Cartão para adicionar e gerenciar alternativas - largura total */}
-        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mb-6">
+        <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mt-6">
           <CardHeader>
             <CardTitle className="text-[#00ff9d]">{t.alternatives}</CardTitle>
           </CardHeader>
@@ -272,7 +268,7 @@ const DecisionHelper = () => {
         </Card>
   
         {/* Cartão que exibe a matriz de decisão em um gráfico - largura total */}
-        <Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mb-6 overflow-hidden">
+        <Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mt-6 overflow-hidden">
           <CardHeader>
             <CardTitle onClick={() => setShowMatrix(!showMatrix)} className="text-[#00ff9d] flex items-center justify-between cursor-pointer">
               {t.decisionMatrix}
