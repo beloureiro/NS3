@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, Globe, Check, RotateCcw, PlusCircle, AlertCircle, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Card, CardHeader, CardContent, CardTitle, Input, DateInput, Button, Timeline } from './components';
-import QuadrantChart from './QuadrantChart'; // Importação do novo componente QuadrantChart
+import QuadrantChart from './QuadrantChart';
 import translations from './translations';
 
 const ActionPlanApp = () => {
@@ -138,20 +138,24 @@ const ActionPlanApp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 p-4 font-sans antialiased">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-4">
-          <Link to="/" className="text-[#00ff9d] hover:underline flex items-center">
-            <ChevronLeft className="mr-2 text-[#00ff9d]" /> {t.backToHome}
-          </Link>
-          <h1 className="text-3xl font-bold text-[#f1f5f9] text-center flex-grow">{t.title}</h1>
-          <Button onClick={toggleLanguage}>
-            <Globe className="mr-2" /> {language === 'en' ? 'PT' : 'EN'}
-          </Button>
-        </div>
-        <p className="text-lg text-[#f1f5f9] italic text-center mb-8">{t.subtitle}</p>
+    <div className="w-full bg-black min-h-screen p-6 text-gray-300 font-sans antialiased">
+      {/* Cabeçalho */}
+      <header className="mb-8 flex justify-between items-center">
+        <Link to="/" className="text-[#00ff9d] hover:underline flex items-center">
+          <ChevronLeft className="mr-2 text-[#00ff9d]" /> {t.backToHome}
+        </Link>
+        <h1 className="text-4xl font-bold text-[#f1f5f9]">{t.title}</h1>
+        <Button onClick={toggleLanguage}>
+          <Globe className="mr-2" /> {language === 'en' ? 'PT' : 'EN'}
+        </Button>
+      </header>
+      
+      <p className="text-lg text-[#f1f5f9] italic text-center mb-8">{t.subtitle}</p>
 
-        <Card className="mb-6">
+      {/* Conteúdo principal */}
+      <main className="space-y-8">
+        {/* Seção de entrada */}
+        <Card>
           <CardHeader>
             <CardTitle>{t.questions[currentQuestion].question}</CardTitle>
           </CardHeader>
@@ -170,7 +174,7 @@ const ActionPlanApp = () => {
                   onChange={(e) => handleInputChange(t.questions[currentQuestion].key, e.target.value)}
                 />
               ) : t.questions[currentQuestion].key === 'urgency' || t.questions[currentQuestion].key === 'importance' ? (
-                <div className="flex justify-center space-x-2">
+                <div className="flex flex-wrap justify-center gap-2">
                   {t.questions[currentQuestion].key === 'urgency' && t.urgencyLevels.map((level, index) => (
                     <Button
                       key={index}
@@ -204,9 +208,9 @@ const ActionPlanApp = () => {
                   {errors[t.questions[currentQuestion].key]}
                 </p>
               )}
-              <div className="flex justify-between mt-4">
+              <div className="flex flex-col sm:flex-row justify-between mt-4 gap-2">
                 <Button onClick={handlePrevious} disabled={currentQuestion === 0}>{t.previous}</Button>
-                <div className="flex space-x-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Button onClick={addNewPlan}>
                     <PlusCircle className="mr-2" /> {t.addNewAction}
                   </Button>
@@ -226,13 +230,14 @@ const ActionPlanApp = () => {
           </CardContent>
         </Card>
 
-        <Card className="mb-6">
+        {/* Action Plan (Tabela) - Movida para cima */}
+        <Card>
           <CardHeader>
             <CardTitle>{t.actionPlan}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[600px]">
                 <thead>
                   <tr>
                     <th className="text-left py-2 px-4 border-b border-gray-700">Ação #</th>
@@ -269,31 +274,32 @@ const ActionPlanApp = () => {
           </CardContent>
         </Card>
 
-        <Card className="mb-6">
+        {/* Action Overview (Gráfico) - Movido para baixo */}
+        <Card>
           <CardHeader>
             <CardTitle>{t.actionOverview}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="mb-4">{t.totalActions}: {plans.length}</p>
-            <div className="h-96">
+            <div className="h-[400px] w-full">
               <QuadrantChart actions={getChartData()} />
             </div>
             <p className="mt-4 text-center text-gray-400">{t.chartDescription}</p>
             <Legend />
           </CardContent>
         </Card>
-      </div>
+      </main>
     </div>
   );
 };
 
 const Legend = () => (
-  <div className="flex justify-center mt-4">
-    <div className="flex items-center mr-4">
+  <div className="flex flex-wrap justify-center mt-4 gap-4">
+    <div className="flex items-center">
       <div className="w-4 h-4 mr-2" style={{ backgroundColor: '#ff6347', opacity: '0.6' }}></div>
       <span className="text-white">Urgency 1, Importance 1</span>
     </div>
-    <div className="flex items-center mr-4">
+    <div className="flex items-center">
       <div className="w-4 h-4 mr-2" style={{ backgroundColor: '#ffd700', opacity: '0.6' }}></div>
       <span className="text-white">Other</span>
     </div>
@@ -303,6 +309,5 @@ const Legend = () => (
     </div>
   </div>
 );
-
 
 export default ActionPlanApp;
