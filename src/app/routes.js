@@ -22,7 +22,7 @@ function Header({ title }) {
 
 const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) => {
   const location = useLocation();
-  
+
   return (
     <Routes>
       <Route path="/" element={
@@ -40,8 +40,8 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
 
           <div className="mb-4">
             <h2 className="text-2xl font-semibold mb-2 text-center">{t.ourExpertise}</h2>
-            <p className="leading-relaxed text-center">
-              {t.expertiseDescription}
+            <p className="leading-relaxed text-center max-w-4xl mx-auto">
+              Explore our dynamic range of skills across key business domains. Our expertise is tailored to elevate your business performance through innovative solutions and strategic insights.
             </p>
           </div>
 
