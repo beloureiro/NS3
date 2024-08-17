@@ -25,7 +25,7 @@ const AddProcessForm = ({ processes, currentLevel, setCurrentLevel, addProcess, 
   };
 
   return (
-    <div className="w-full bg-gray-800 text-white p-6 rounded-lg shadow-lg mb-6">
+    <div className="w-full bg-gray text-white ">
       <div className="mb-4">
         <select
           value={currentLevel}
@@ -34,7 +34,7 @@ const AddProcessForm = ({ processes, currentLevel, setCurrentLevel, addProcess, 
             setParentProcess('');
             setError('');
           }}
-          className="w-full bg-gray-700 text-white border border-gray-600 p-2 rounded mb-4"
+          className="w-full bg-black border border-green-700 rounded-lg text-white p-2 "
         >
           <option value="1">1. Business Process (Macroprocess)</option>
           <option value="2">2. Process</option>
@@ -48,7 +48,7 @@ const AddProcessForm = ({ processes, currentLevel, setCurrentLevel, addProcess, 
           <select
             value={parentProcess}
             onChange={(e) => setParentProcess(e.target.value)}
-            className="w-full bg-gray-700 text-white border border-gray-600 p-2 rounded mb-4"
+            className="w-full bg-black border border-green-700 text-white p-2 rounded mb-4"
           >
             <option value="">{t.selectParent}</option>
             {getEligibleParents(processes, currentLevel).map((process, index) => (
@@ -62,11 +62,11 @@ const AddProcessForm = ({ processes, currentLevel, setCurrentLevel, addProcess, 
           value={processName}
           onChange={(e) => setProcessName(e.target.value)}
           placeholder={t.placeholder}
-          className="flex-1 bg-gray-700 text-white border border-gray-600 p-2 rounded mr-2"
+          className="flex-1 bg-black border border-green-900 text-white p-2 "
         />
         <button
           onClick={handleAddProcess}
-          className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded"
+          className="bg-green-700 hover:bg-green-500 text-white p-2 rounded"
         >
           {t.addProcess}
         </button>
