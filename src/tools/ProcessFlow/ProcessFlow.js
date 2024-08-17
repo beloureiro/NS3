@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, Globe, MoreVertical, Download, Upload } from 'lucide-react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { translations } from './utils';
 import AddProcessForm from './AddProcessForm';
-import { exportProcessFlow } from './ProcessFlowExportImport';
+import { exportProcessFlow, importProcessFlow, handleImportClick } from './ProcessFlowExportImport';
 
 // Componente para renderizar uma caixa de processo individual
 const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onMove }) => {
@@ -148,6 +148,7 @@ const ProcessFlowDiagramApp = () => {
   const [isTitleSet, setIsTitleSet] = useState(false);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const fileInputRef = useRef(null);
 
   const t = translations[language];
 
@@ -252,32 +253,25 @@ const ProcessFlowDiagramApp = () => {
   };
 
   const handleExport = () => {
-    exportProcessFlow(processes, title);
+    exportProcessFlow(processes, title, description, t);
   };
 
   const handleImport = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const importedData = JSON.parse(e.target.result);
-          if (importedData.processes && importedData.title) {
-            setProcesses(importedData.processes);
-            setTitle(importedData.title);
-            setDescription(importedData.description || '');
-            setIsTitleSet(true);
-            alert('Importação bem-sucedida!');
-          } else {
-            throw new Error("Estrutura de dados incorreta");
-          }
-        } catch (err) {
-          console.error("Invalid JSON file", err);
-          alert("Erro ao importar o arquivo. Certifique-se de que o arquivo está correto.");
-        }
-      };
-      reader.readAsText(file);
+    const file = event.target.files && event.target.files[0];
+    if (!file) {
+      console.error('No file selected');
+      return;
     }
+
+    if (file.type !== 'application/json') {
+      alert(t.fileNotSupported);
+      // Limpe o valor do input de arquivo para permitir a seleção do mesmo arquivo novamente
+      event.target.value = '';
+      return;
+    }
+
+    importProcessFlow(event, setProcesses, setTitle, setDescription, t);
+    setIsTitleSet(true);
   };
 
   return (
@@ -401,10 +395,16 @@ const ProcessFlowDiagramApp = () => {
             <button onClick={handleExport} className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200">
               <Download className="mr-2" /> {t.exportDiagram}
             </button>
-            <label className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded cursor-pointer transition-colors duration-200">
+            <button onClick={() => handleImportClick(fileInputRef)} className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200">
               <Upload className="mr-2" /> {t.importDiagram}
-              <input type="file" accept=".json" onChange={handleImport} className="hidden" />
-            </label>
+            </button>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImport}
+              style={{ display: 'none' }}
+              accept=".json"
+            />
           </div>
         )}
       </div>

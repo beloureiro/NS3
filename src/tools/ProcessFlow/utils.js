@@ -40,7 +40,10 @@ export const translations = {
     enterProcessTitle: "Enter process title",
     enterProcessDescription: "Enter process description (optional)",
     exportDiagram: "Export Diagram", // Texto para o botão de exportar
-    importDiagram: "Import Diagram" // Texto para o botão de importar (se necessário)
+    importDiagram: "Import Diagram", // Texto para o botão de importar (se necessário)
+    fileNotSupported: "File type not supported. Please upload a JSON file.", // Tradução adicional
+    importSuccess: "Import successful!", // Tradução adicional
+    importError: "Error importing file. Please check the file format." // Tradução adicional
   },
   pt: {
     backToHome: "Voltar",
@@ -54,6 +57,9 @@ export const translations = {
     enterProcessTitle: "Digite o título do processo",
     enterProcessDescription: "Digite a descrição do processo (opcional)",
     exportDiagram: "Exportar Diagrama", // Texto para o botão de exportar
-    importDiagram: "Importar Diagrama" // Texto para o botão de importar (se necessário)
+    importDiagram: "Importar Diagrama", // Texto para o botão de importar (se necessário)
+    fileNotSupported: "Tipo de arquivo não suportado. Por favor, faça upload de um arquivo JSON.", // Tradução adicional
+    importSuccess: "Importação bem-sucedida!", // Tradução adicional
+    importError: "Erro ao importar o arquivo. Por favor, verifique o formato do arquivo." // Tradução adicional
   },
 };
