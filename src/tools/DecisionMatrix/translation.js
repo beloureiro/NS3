@@ -26,7 +26,14 @@ export const translations = {
     weightedScore: 'Weighted Score',
     avgCriterionWeight: 'Avg. Criterion Weight',
     name: 'Name',
-    back: "← Back" // Adiciona o texto de retorno
+    back: "← Back", // Adiciona o texto de retorno
+    export: "Export",
+    import: "Import",
+    exportSuccess: "Decision process exported successfully!",
+    importSuccess: "Decision process imported successfully!",
+    importError: "Error importing file. Please try again.",
+    fileNotSupported: "File type not supported. Please use a JSON file.",
+    unsavedChangesWarning: "You have unsaved changes. Are you sure you want to leave this page?",
   },
   pt: {
     title: "Matriz de Decisão Avançada",
@@ -55,7 +62,13 @@ export const translations = {
     weightedScore: 'Pontuação Ponderada',
     avgCriterionWeight: 'Peso Médio do Critério',
     name: 'Nome',
-    back: "← Voltar" // Adiciona o texto de retorno
+    back: "← Voltar", // Adiciona o texto de retorno
+    export: "Exportar",
+    import: "Importar",
+    exportSuccess: "Processo de decisão exportado com sucesso!",
+    importSuccess: "Processo de decisão importado com sucesso!",
+    importError: "Erro ao importar o arquivo. Por favor, tente novamente.",
+    fileNotSupported: "Tipo de arquivo não suportado. Por favor, use um arquivo JSON.",
+    unsavedChangesWarning: "Você tem alterações não salvas. Tem certeza que deseja sair desta página?",
   },
 };
-// Objeto de traduções para suportar múltiplos idiomas (inglês e português).

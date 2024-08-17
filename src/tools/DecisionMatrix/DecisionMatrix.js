@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Globe, Brain, ChevronDown, Plus, Trash2, Send, CheckCircle } from 'lucide-react';
 import {
@@ -7,6 +7,8 @@ import {
 } from './HelperComponents';
 import { calculateWeightedScores, ImprovedScatterChart } from './DecisionLogic';
 import { translations } from './translation';
+import ImportExportButtons from './ImportExportButtons';
+import { exportDecisionProcess, importDecisionProcess } from './DecisionMatrixExportImport';
 
 const DecisionHelper = () => {
   const [alternatives, setAlternatives] = useState([]);
@@ -19,12 +21,34 @@ const DecisionHelper = () => {
   const [showMatrix, setShowMatrix] = useState(false);
   const [language, setLanguage] = useState('en');
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+
+  const fileInputRef = useRef(null);  // Adicionado aqui
 
   const t = translations[language];
 
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
   };
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = t.unsavedChangesWarning;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [hasUnsavedChanges, t]);
+
+  useEffect(() => {
+    setHasUnsavedChanges(true);
+  }, [alternatives, criteria]);
 
   const addAlternative = () => {
     setAlternatives([...alternatives, { name: '', scores: criteria.map(() => 0) }]);
@@ -121,6 +145,17 @@ const DecisionHelper = () => {
     makeDecision();
   };
 
+  const handleExport = () => {
+    exportDecisionProcess(alternatives, criteria, decision, t);
+    setHasUnsavedChanges(false);
+  };
+
+  const handleImportClick = () => {  // Adicionado aqui
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <div className="w-full min-h-screen bg-black text-gray-300 font-sans antialiased">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -189,7 +224,7 @@ const DecisionHelper = () => {
                     />
                     <Button
                       onClick={() => removeCriterion(index)}
-                      className="bg-red-900 hover:bg-red-800 rounded-full p-2 transition-colors duration-300"
+                      className="bg-red-900 hover:bg-red-800 rounded-full p-2 transition-colors duração-300"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -294,6 +329,27 @@ const DecisionHelper = () => {
             <AlertDescription className="text-[#00ff9d]">{decision}</AlertDescription>
           </Alert>
         )}
+
+        {/* Centraliza os botões e ajusta os ícones */}
+        <div className="flex justify-center mt-4">
+          <ImportExportButtons
+            onExport={handleExport}
+            onImport={handleImportClick}  // Modificado aqui
+            language={language}
+            className="flex items-center space-x-2"
+          />
+        </div>
+
+        <input
+          type="file"
+          ref={fileInputRef}  // Modificado aqui
+          style={{ display: 'none' }}
+          onChange={(e) => {
+            importDecisionProcess(e, setAlternatives, setCriteria, setDecision, t);
+            setHasUnsavedChanges(false);
+          }}
+          accept=".json"
+        />
       </div>
   
       {/* Modal de isenção de responsabilidade */}
