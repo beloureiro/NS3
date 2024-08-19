@@ -9,22 +9,25 @@ import { exportProcessFlow, importProcessFlow, handleImportClick } from './Proce
 
 // Componente para renderizar uma caixa de processo individual
 const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onMove }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedName, setEditedName] = useState(name);
+  const [isEditing, setIsEditing] = useState(false); // Estado para controlar se o nome do processo está sendo editado
+  const [editedName, setEditedName] = useState(name); // Estado para armazenar o nome do processo durante a edição
 
+  // Configuração para permitir que o componente seja arrastável
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'process',
-    item: { id, level },
+    item: { id, level }, // Informações do item arrastado
     collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
+      isDragging: !!monitor.isDragging(), // Controla o estado de arrastamento
     }),
   }));
 
+  // Configuração para permitir que o componente seja um alvo de drop (receber um item arrastado)
   const [, drop] = useDrop(() => ({
-    accept: 'process',
-    drop: (item) => onMove(item.id, id),
+    accept: 'process', // Define o tipo de item que pode ser solto
+    drop: (item) => onMove(item.id, id), // Função a ser chamada ao soltar um item
   }));
 
+  // Função para determinar o estilo da caixa com base no nível do processo
   const getStyle = () => {
     let style = 'p-2 text-center rounded min-w-[120px] shadow-md flex items-center ';
     if (isRoot) {
@@ -40,15 +43,18 @@ const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onM
     }
   };
 
+  // Função para iniciar a edição do nome ao clicar duas vezes
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
 
+  // Função para finalizar a edição do nome ao perder o foco
   const handleBlur = () => {
     setIsEditing(false);
-    onEdit(id, editedName);
+    onEdit(id, editedName); // Chama a função de edição passada como prop
   };
 
+  // Função para salvar a edição ao pressionar Enter
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleBlur();
@@ -57,23 +63,23 @@ const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onM
 
   return (
     <div 
-      ref={(node) => drag(drop(node))}
-      className={`${getStyle()} ${isSelected ? 'ring-2 ring-blue-500' : ''} ${isDragging ? 'opacity-50' : ''}`}
-      onClick={() => onSelect(id)}
-      onDoubleClick={handleDoubleClick}
+      ref={(node) => drag(drop(node))} // Configura o elemento para ser arrastável e recebível
+      className={`${getStyle()} ${isSelected ? 'ring-2 ring-blue-500' : ''} ${isDragging ? 'opacity-50' : ''}`} // Aplica estilos condicionalmente
+      onClick={() => onSelect(id)} // Seleciona o processo ao clicar
+      onDoubleClick={handleDoubleClick} // Inicia a edição ao clicar duas vezes
     >
       {isEditing ? (
         <input
           type="text"
           value={editedName}
-          onChange={(e) => setEditedName(e.target.value)}
-          onBlur={handleBlur}
-          onKeyPress={handleKeyPress}
+          onChange={(e) => setEditedName(e.target.value)} // Atualiza o nome do processo durante a edição
+          onBlur={handleBlur} // Salva a edição ao perder o foco
+          onKeyPress={handleKeyPress} // Salva a edição ao pressionar Enter
           autoFocus
           className="bg-transparent text-inherit w-full text-center"
         />
       ) : (
-        <span className="flex-1">{level === '5' ? (<><span className="mr-1">▸</span> {name}</>) : name}</span>
+        <span className="flex-1">{level === '5' ? (<><span className="mr-1">▸</span> {name}</>) : name}</span> // Exibe o nome do processo ou uma seta caso seja um item de nível 5
       )}
     </div>
   );
@@ -89,13 +95,14 @@ const ArrowRight = () => (
   </div>
 );
 
+// Componente para renderizar uma linha vertical
 const VerticalLine = () => (
   <div className="w-0.5 h-4 bg-green-500 my-1"></div>
 );
 
 // Componente principal para renderizar um nível do processo
 const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, onEdit, onMove }) => {
-  const isHorizontal = parseInt(level) <= 3;
+  const isHorizontal = parseInt(level) <= 3; // Define se o layout será horizontal ou vertical
 
   return (
     <div className={`relative ${isHorizontal ? 'flex flex-row items-start' : 'flex flex-col'}`}>
@@ -106,15 +113,15 @@ const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, 
               id={process.id}
               level={level} 
               name={process.name} 
-              isRoot={isRoot && index === 0}
-              isSelected={selectedId === process.id}
-              onSelect={onSelect}
-              onEdit={onEdit}
-              onMove={onMove}
+              isRoot={isRoot && index === 0} // Define se é o processo raiz
+              isSelected={selectedId === process.id} // Verifica se o processo está selecionado
+              onSelect={onSelect} // Função de seleção
+              onEdit={onEdit} // Função de edição
+              onMove={onMove} // Função de movimentação
             />
             {process.children && process.children.length > 0 && (
               <div className={`flex flex-col items-center ${level === '4' ? 'mt-1' : 'mt-2'}`}>
-                <VerticalLine />
+                <VerticalLine /> {/* Renderiza a linha vertical */}
                 <ProcessLevel 
                   processes={process.children} 
                   level={(parseInt(level) + 1).toString()} 
@@ -127,7 +134,7 @@ const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, 
             )}
           </div>
           {index < processes.length - 1 && isHorizontal && (
-            <ArrowRight />
+            <ArrowRight /> // Renderiza a seta entre processos
           )}
         </React.Fragment>
       ))}
@@ -135,35 +142,36 @@ const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, 
   );
 };
 
-// O componente ProcessFlowDiagramApp começa aqui
+// Componente principal da aplicação de diagrama de fluxo de processos
 const ProcessFlowDiagramApp = () => {
-  const [processes, setProcesses] = useState([]);
-  const [currentLevel, setCurrentLevel] = useState('1');
-  const [processName, setProcessName] = useState('');
-  const [parentProcess, setParentProcess] = useState('');
-  const [error, setError] = useState('');
-  const [language, setLanguage] = useState('en');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [isTitleSet, setIsTitleSet] = useState(false);
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
-  const fileInputRef = useRef(null);
+  const [processes, setProcesses] = useState([]); // Estado para armazenar a lista de processos
+  const [currentLevel, setCurrentLevel] = useState('1'); // Estado para armazenar o nível atual de processo
+  const [processName, setProcessName] = useState(''); // Estado para armazenar o nome do processo sendo adicionado
+  const [parentProcess, setParentProcess] = useState(''); // Estado para armazenar o processo pai selecionado
+  const [error, setError] = useState(''); // Estado para armazenar mensagens de erro
+  const [language, setLanguage] = useState('en'); // Estado para armazenar o idioma da aplicação
+  const [title, setTitle] = useState(''); // Estado para armazenar o título do diagrama
+  const [description, setDescription] = useState(''); // Estado para armazenar a descrição do diagrama
+  const [isTitleSet, setIsTitleSet] = useState(false); // Estado para indicar se o título foi definido
+  const [isEditingTitle, setIsEditingTitle] = useState(false); // Estado para controlar a edição do título
+  const [selectedId, setSelectedId] = useState(null); // Estado para armazenar o ID do processo selecionado
+  const fileInputRef = useRef(null); // Referência ao input de arquivo para importação
 
-  const t = translations[language];
+  const t = translations[language]; // Obtenção das traduções com base no idioma atual
 
+  // Função para adicionar um novo processo
   const addProcess = (name, parentId) => {
     const newProcess = { id: Date.now().toString(), level: currentLevel, name, children: [] };
     
     setProcesses(prevProcesses => {
       if (currentLevel === '1') {
-        return [...prevProcesses, newProcess];
+        return [...prevProcesses, newProcess]; // Adiciona o processo como raiz se for de nível 1
       } else {
         const updatedProcesses = [...prevProcesses];
         const addToParent = (items) => {
           for (let item of items) {
             if (item.id === parentId) {
-              item.children.push(newProcess);
+              item.children.push(newProcess); // Adiciona o processo ao pai correspondente
               return true;
             }
             if (item.children && addToParent(item.children)) {
@@ -174,23 +182,25 @@ const ProcessFlowDiagramApp = () => {
         };
         
         if (!addToParent(updatedProcesses)) {
-          setError('Failed to add process. Please check the hierarchy.');
+          setError('Failed to add process. Please check the hierarchy.'); // Exibe erro se não for possível adicionar
         }
         return updatedProcesses;
       }
     });
   };
 
+  // Função para selecionar um processo
   const handleSelect = useCallback((id) => {
     setSelectedId(id);
   }, []);
 
+  // Função para editar o nome de um processo
   const handleEdit = useCallback((id, newName) => {
     setProcesses(prevProcesses => {
       const updateProcess = (items) => {
         return items.map(item => {
           if (item.id === id) {
-            return { ...item, name: newName };
+            return { ...item, name: newName }; // Atualiza o nome do processo
           }
           if (item.children) {
             return { ...item, children: updateProcess(item.children) };
@@ -202,6 +212,7 @@ const ProcessFlowDiagramApp = () => {
     });
   }, []);
 
+  // Função para mover um processo para um novo pai
   const handleMove = useCallback((draggedId, targetId) => {
     if (draggedId === targetId) return;
 
@@ -210,7 +221,7 @@ const ProcessFlowDiagramApp = () => {
       const removeItem = (items) => {
         return items.filter(item => {
           if (item.id === draggedId) {
-            draggedItem = item;
+            draggedItem = item; // Remove o item arrastado
             return false;
           }
           if (item.children) {
@@ -223,7 +234,7 @@ const ProcessFlowDiagramApp = () => {
       const addItem = (items) => {
         return items.map(item => {
           if (item.id === targetId) {
-            return { ...item, children: [...(item.children || []), draggedItem] };
+            return { ...item, children: [...(item.children || []), draggedItem] }; // Adiciona o item ao novo pai
           }
           if (item.children) {
             return { ...item, children: addItem(item.children) };
@@ -233,14 +244,16 @@ const ProcessFlowDiagramApp = () => {
       };
 
       let newProcesses = removeItem(prevProcesses);
-      return addItem(newProcesses);
+      return addItem(newProcesses); // Atualiza a estrutura dos processos
     });
   }, []);
 
+  // Função para alternar entre os idiomas
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
   };
 
+  // Função para definir o título do diagrama
   const setProcessTitle = () => {
     if (title.trim()) {
       setIsTitleSet(true);
@@ -248,14 +261,17 @@ const ProcessFlowDiagramApp = () => {
     }
   };
 
+  // Função para iniciar a edição do título
   const editTitle = () => {
     setIsEditingTitle(true);
   };
 
+  // Função para exportar o diagrama
   const handleExport = () => {
     exportProcessFlow(processes, title, description, t);
   };
 
+  // Função para importar um diagrama a partir de um arquivo
   const handleImport = (event) => {
     const file = event.target.files && event.target.files[0];
     if (!file) {
@@ -264,14 +280,13 @@ const ProcessFlowDiagramApp = () => {
     }
 
     if (file.type !== 'application/json') {
-      alert(t.fileNotSupported);
-      // Limpe o valor do input de arquivo para permitir a seleção do mesmo arquivo novamente
-      event.target.value = '';
+      alert(t.fileNotSupported); // Exibe alerta se o tipo de arquivo não for suportado
+      event.target.value = ''; // Limpa o valor do input para permitir a seleção do mesmo arquivo novamente
       return;
     }
 
     importProcessFlow(event, setProcesses, setTitle, setDescription, t);
-    setIsTitleSet(true);
+    setIsTitleSet(true); // Marca que o título foi definido após a importação
   };
 
   return (
@@ -412,4 +427,4 @@ const ProcessFlowDiagramApp = () => {
   );
 };
 
-export default ProcessFlowDiagramApp;
+export default ProcessFlowDiagramApp; // Exporta o componente para uso em outras partes da aplicação
