@@ -4,61 +4,69 @@ import { Globe, Brain, ChevronDown, Plus, Trash2, Send, CheckCircle } from 'luci
 import {
   Button, Input, Textarea, Card, CardHeader, CardContent, CardFooter, CardTitle,
   Alert, AlertTitle, AlertDescription, DisclaimerModal
-} from './HelperComponents';
-import { calculateWeightedScores, ImprovedScatterChart } from './DecisionLogic';
-import { translations } from './translation';
-import ImportExportButtons from './ImportExportButtons';
-import { exportDecisionProcess, importDecisionProcess } from './DecisionMatrixExportImport';
+} from './HelperComponents'; // Importa componentes auxiliares
+import { calculateWeightedScores, ImprovedScatterChart } from './DecisionLogic'; // Importa funções e componentes relacionados à lógica de decisão
+import { translations } from './translation'; // Importa traduções
+import ImportExportButtons from './ImportExportButtons'; // Importa o componente de botões de importação/exportação
+import { exportDecisionProcess, importDecisionProcess } from './DecisionMatrixExportImport'; // Importa funções de importação/exportação de decisões
 
 const DecisionHelper = () => {
-  const [alternatives, setAlternatives] = useState([]);
-  const [decision, setDecision] = useState(null);
-  const [userInput, setUserInput] = useState('');
+  // Definição de estados utilizando o hook useState
+  const [alternatives, setAlternatives] = useState([]); // Armazena as alternativas de decisão
+  const [decision, setDecision] = useState(null); // Armazena a decisão final
+  const [userInput, setUserInput] = useState(''); // Armazena a entrada do usuário
   const [criteria, setCriteria] = useState([
     { name: 'Importance', weight: 5 },
     { name: 'Urgency', weight: 4 },
-  ]);
-  const [showMatrix, setShowMatrix] = useState(false);
-  const [language, setLanguage] = useState('en');
-  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  ]); // Armazena os critérios de decisão com pesos
+  const [showMatrix, setShowMatrix] = useState(false); // Controla a exibição da matriz de decisão
+  const [language, setLanguage] = useState('en'); // Define o idioma
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false); // Controla a exibição do modal de isenção de responsabilidade
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false); // Indica se há alterações não salvas
 
-  const fileInputRef = useRef(null);  // Adicionado aqui
+  const fileInputRef = useRef(null);  // Referência ao input de arquivo para importação
 
+  // Obtenção das traduções de acordo com o idioma selecionado
   const t = translations[language];
 
+  // Alterna entre os idiomas (inglês e português)
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
   };
 
+  // Hook useEffect para avisar o usuário sobre mudanças não salvas antes de sair da página
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       if (hasUnsavedChanges) {
         e.preventDefault();
-        e.returnValue = t.unsavedChangesWarning;
+        e.returnValue = t.unsavedChangesWarning; // Exibe uma mensagem de aviso
       }
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('beforeunload', handleBeforeUnload); // Remove o listener quando o componente é desmontado
     };
   }, [hasUnsavedChanges, t]);
 
+  // Marca que há alterações não salvas quando alternativas ou critérios são alterados
   useEffect(() => {
     setHasUnsavedChanges(true);
   }, [alternatives, criteria]);
 
+  // Adiciona uma nova alternativa ao estado
   const addAlternative = () => {
     setAlternatives([...alternatives, { name: '', scores: criteria.map(() => 0) }]);
   };
 
+  // Remove uma alternativa específica
   const removeAlternative = (index) => {
     const newAlternatives = alternatives.filter((_, i) => i !== index);
     setAlternatives(newAlternatives);
   };
 
+  // Atualiza o nome ou os scores de uma alternativa específica
   const updateAlternative = (index, field, value) => {
     const newAlternatives = [...alternatives];
     if (field === 'name') {
@@ -69,16 +77,19 @@ const DecisionHelper = () => {
     setAlternatives(newAlternatives);
   };
 
+  // Adiciona um novo critério de decisão
   const addCriterion = () => {
     setCriteria([...criteria, { name: '', weight: 3 }]);
   };
 
+  // Atualiza o nome ou o peso de um critério específico
   const updateCriterion = (index, field, value) => {
     const newCriteria = [...criteria];
     newCriteria[index][field] = field === 'weight' ? parseFloat(value) : value;
     setCriteria(newCriteria);
   };
 
+  // Remove um critério específico e atualiza as alternativas
   const removeCriterion = (index) => {
     const newCriteria = criteria.filter((_, i) => i !== index);
     setCriteria(newCriteria);
@@ -88,20 +99,23 @@ const DecisionHelper = () => {
     })));
   };
 
+  // Realiza a decisão final com base nos critérios e alternativas
   const makeDecision = () => {
     if (alternatives.length < 2) {
-      setDecision(t.addTwoAlternatives);
+      setDecision(t.addTwoAlternatives); // Verifica se há pelo menos duas alternativas
       return;
     }
 
-    const weightedScores = calculateWeightedScores(alternatives, criteria);
+    const weightedScores = calculateWeightedScores(alternatives, criteria); // Calcula os scores ponderados
     const bestAlternative = weightedScores.reduce((prev, current) =>
       (current.score > prev.score) ? current : prev
     );
 
+    // Define a melhor alternativa com base nos scores calculados
     setDecision(t.bestAlternative.replace('{name}', bestAlternative.name).replace('{score}', bestAlternative.score.toFixed(2)));
   };
 
+  // Processa a entrada do usuário e sugere alternativas
   const processUserInput = () => {
     const words = userInput.toLowerCase().split(/\s+/);
     const extractedAlternatives = [];
@@ -123,9 +137,10 @@ const DecisionHelper = () => {
 
     setAlternatives(extractedAlternatives);
     setUserInput('');
-    suggestCriteria(words);
+    suggestCriteria(words); // Sugere critérios com base nas palavras-chave na entrada do usuário
   };
 
+  // Sugere critérios de decisão com base em palavras comuns
   const suggestCriteria = (words) => {
     const commonCriteria = ['cost', 'time', 'quality', 'risk', 'benefit', 'impact', 'viability', 'durability', 'satisfaction', 'innovation',
                             'custo', 'tempo', 'qualidade', 'risco', 'benefício', 'impacto', 'viabilidade', 'durabilidade', 'satisfação', 'inovação'];
@@ -136,21 +151,25 @@ const DecisionHelper = () => {
     }
   };
 
+  // Exibe o modal de isenção de responsabilidade antes de realizar a decisão
   const handleDecideClick = () => {
     setIsDisclaimerOpen(true);
   };
 
+  // Confirma a decisão e fecha o modal de isenção
   const handleDisclaimerConfirm = () => {
     setIsDisclaimerOpen(false);
     makeDecision();
   };
 
+  // Exporta o processo de decisão para um arquivo
   const handleExport = () => {
     exportDecisionProcess(alternatives, criteria, decision, t);
-    setHasUnsavedChanges(false);
+    setHasUnsavedChanges(false); // Marca que as mudanças foram salvas
   };
 
-  const handleImportClick = () => {  // Adicionado aqui
+  // Dispara o input de arquivo para importar o processo de decisão
+  const handleImportClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -235,7 +254,7 @@ const DecisionHelper = () => {
             <CardFooter>
               <Button
                 onClick={addCriterion}
-                className="w-full bg-[#374151] hover:bg-[#00864c] text-white font-medium flex items-center justify-center space-x-2 py-2 px-4 rounded transition-colors duration-300"
+                className="w-full bg-[#374151] hover:bg-[#00864c] text-white font-medium flex items-center justify-center space-x-2 py-2 px-4 rounded transition-colors duração-300"
               >
                 <Plus className="h-4 w-4" />
                 <span>{t.addCriterion}</span>
@@ -363,4 +382,4 @@ const DecisionHelper = () => {
   );
 };
 
-export default DecisionHelper;
+export default DecisionHelper; // Exporta o componente para uso em outras partes da aplicação
