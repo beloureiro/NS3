@@ -9,6 +9,7 @@ import ImportExportButtons from './ImportExportButtons';
 import { exportActionPlan, importActionPlan, handleImportClick } from './actionPlanExportImport';
 
 const ActionPlanApp = () => {
+  // Estado para controlar a pergunta atual, o plano de ação, a linguagem e erros de validação
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [plans, setPlans] = useState([{
     what: '', why: '', where: '', when: '', who: '', how: '', howMuch: '',
@@ -18,11 +19,13 @@ const ActionPlanApp = () => {
   const [language, setLanguage] = useState('en');
   const [errors, setErrors] = useState({});
   const [editingField, setEditingField] = useState(null);
-  const [chartKey, setChartKey] = useState(0);  // Novo estado para forçar a atualização do gráfico
+  const [chartKey, setChartKey] = useState(0);  // Estado para forçar a atualização do gráfico
   const fileInputRef = useRef(null);
 
+  // Traduções de acordo com o idioma selecionado
   const t = translations[language];
 
+  // Função para lidar com a mudança de valor nos campos de entrada
   const handleInputChange = (key, value) => {
     const updatedPlans = [...plans];
     updatedPlans[currentPlan] = {
@@ -36,6 +39,7 @@ const ActionPlanApp = () => {
     }
   };
 
+  // Função para validar os campos de entrada
   const validateField = (key, value) => {
     if (key === 'what' && !value.trim()) {
       return t.fieldRequired;
@@ -50,6 +54,7 @@ const ActionPlanApp = () => {
     return '';
   };
 
+  // Função para avançar para a próxima pergunta ou adicionar um novo plano de ação
   const handleNext = () => {
     const currentKey = t.questions[currentQuestion].key;
     const error = validateField(currentKey, plans[currentPlan][currentKey]);
@@ -66,12 +71,14 @@ const ActionPlanApp = () => {
     }
   };
 
+  // Função para voltar para a pergunta anterior
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
     }
   };
 
+  // Função para adicionar um novo plano de ação
   const addNewPlan = () => {
     const currentPlanData = plans[currentPlan];
     if (!currentPlanData.what.trim() || !currentPlanData.when.trim()) {
@@ -91,10 +98,12 @@ const ActionPlanApp = () => {
     setErrors({});
   };
 
+  // Função para alternar entre os idiomas
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
   };
 
+  // Função para deletar um plano de ação específico
   const deletePlan = (indexToRemove) => {
     const updatedPlans = plans.filter((_, index) => index !== indexToRemove);
     setPlans(updatedPlans);
@@ -111,10 +120,12 @@ const ActionPlanApp = () => {
     }
   };
 
+  // Função para habilitar a edição de um campo específico
   const handleDoubleClick = (index, field) => {
     setEditingField({ index, field });
   };
 
+  // Função para salvar as edições feitas em um campo
   const handleEditSave = (e, index, field) => {
     const value = e.target.value;
     const updatedPlans = [...plans];
@@ -128,10 +139,11 @@ const ActionPlanApp = () => {
     setPlans(updatedPlans);
     setEditingField(null);
 
-    // Forçar atualização do gráfico
+    // Força a atualização do gráfico
     setChartKey(prevKey => prevKey + 1);
   };
 
+  // Função para preparar os dados do gráfico com base nos planos de ação
   const getChartData = () => {
     const today = new Date();
     return plans
@@ -363,6 +375,7 @@ const ActionPlanApp = () => {
   );
 };
 
+// Componente de legenda para o gráfico
 const Legend = () => (
   <div className="flex flex-wrap justify-center mt-4 gap-4">
     <div className="flex items-center">
