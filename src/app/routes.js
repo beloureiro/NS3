@@ -23,6 +23,14 @@ function Header({ title }) {
 const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) => {
   const location = useLocation();
 
+  // Definições das classes de cor para o botão
+  const normalBgColor = "bg-[#000000]"; // Cor de fundo normal
+  const hoverBgColor = "hover:bg-[#00ff9d]"; // Cor de fundo no hover
+  const normalBorderColor = "border-[#00cc7d]"; // Cor da borda normal
+  const hoverBorderColor = "hover:border-[#00cc7d]"; // Cor da borda no hover
+  const normalTextColor = "text-[#ffffff]"; // Cor do texto normal
+  const hoverTextColor = "hover:text-[#000000]"; // Cor do texto no hover
+
   return (
     <Routes>
       <Route path="/" element={
@@ -51,7 +59,7 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
             <div className="mt-2 mb-2 text-center">
               <button
                 onClick={() => setShowTools(!showTools)} 
-                className="bg-[#00cc7d] hover:bg-[#00ff9d] text-black text-sm font-medium py-1.5 px-5 rounded inline-flex items-center transition-colors duration-300"
+                className={`border-2 text-sm font-medium py-1.5 px-6 rounded inline-flex items-center transition-colors duration-300 ${normalBgColor} ${hoverBgColor} ${normalBorderColor} ${hoverBorderColor} ${normalTextColor} ${hoverTextColor}`}
               >
                 <Wrench className="mr-1" size={16} />
                 <span>{t.quickToolsButton}</span>
