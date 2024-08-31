@@ -98,6 +98,7 @@
         document.cookie = "marketingCookies=true; path=/";
         document.getElementById('cookie-consent-banner').style.display = 'none';
         loadGoogleAnalytics();
+        document.getElementById('cookie-consent-banner').setAttribute('aria-hidden', 'true'); // Acessibilidade
       }
 
       function showCookieSettings() {
@@ -166,7 +167,7 @@
     <div id="root"></div>
 
     <!-- Banner de Consentimento de Cookies -->
-    <div id="cookie-consent-banner" class="cookie-consent-banner" style="display: none;">
+    <div id="cookie-consent-banner" class="cookie-consent-banner" style="display: none;" aria-live="polite"> <!-- Acessibilidade -->
       This site uses cookies to improve your experience. Please review and manage your preferences.
       <button onclick="showCookieSettings()">Manage Cookies</button>
       <button onclick="acceptAllCookies()">Accept All</button>

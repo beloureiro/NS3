@@ -4,7 +4,7 @@
   Funcionalidades:
   - **flattenProcesses**: Esta função é utilizada para "achatar" uma estrutura de processos hierárquicos, transformando-a em um array simples, que contém todos os processos, incluindo aqueles que estão aninhados.
   - **getEligibleParents**: Esta função identifica quais processos em um determinado nível hierárquico podem ser considerados "pais" para novos processos que estão sendo adicionados.
-  - **translations**: Este objeto contém as traduções para os textos usados na interface do aplicativo, suportando inglês (en) e português (pt). Você pode adicionar ou modificar traduções conforme necessário.
+  - **translations**: Este objeto contém as traduções para os textos usados na interface do aplicativo, suportando inglês (en), português (pt) e outros idiomas conforme necessário.
 
   Este arquivo é importante para manipular a estrutura hierárquica dos processos e para suportar a internacionalização do aplicativo.
 */
@@ -39,11 +39,14 @@ export const translations = {
     editTitle: "Edit",
     enterProcessTitle: "Enter process title",
     enterProcessDescription: "Enter process description (optional)",
-    exportDiagram: "Export Diagram", // Texto para o botão de exportar
-    importDiagram: "Import Diagram", // Texto para o botão de importar (se necessário)
-    fileNotSupported: "File type not supported. Please upload a JSON file.", // Tradução adicional
-    importSuccess: "Import successful!", // Tradução adicional
-    importError: "Error importing file. Please check the file format." // Tradução adicional
+    exportDiagram: "Export Diagram",
+    importDiagram: "Import Diagram",
+    fileNotSupported: "File type not supported. Please upload a JSON file.",
+    importSuccess: "Import successful!",
+    importError: "Error importing file. Please check the file format.",
+    tutorialStep1: "Set the title for the process you manage or own.",
+    tutorialStep2: "Add a subtitle that briefly describes the process.",
+    tutorialStep3: "Use the BPMN methodology to create your diagram. Remember that there is a hierarchy and levels of process modeling.",
   },
   pt: {
     backToHome: "Voltar",
@@ -56,10 +59,13 @@ export const translations = {
     editTitle: "Editar",
     enterProcessTitle: "Digite o título do processo",
     enterProcessDescription: "Digite a descrição do processo (opcional)",
-    exportDiagram: "Exportar Diagrama", // Texto para o botão de exportar
-    importDiagram: "Importar Diagrama", // Texto para o botão de importar (se necessário)
-    fileNotSupported: "Tipo de arquivo não suportado. Por favor, faça upload de um arquivo JSON.", // Tradução adicional
-    importSuccess: "Importação bem-sucedida!", // Tradução adicional
-    importError: "Erro ao importar o arquivo. Por favor, verifique o formato do arquivo." // Tradução adicional
+    exportDiagram: "Exportar Diagrama",
+    importDiagram: "Importar Diagrama",
+    fileNotSupported: "Tipo de arquivo não suportado. Por favor, faça upload de um arquivo JSON.",
+    importSuccess: "Importação bem-sucedida!",
+    importError: "Erro ao importar o arquivo. Por favor, verifique o formato do arquivo.",
+    tutorialStep1: "Defina o título do processo que você gerencia ou do qual é responsável.",
+    tutorialStep2: "Adicione um subtítulo que descreva brevemente o processo.",
+    tutorialStep3: "Utilize a metodologia BPMN para criar seu diagrama. Lembre-se que há uma hierarquia e níveis de modelagem de processos.",
   },
 };

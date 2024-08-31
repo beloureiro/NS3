@@ -6,6 +6,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { translations } from './utils';
 import AddProcessForm from './AddProcessForm';
 import { exportProcessFlow, importProcessFlow, handleImportClick } from './ProcessFlowExportImport';
+import Tutorial from './Tutorial'; // Importação do componente Tutorial
 
 // Componente para renderizar uma caixa de processo individual
 const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onMove }) => {
@@ -156,6 +157,7 @@ const ProcessFlowDiagramApp = () => {
   const [isEditingTitle, setIsEditingTitle] = useState(false); // Estado para controlar a edição do título
   const [selectedId, setSelectedId] = useState(null); // Estado para armazenar o ID do processo selecionado
   const fileInputRef = useRef(null); // Referência ao input de arquivo para importação
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false); // Estado para controlar a visibilidade do tutorial
 
   const t = translations[language]; // Obtenção das traduções com base no idioma atual
 
@@ -258,6 +260,7 @@ const ProcessFlowDiagramApp = () => {
     if (title.trim()) {
       setIsTitleSet(true);
       setIsEditingTitle(false);
+      setIsTutorialOpen(false); // Oculta o tutorial ao definir o título
     }
   };
 
@@ -289,6 +292,11 @@ const ProcessFlowDiagramApp = () => {
     setIsTitleSet(true); // Marca que o título foi definido após a importação
   };
 
+  // Função para alternar a visibilidade do tutorial
+  const toggleTutorial = () => {
+    setIsTutorialOpen(prev => !prev);
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="bg-[#000000] text-[#b3b3b3] min-h-screen w-full p-4 sm:p-8">
@@ -304,6 +312,8 @@ const ProcessFlowDiagramApp = () => {
             <Globe className="mr-2" /> {language.toUpperCase()}
           </button>
         </div>
+
+        <Tutorial language={language} isOpen={isTutorialOpen} toggleTutorial={toggleTutorial} /> {/* Passa o estado e a função */}
 
         <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-6 border border-[#333333]">
           {!isTitleSet ? (
