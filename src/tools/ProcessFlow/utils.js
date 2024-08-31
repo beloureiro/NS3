@@ -47,6 +47,7 @@ export const translations = {
     tutorialStep1: "Set the title for the process you manage or own.",
     tutorialStep2: "Add a subtitle that briefly describes the process.",
     tutorialStep3: "Use the BPMN methodology to create your diagram. Remember that there is a hierarchy and levels of process modeling.",
+    tutorialStep4: "You can edit a block by double-clicking, move it by dragging, or delete it by clicking the trash icon that appears when you hover over it.", // Nova etapa
   },
   pt: {
     backToHome: "Voltar",
@@ -67,5 +68,6 @@ export const translations = {
     tutorialStep1: "Defina o título do processo que você gerencia ou do qual é responsável.",
     tutorialStep2: "Adicione um subtítulo que descreva brevemente o processo.",
     tutorialStep3: "Utilize a metodologia BPMN para criar seu diagrama. Lembre-se que há uma hierarquia e níveis de modelagem de processos.",
+    tutorialStep4: "Você pode editar um bloco com um duplo clique, mover arrastando ou apagar clicando no ícone de lixeira que aparece ao passar o mouse sobre ele.", // Nova etapa
   },
 };

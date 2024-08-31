@@ -6,10 +6,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { translations } from './utils';
 import AddProcessForm from './AddProcessForm';
 import { exportProcessFlow, importProcessFlow, handleImportClick } from './ProcessFlowExportImport';
-import Tutorial from './Tutorial'; // Importação do componente Tutorial
+import Tutorial from './Tutorial'; // Importando o componente Tutorial
 
 // Componente para renderizar uma caixa de processo individual
-const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onMove }) => {
+const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onMove, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false); // Estado para controlar se o nome do processo está sendo editado
   const [editedName, setEditedName] = useState(name); // Estado para armazenar o nome do processo durante a edição
 
@@ -68,6 +68,7 @@ const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onM
       className={`${getStyle()} ${isSelected ? 'ring-2 ring-blue-500' : ''} ${isDragging ? 'opacity-50' : ''}`} // Aplica estilos condicionalmente
       onClick={() => onSelect(id)} // Seleciona o processo ao clicar
       onDoubleClick={handleDoubleClick} // Inicia a edição ao clicar duas vezes
+      style={{ position: 'relative' }} // Para posicionar o ícone
     >
       {isEditing ? (
         <input
@@ -82,6 +83,13 @@ const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onM
       ) : (
         <span className="flex-1">{level === '5' ? (<><span className="mr-1">▸</span> {name}</>) : name}</span> // Exibe o nome do processo ou uma seta caso seja um item de nível 5
       )}
+      <button 
+        onClick={(e) => { e.stopPropagation(); onDelete(id); }} // Impede a propagação do evento
+        className="absolute top-1 right-1 text-red-500 opacity-0 hover:opacity-100 transition-opacity"
+        style={{ transition: 'opacity 0.2s' }} // Transição suave
+      >
+        🗑️
+      </button>
     </div>
   );
 };
@@ -102,7 +110,7 @@ const VerticalLine = () => (
 );
 
 // Componente principal para renderizar um nível do processo
-const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, onEdit, onMove }) => {
+const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, onEdit, onMove, onDelete }) => {
   const isHorizontal = parseInt(level) <= 3; // Define se o layout será horizontal ou vertical
 
   return (
@@ -119,6 +127,7 @@ const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, 
               onSelect={onSelect} // Função de seleção
               onEdit={onEdit} // Função de edição
               onMove={onMove} // Função de movimentação
+              onDelete={onDelete} // Função de exclusão
             />
             {process.children && process.children.length > 0 && (
               <div className={`flex flex-col items-center ${level === '4' ? 'mt-1' : 'mt-2'}`}>
@@ -130,6 +139,7 @@ const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, 
                   onSelect={onSelect}
                   onEdit={onEdit}
                   onMove={onMove}
+                  onDelete={onDelete}
                 />
               </div>
             )}
@@ -160,6 +170,11 @@ const ProcessFlowDiagramApp = () => {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false); // Estado para controlar a visibilidade do tutorial
 
   const t = translations[language]; // Obtenção das traduções com base no idioma atual
+
+  // Função para alternar a visibilidade do tutorial
+  const toggleTutorial = () => {
+    setIsTutorialOpen(prev => !prev);
+  };
 
   // Função para adicionar um novo processo
   const addProcess = (name, parentId) => {
@@ -250,6 +265,19 @@ const ProcessFlowDiagramApp = () => {
     });
   }, []);
 
+  // Função para excluir um processo
+  const handleDelete = useCallback((id) => {
+    setProcesses(prevProcesses => {
+      const removeProcess = (items) => {
+        return items.filter(item => item.id !== id).map(item => ({
+          ...item,
+          children: removeProcess(item.children)
+        }));
+      };
+      return removeProcess(prevProcesses);
+    });
+  }, []);
+
   // Função para alternar entre os idiomas
   const toggleLanguage = () => {
     setLanguage(lang => lang === 'en' ? 'pt' : 'en');
@@ -260,7 +288,6 @@ const ProcessFlowDiagramApp = () => {
     if (title.trim()) {
       setIsTitleSet(true);
       setIsEditingTitle(false);
-      setIsTutorialOpen(false); // Oculta o tutorial ao definir o título
     }
   };
 
@@ -292,11 +319,6 @@ const ProcessFlowDiagramApp = () => {
     setIsTitleSet(true); // Marca que o título foi definido após a importação
   };
 
-  // Função para alternar a visibilidade do tutorial
-  const toggleTutorial = () => {
-    setIsTutorialOpen(prev => !prev);
-  };
-
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="bg-[#000000] text-[#b3b3b3] min-h-screen w-full p-4 sm:p-8">
@@ -313,7 +335,11 @@ const ProcessFlowDiagramApp = () => {
           </button>
         </div>
 
-        <Tutorial language={language} isOpen={isTutorialOpen} toggleTutorial={toggleTutorial} /> {/* Passa o estado e a função */}
+        <Tutorial 
+          language={language} 
+          isOpen={isTutorialOpen} 
+          toggleTutorial={toggleTutorial} // Passa a função como prop
+        />
 
         <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-6 border border-[#333333]">
           {!isTitleSet ? (
@@ -410,6 +436,7 @@ const ProcessFlowDiagramApp = () => {
               onSelect={handleSelect}
               onEdit={handleEdit}
               onMove={handleMove}
+              onDelete={handleDelete} // Passa a função de exclusão
               className="bg-[#0d0d0d] text-[#b3b3b3] border-[#333333]"
             />
           </div>

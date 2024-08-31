@@ -5,21 +5,22 @@ import { Info } from 'lucide-react'; // Certifique-se de ter o pacote lucide-rea
 
 const Tutorial = ({ language, isOpen, toggleTutorial }) => {
   const [isButtonVisible, setButtonVisible] = useState(true); // Estado para controlar a visibilidade do botão
-  const t = translations[language];
+  const t = translations[language] || {}; // Fallback para evitar erro
 
   const steps = [
-    { title: t.tutorialStep1 },
-    { title: t.tutorialStep2 },
-    { title: t.tutorialStep3 },
+    { title: t.tutorialStep1 || "Default Step 1" },
+    { title: t.tutorialStep2 || "Default Step 2" },
+    { title: t.tutorialStep3 || "Default Step 3" },
+    { title: t.tutorialStep4 || "Default Step 4" }, // Usando a tradução correta
   ];
 
   const handleButtonClick = () => {
-    toggleTutorial();
+    toggleTutorial(); // Chama a função para alternar a visibilidade
     setButtonVisible(false); // Oculta o botão ao clicar
   };
 
   return (
-    <div className="relative">
+    <div className="relative mb-4">
       {isButtonVisible && ( // Renderiza o botão apenas se estiver visível
         <button
           onClick={handleButtonClick}
@@ -32,7 +33,7 @@ const Tutorial = ({ language, isOpen, toggleTutorial }) => {
       )}
 
       {isOpen && (
-        <div className="bg-gray-800 text-white p-4 rounded-lg shadow-lg mt-2">
+        <div className="bg-[#1a1a1a] text-white p-4 rounded-lg shadow-lg mt-2">
           <Timeline steps={steps} />
         </div>
       )}
