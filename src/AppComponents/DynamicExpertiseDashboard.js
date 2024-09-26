@@ -31,7 +31,7 @@ const DynamicExpertiseDashboard = ({ language }) => {
       color: "#4ECDC4",
       skills: t.skills.dataAnalysis.map((skill, index) => ({ 
         name: skill,
-        value: [85, 95, 90, 75, 75, 85][index] 
+        value: [80, 90, 90, 100, 70, 100][index] 
       }))
     },
     consultingTeaching: {
