@@ -8,7 +8,7 @@ const DynamicExpertiseDashboard = ({ language }) => {
   const t = translations[language].expertiseAreas;
   
   // Estado para controlar a área ativa selecionada pelo usuário
-  const [activeArea, setActiveArea] = useState('businessManagement');
+  const [activeArea, setActiveArea] = useState('dataAnalysis'); // Alterado para 'dataAnalysis'
   
   // Estado para armazenar os dados animados a serem exibidos no gráfico
   const [animateData, setAnimateData] = useState([]);
@@ -18,20 +18,20 @@ const DynamicExpertiseDashboard = ({ language }) => {
 
   // useMemo para memorizar as áreas de expertise e suas propriedades, evitando recalcular quando não necessário
   const expertiseAreas = useMemo(() => ({
+    dataAnalysis: { // Mover dataAnalysis para o primeiro lugar
+      title: t.dataAnalysis,
+      color: "#4ECDC4",
+      skills: t.skills.dataAnalysis.map((skill, index) => ({ 
+        name: skill,
+        value: [80, 90, 90, 100, 70, 100][index] 
+      }))
+    },
     businessManagement: {
       title: t.businessManagement, // Título da área
       color: "#ADFF2F", // Cor associada à área
       skills: t.skills.businessManagement.map((skill, index) => ({ 
         name: skill, // Nome da habilidade
         value: [90, 85, 75, 75, 85, 80][index] // Valor associado à habilidade
-      }))
-    },
-    dataAnalysis: {
-      title: t.dataAnalysis,
-      color: "#4ECDC4",
-      skills: t.skills.dataAnalysis.map((skill, index) => ({ 
-        name: skill,
-        value: [80, 90, 90, 100, 70, 100][index] 
       }))
     },
     consultingTeaching: {
