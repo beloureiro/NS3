@@ -9,6 +9,7 @@ import ActionPlanApp from '../tools/ActionPlan/ActionPlan';
 import ProcessFlowDiagramApp from '../tools/ProcessFlow/ProcessFlow';
 import LanguageToggle from '../AppComponents/LanguageToggle';
 import IndependentWidthPage from '../tools/WidthPage/IndependentWidthPage';
+import Solutions from '../AppComponents/Solutions';
 
 // Header component: displays the main title of the page
 function Header({ title }) {
@@ -54,7 +55,10 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
             <p className="mt-1 text-gray-400">{t.description}</p>
           </div>
 
-          {/* Section displaying expertise information */}
+          {/* Solutions component */}
+          <Solutions language={language} />
+
+          {/* Expertise section */}
           <div className="mb-4">
             <h2 className="text-2xl font-semibold mb-2 text-center">{t.ourExpertise}</h2>
             <p className="leading-relaxed text-center max-w-4xl mx-auto">

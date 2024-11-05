@@ -5,6 +5,7 @@ import AppRoutes from './routes';
 import translations from '../AppComponents/translations';
 import logo from '../assets/rsz_1design_inmotion_181818.png';
 import Footer from '../AppComponents/Footer';
+import Solutions from '../AppComponents/Solutions';
 import '../index.css';
 
 // Componente de conteúdo do App
@@ -34,7 +35,6 @@ function AppContent() {
       
       {/* Container de conteúdo central com largura condicional */}
       <div className={`${isHomePage ? 'w-full max-w-4xl' : 'w-full'} text-center flex flex-col items-center relative`}>
-        
         {/* Rotas principais do aplicativo */}
         <AppRoutes
           language={language}

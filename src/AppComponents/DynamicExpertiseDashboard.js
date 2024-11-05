@@ -90,7 +90,7 @@ const DynamicExpertiseDashboard = ({ language }) => {
       horizontalOffset: 0,
       verticalOffset: 0,
       fontSize: 15,
-      lineHeight: 20
+      lineHeight: 14
     };
 
     // Configurações para dispositivos móveis
@@ -99,8 +99,8 @@ const DynamicExpertiseDashboard = ({ language }) => {
       adjustmentFactor: 0.3,
       horizontalOffset: 0,
       verticalOffset: 0,
-      fontSize: 12,
-      lineHeight: 15
+      fontSize: 10,
+      lineHeight: 12
     };
 
     // Escolhe a configuração apropriada com base no dispositivo
@@ -113,7 +113,7 @@ const DynamicExpertiseDashboard = ({ language }) => {
     };
 
     return (
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={250}>
         <RadarChart cx="50%" cy="50%" outerRadius="70%" data={animateData}>
           <PolarGrid stroke="#374151" />
           <PolarAngleAxis
