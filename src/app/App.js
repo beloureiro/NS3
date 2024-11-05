@@ -5,7 +5,6 @@ import AppRoutes from './routes';
 import translations from '../AppComponents/translations';
 import logo from '../assets/rsz_1design_inmotion_181818.png';
 import Footer from '../AppComponents/Footer';
-import Solutions from '../AppComponents/Solutions';
 import '../index.css';
 
 // Componente de conteúdo do App

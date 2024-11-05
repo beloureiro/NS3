@@ -10,6 +10,7 @@ import ProcessFlowDiagramApp from '../tools/ProcessFlow/ProcessFlow';
 import LanguageToggle from '../AppComponents/LanguageToggle';
 import IndependentWidthPage from '../tools/WidthPage/IndependentWidthPage';
 import Solutions from '../AppComponents/Solutions';
+import InProcess from '../Solutions/Inprocess';
 
 // Header component: displays the main title of the page
 function Header({ title }) {
@@ -113,6 +114,12 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
       <Route path="/5w2h" element={<ActionPlanApp />} />
       <Route path="/process-flow" element={<ProcessFlowDiagramApp />} />
       <Route path="/independent-width" element={<IndependentWidthPage />} />
+      <Route 
+        path="/inprocess" 
+        element={
+          <InProcess initialLanguage={language} setAppLanguage={setLanguage} />
+        } 
+      />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
