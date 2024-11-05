@@ -215,7 +215,7 @@ const InProcessMethodology = () => {
   const currentExplanation = explanations[selectedItem] || explanations.default;
 
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col">
+    <div className="bg-black text-white flex flex-col">
       {/* Header Section */}
       <div className="w-full max-w-6xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center mb-4">
@@ -244,7 +244,7 @@ const InProcessMethodology = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow">
+      <div>
         <div className="max-w-6xl mx-auto px-6">
           {/* ...existing Card and content... */}
           <Card className="bg-gray-800 border-gray-700">
@@ -386,7 +386,7 @@ const InProcessMethodology = () => {
         </div>
       </div>
 
-      <ContactSection title="Contact Us" className="mt-8 mb-4" />
+      <ContactSection title="Contact Us" className="mt-4 mb-2" />
     </div>
   );
 };
