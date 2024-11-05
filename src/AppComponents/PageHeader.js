@@ -23,10 +23,10 @@ const PageHeader = ({ language, setLanguage, logo }) => {
       </Helmet>
 
       <div className="w-full p-4">
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-between items-center w-full max-w-4xl mx-auto px-12">
           <Link
             to="/"
-            className="text-[#00ff9d] hover:underline flex items-center"
+            className="text-[#00ff9d] hover:underline flex items-center w-24"
           >
             <ChevronLeft className="mr-2" /> {t.back}
           </Link>
@@ -56,7 +56,7 @@ const PageHeader = ({ language, setLanguage, logo }) => {
 
           <button
             onClick={() => setLanguage((lang) => (lang === "en" ? "pt" : "en"))}
-            className="flex items-center bg-gray-800 px-3 py-2 rounded hover:bg-[#00ff9d] hover:text-black transition-colors"
+            className="flex items-center bg-gray-800 px-3 py-2 rounded hover:bg-[#00ff9d] hover:text-black transition-colors w-24"
           >
             <Globe className="mr-2" /> {language.toUpperCase()}
           </button>
