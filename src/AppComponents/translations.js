@@ -66,7 +66,18 @@ const translations = {
         ]
       }
     },
-    footerText: "© InMotion - Technology and Management Services"
+    footerText: "© InMotion - Technology and Management Services",
+    solutions: {
+      inprocess: {
+        description: 'Process optimization'
+      },
+      fourMenu: {
+        description: 'Web Menu solution'
+      },
+      rex: {
+        description: 'Real State Platform'
+      }
+    }
   },
   
   pt: {
@@ -134,7 +145,18 @@ const translations = {
         ]
       }
     },
-    footerText: "© InMotion - Tecnologia e Serviços de Gestão"
+    footerText: "© InMotion - Tecnologia e Serviços de Gestão",
+    solutions: {
+      inprocess: {
+        description: 'Otimização de Processos'
+      },
+      fourMenu: {
+        description: 'Solução de Cardápio Web'
+      },
+      rex: {
+        description: 'Gestão de Imóveis'
+      }
+    }
   },
 
   fr: {
@@ -202,7 +224,18 @@ const translations = {
         ]
       }
     },
-    footerText: "© InMotion - Services de Technologie et de Gestion"
+    footerText: "© InMotion - Services de Technologie et de Gestion",
+    solutions: {
+      inprocess: {
+        description: 'Optimisation du processus'
+      },
+      fourMenu: {
+        description: 'Solution de Menu Web'
+      },
+      rex: {
+        description: 'Plateforme de Gestion Immobilière'
+      }
+    }
   },
 
   nl: {
@@ -270,7 +303,18 @@ const translations = {
         ]
       }
     },
-    footerText: "© InMotion - Technologie en Managementdiensten"
+    footerText: "© InMotion - Technologie en Managementdiensten",
+    solutions: {
+      inprocess: {
+        description: 'Processoptimalisatie'
+      },
+      fourMenu: {
+        description: 'Web Menu oplossing'
+      },
+      rex: {
+        description: 'Onroerend goed platform'
+      }
+    }
   },
 
 
@@ -339,7 +383,18 @@ const translations = {
         ]
       }
     },
-    footerText: "© InMotion - Servicios de Tecnología y Gestión"
+    footerText: "© InMotion - Servicios de Tecnología y Gestión",
+    solutions: {
+      inprocess: {
+        description: 'Optimización del proceso'
+      },
+      fourMenu: {
+        description: 'Solución de Menú Web'
+      },
+      rex: {
+        description: 'Plataforma de Gestión Inmobiliaria'
+      }
+    }
   }
 };
 

@@ -1,29 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import translations from './translations';
 
 const Solutions = ({ language }) => {
+  const t = translations[language].solutions;
+
   const solutions = [
     {
       name: 'InProcess',
-      description: language === 'en' 
-        ? 'Process optimization methodology'
-        : 'Metodologia de otimização de processos',
+      description: t.inprocess.description,
       path: '/inprocess',
       titleColor: '#00ff9d'
     },
     {
       name: '4Menu',
-      description: language === 'en'
-        ? 'Menu management solution'
-        : 'Solução de gestão de cardápios',
+      description: t.fourMenu.description,
       path: '/4menu',
       titleColor: '#FF6B6B'
     },
     {
       name: 'Rex',
-      description: language === 'en'
-        ? 'Customer experience platform'
-        : 'Plataforma de experiência do cliente',
+      description: t.rex.description,
       path: '/rex',
       titleColor: '#ffff08'
     }
