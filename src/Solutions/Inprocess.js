@@ -10,7 +10,6 @@ import {
   ChevronLeft,
   Globe,
 } from "lucide-react";
-import Footer from "../AppComponents/Footer";
 import logo from "../assets/rsz_1design_inmotion_181818.png";
 import ContactSection from "../AppComponents/ContactSection";
 
@@ -387,12 +386,7 @@ const InProcessMethodology = () => {
         </div>
       </div>
 
-      <ContactSection title="Contact Us" />
-
-      {/* Footer */}
-      <div className="mt-12">
-        <Footer language={language} />
-      </div>
+      <ContactSection title="Contact Us" className="mt-8 mb-4" />
     </div>
   );
 };
