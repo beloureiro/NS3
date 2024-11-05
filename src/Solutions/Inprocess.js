@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// Remove Link import since back arrow is removed
+// import { Link } from "react-router-dom";
 import {
   Activity,
   Users,
@@ -7,10 +8,10 @@ import {
   Search,
   ClipboardCheck,
   BarChart,
-  ChevronLeft,
-  Globe,
+  // ChevronLeft, // Removed
+  // Globe,        // Removed
 } from "lucide-react";
-import logo from "../assets/rsz_1design_inmotion_181818.png";
+// Remove logo import since it's not needed anymore
 import ContactSection from "../AppComponents/ContactSection";
 
 // Componentes auxiliares
@@ -216,31 +217,9 @@ const InProcessMethodology = () => {
 
   return (
     <div className="bg-black text-white flex flex-col">
-      {/* Header Section */}
+      {/* Header Section - Simplified */}
       <div className="w-full max-w-6xl mx-auto px-6 py-4">
-        <div className="flex justify-between items-center mb-4">
-          <Link to="/">
-            <img
-              src={logo}
-              alt="InMotion logo"
-              className="h-12 transform hover:scale-105 transition-transform duration-300"
-            />
-          </Link>
-          <button
-            onClick={() => setLanguage((lang) => (lang === "en" ? "pt" : "en"))}
-            className="flex items-center bg-gray-800 px-3 py-2 rounded hover:bg-[#00ff9d] hover:text-black transition-colors"
-          >
-            <Globe className="mr-2" /> {language.toUpperCase()}
-          </button>
-        </div>
-        <div className="flex items-center mb-8">
-          <Link
-            to="/"
-            className="text-[#00ff9d] hover:underline flex items-center"
-          >
-            <ChevronLeft className="mr-2" /> {t.back}
-          </Link>
-        </div>
+        {/* Removed language button and back arrow */}
       </div>
 
       {/* Main Content */}
