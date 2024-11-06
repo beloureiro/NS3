@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Mail, Phone, Linkedin, MessageCircle, Wrench } from "lucide-react";
+import { Wrench } from "lucide-react";
 import DynamicExpertiseDashboard from "../AppComponents/DynamicExpertiseDashboard";
 import QuickTools from "../AppComponents/QuickTools";
 import ErrorPage from "../AppComponents/ErrorPage";
@@ -10,7 +10,6 @@ import ProcessFlowDiagramApp from "../tools/ProcessFlow/ProcessFlow";
 import LanguageToggle from "../AppComponents/LanguageToggle";
 import IndependentWidthPage from "../tools/WidthPage/IndependentWidthPage";
 import Solutions from "../AppComponents/Solutions";
-import InProcess from "../Solutions/Inprocess";
 import ContactSection from "../AppComponents/ContactSection";
 import InProcessMethodology from "../Solutions/Inprocess";
 

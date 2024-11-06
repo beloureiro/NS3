@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import { BrowserRouter as Router} from "react-router-dom";
 import AppRoutes from "./routes";
 import translations from "../AppComponents/translations";
 import logo from "../assets/rsz_1design_inmotion_181818.png";
 import Footer from "../AppComponents/Footer";
 import PageHeader from "../AppComponents/PageHeader";
 import "../index.css";
-import InProcessMethodology from "../Solutions/Inprocess"; // Certifique-se de importar o componente
 
 // Componente de conteúdo do App
 function AppContent() {
@@ -19,8 +18,6 @@ function AppContent() {
   // Seleciona as traduções para o idioma atual
   const t = translations[language];
 
-  // Usa o hook useLocation para obter a localização atual
-  const location = useLocation();
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
