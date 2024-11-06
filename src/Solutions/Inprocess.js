@@ -117,11 +117,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
   return (
     <div className="bg-black text-white flex flex-col">
-      {/* Increased max-width to max-w-8xl for a wider main container */}
-      <div className="w-full max-w-8xl mx-auto px-6 py-4"></div>
-
       <div>
-        <div className="max-w-8xl mx-auto px-6">
+        <div className="max-w-screen-2xl mx-auto px-6">
           <Card className="bg-gray-800 border-gray-700">
             <CardContent className="p-6">
               <div className="flex items-center space-x-4 mb-8">
