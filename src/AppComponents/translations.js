@@ -80,6 +80,9 @@ const translations = {
       rex: {
         description: "Real State Platform",
       },
+      aicare: {
+        description: "AI-Powered Healthcare Platform",
+      },
     },
   },
 
@@ -162,6 +165,9 @@ const translations = {
       },
       rex: {
         description: "Gestão de Imóveis",
+      },
+      aicare: {
+        description: "Plataforma de Saúde com IA",
       },
     },
   },
@@ -246,6 +252,9 @@ const translations = {
       rex: {
         description: "Plateforme de Gestion Immobilière",
       },
+      aicare: {
+        description: "Plateforme de Santé Alimentée par l'IA",
+      },
     },
   },
 
@@ -328,6 +337,9 @@ const translations = {
       rex: {
         description: "Onroerend goed platform",
       },
+      aicare: {
+        description: "AI-aangedreven Gezondheidsplatform",
+      },
     },
   },
 
@@ -409,6 +421,9 @@ const translations = {
       },
       rex: {
         description: "Plataforma de Gestión Inmobiliaria",
+      },
+      aicare: {
+        description: "Plataforma de Salud Impulsada por IA",
       },
     },
   },
