@@ -75,9 +75,7 @@ const AppRoutes = ({
                 {t.ourExpertise}
               </h2>
               <p className="leading-relaxed text-center max-w-4xl mx-auto">
-                Explore our dynamic range of skills across key business domains.
-                Our expertise is tailored to elevate your business performance
-                through innovative solutions and strategic insights.
+                {t.expertiseDescriptionShort}
               </p>
             </div>
 

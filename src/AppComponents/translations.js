@@ -3,11 +3,14 @@
 const translations = {
   en: {
     // Esta seção contém as traduções para o idioma inglês.
-    
+
     title: "Business Management Solutions",
     description: "Your Daily Toolbox for Business Excellence",
     ourExpertise: "Our Expertise",
-    expertiseDescription: "Explore our dynamic range of skills across key business domains. Our expertise is tailored to elevate your business performance through innovative solutions and strategic insights.",
+    expertiseDescription:
+      "Explore our dynamic range of skills across key business domains. Our expertise is tailored to elevate your business performance through innovative solutions and strategic insights.",
+    expertiseDescriptionShort:
+      "Explore our dynamic range of skills across key business domains. Our expertise is tailored to elevate your business performance through innovative solutions and strategic insights.",
     transformBusiness: "Transform Your Business Today",
     quickTools: {
       title: "Quick Tools",
@@ -32,7 +35,7 @@ const translations = {
           "Strategic Planning",
           "Financial Analysis",
           "Project Management",
-          "Customer Satisfaction"
+          "Customer Satisfaction",
         ],
         dataAnalysis: [
           "Business Intelligence",
@@ -40,7 +43,7 @@ const translations = {
           "Data Modeling",
           "Python Programming",
           "Advanced Excel",
-          "Artificial Intelligence"
+          "Artificial Intelligence",
         ],
         consultingTeaching: [
           "Business Consulting",
@@ -48,45 +51,49 @@ const translations = {
           "Financial Training",
           "Lean Process Management",
           "Strategic Planning",
-          "Solution Development"
+          "Solution Development",
         ],
         designInnovation: [
           "Design",
           "Innovation",
           "Creativity",
           "Product Development",
-          "Innovative Solutions"
+          "Innovative Solutions",
         ],
         healthLeadership: [
           "Leadership",
           "Inclusion & Diversity",
           "Emotional Intelligence",
           "Wellness Programs",
-          "Health & Safety Policies"
-        ]
-      }
+          "Health & Safety Policies",
+        ],
+      },
     },
     footerText: "© InMotion - Technology and Management Services",
     solutions: {
       inprocess: {
-        description: 'Process optimization'
+        description: "Process optimization",
       },
       fourMenu: {
-        description: 'Web Menu solution'
+        description: "Web Menu solution",
       },
       rex: {
-        description: 'Real State Platform'
-      }
-    }
+        description: "Real State Platform",
+      },
+    },
   },
-  
+
   pt: {
     // Esta seção contém as traduções para o idioma português.
-    
+
     title: "Soluções em Gestão Empresarial",
-    description: "Sua Caixa de Ferramentas Diária para a Excelência Empresarial",
+    description:
+      "Sua Caixa de Ferramentas Diária para a Excelência Empresarial",
     ourExpertise: "Nossa Expertise",
-    expertiseDescription: "Explore nossa ampla gama de habilidades em áreas empresariais essenciais. Nossa expertise é projetada para elevar o desempenho do seu negócio através de soluções inovadoras e insights estratégicos.",
+    expertiseDescription:
+      "Explore nossa ampla gama de habilidades em áreas empresariais essenciais. Nossa expertise é projetada para elevar o desempenho do seu negócio através de soluções inovadoras e insights estratégicos.",
+    expertiseDescriptionShort:
+      "Explore nossa ampla gama de habilidades em áreas empresariais essenciais. Nossa expertise é projetada para elevar o desempenho do seu negócio através de soluções inovadoras e insights estratégicos.",
     transformBusiness: "Transforme Seu Negócio Hoje",
     quickTools: {
       title: "Ferramentas Rápidas",
@@ -111,7 +118,7 @@ const translations = {
           "Planejamento Estratégico",
           "Análise Financeira",
           "Gestão de Projetos",
-          "Satisfação do Cliente"
+          "Satisfação do Cliente",
         ],
         dataAnalysis: [
           "Inteligência de Negócios",
@@ -119,7 +126,7 @@ const translations = {
           "Modelagem de Dados",
           "Programação em Python",
           "Excel Avançado",
-          "Inteligência Artificial"
+          "Inteligência Artificial",
         ],
         consultingTeaching: [
           "Consultoria Empresarial",
@@ -127,45 +134,49 @@ const translations = {
           "Treinamento Financeiro",
           "Processos Lean",
           "Planejamento Estratégico",
-          "Desenvolvimento de Soluções"
+          "Desenvolvimento de Soluções",
         ],
         designInnovation: [
           "Design",
           "Inovação",
           "Criatividade",
           "Desenvolvimento de Produtos",
-          "Soluções Inovadoras"
+          "Soluções Inovadoras",
         ],
         healthLeadership: [
           "Liderança",
           "Inclusão & Diversidade",
           "Inteligência Emocional",
           "Programas de Bem-Estar",
-          "Políticas de Saúde e Segurança"
-        ]
-      }
+          "Políticas de Saúde e Segurança",
+        ],
+      },
     },
     footerText: "© InMotion - Tecnologia e Serviços de Gestão",
     solutions: {
       inprocess: {
-        description: 'Otimização de Processos'
+        description: "Otimização de Processos",
       },
       fourMenu: {
-        description: 'Solução de Cardápio Web'
+        description: "Solução de Cardápio Web",
       },
       rex: {
-        description: 'Gestão de Imóveis'
-      }
-    }
+        description: "Gestão de Imóveis",
+      },
+    },
   },
 
   fr: {
     // Cette section contient les traductions en français.
-    
+
     title: "Solutions en Gestion d'Entreprise",
-    description: "Votre Boîte à Outils Quotidienne pour l'Excellence en Affaires",
+    description:
+      "Votre Boîte à Outils Quotidienne pour l'Excellence en Affaires",
     ourExpertise: "Notre Expertise",
-    expertiseDescription: "Explorez notre gamme dynamique de compétences dans les domaines clés de l'entreprise. Notre expertise est conçue pour améliorer la performance de votre entreprise grâce à des solutions innovantes et des perspectives stratégiques.",
+    expertiseDescription:
+      "Explorez notre gamme dynamique de compétences dans les domaines clés de l'entreprise. Notre expertise est conçue pour améliorer la performance de votre entreprise grâce à des solutions innovantes et des perspectives stratégiques.",
+    expertiseDescriptionShort:
+      "Explorez notre gamme dynamique de compétences dans les domaines clés de l'entreprise. Notre expertise est conçue pour améliorer la performance de votre entreprise grâce à des solutions innovantes et des perspectives stratégiques.",
     transformBusiness: "Transformez Votre Entreprise Aujourd'hui",
     quickTools: {
       title: "Outils Rapides",
@@ -190,7 +201,7 @@ const translations = {
           "Planification Stratégique",
           "Analyse Financière",
           "Gestion de Projet",
-          "Satisfaction Client"
+          "Satisfaction Client",
         ],
         dataAnalysis: [
           "Intelligence d'Affaires",
@@ -198,7 +209,7 @@ const translations = {
           "Modélisation des Données",
           "Programmation Python",
           "Excel Avancé",
-          "Intelligence Artificielle"
+          "Intelligence Artificielle",
         ],
         consultingTeaching: [
           "Conseil en Entreprise",
@@ -206,45 +217,48 @@ const translations = {
           "Formation Financière",
           "Gestion des Processus Lean",
           "Planification Stratégique",
-          "Développement de Solutions"
+          "Développement de Solutions",
         ],
         designInnovation: [
           "Design",
           "Innovation",
           "Créativité",
           "Développement de Produits",
-          "Solutions Innovantes"
+          "Solutions Innovantes",
         ],
         healthLeadership: [
           "Leadership",
           "Inclusion & Diversité",
           "Intelligence Émotionnelle",
           "Programmes de Bien-Être",
-          "Politiques de Santé et Sécurité"
-        ]
-      }
+          "Politiques de Santé et Sécurité",
+        ],
+      },
     },
     footerText: "© InMotion - Services de Technologie et de Gestion",
     solutions: {
       inprocess: {
-        description: 'Optimisation du processus'
+        description: "Optimisation du processus",
       },
       fourMenu: {
-        description: 'Solution de Menu Web'
+        description: "Solution de Menu Web",
       },
       rex: {
-        description: 'Plateforme de Gestion Immobilière'
-      }
-    }
+        description: "Plateforme de Gestion Immobilière",
+      },
+    },
   },
 
   nl: {
     // Deze sectie bevat de vertalingen voor de Nederlandse taal.
-    
+
     title: "Bedrijfsmanagement Oplossingen",
     description: "Uw Dagelijkse Toolkit voor Zakelijke Excellentie",
     ourExpertise: "Onze Expertise",
-    expertiseDescription: "Verken ons dynamische scala aan vaardigheden in belangrijke bedrijfsdomeinen. Onze expertise is op maat gemaakt om uw bedrijfsprestaties te verbeteren door middel van innovatieve oplossingen en strategische inzichten.",
+    expertiseDescription:
+      "Verken ons dynamische scala aan vaardigheden in belangrijke bedrijfsdomeinen. Onze expertise is op maat gemaakt om uw bedrijfsprestaties te verbeteren door middel van innovatieve oplossingen en strategische inzichten.",
+    expertiseDescriptionShort:
+      "Verken ons dynamische scala aan vaardigheden in belangrijke bedrijfsdomeinen. Onze expertise is op maat gemaakt om uw bedrijfsprestaties te verbeteren door middel van innovatieve oplossingen en strategische inzichten.",
     transformBusiness: "Transformeer Uw Bedrijf Vandaag",
     quickTools: {
       title: "Snelle Tools",
@@ -269,7 +283,7 @@ const translations = {
           "Strategische Planning",
           "Financiële Analyse",
           "Projectmanagement",
-          "Klanttevredenheid"
+          "Klanttevredenheid",
         ],
         dataAnalysis: [
           "Business Intelligence",
@@ -277,7 +291,7 @@ const translations = {
           "Datamodellering",
           "Python Programmering",
           "Geavanceerd Excel",
-          "Artificial Intelligence"
+          "Artificial Intelligence",
         ],
         consultingTeaching: [
           "Bedrijfsadvies",
@@ -285,46 +299,48 @@ const translations = {
           "Financiële Training",
           "Lean Procesmanagement",
           "Strategische Planning",
-          "Oplossingsontwikkeling"
+          "Oplossingsontwikkeling",
         ],
         designInnovation: [
           "Design",
           "Innovatie",
           "Creativiteit",
           "Productontwikkeling",
-          "Innovatieve Oplossingen"
+          "Innovatieve Oplossingen",
         ],
         healthLeadership: [
           "Leiderschap",
           "Inclusie & Diversiteit",
           "Emotionele Intelligentie",
           "Wellness Programma's",
-          "Gezondheids- en Veiligheidsbeleid"
-        ]
-      }
+          "Gezondheids- en Veiligheidsbeleid",
+        ],
+      },
     },
     footerText: "© InMotion - Technologie en Managementdiensten",
     solutions: {
       inprocess: {
-        description: 'Processoptimalisatie'
+        description: "Processoptimalisatie",
       },
       fourMenu: {
-        description: 'Web Menu oplossing'
+        description: "Web Menu oplossing",
       },
       rex: {
-        description: 'Onroerend goed platform'
-      }
-    }
+        description: "Onroerend goed platform",
+      },
+    },
   },
-
 
   es: {
     // Esta sección contiene las traducciones para el idioma español.
-    
+
     title: "Soluciones de Gestión Empresarial",
     description: "Su Caja de Herramientas para la Excelencia Empresarial",
     ourExpertise: "Nuestra Experiencia",
-    expertiseDescription: "Explore nuestra gama de habilidades en áreas clave de negocios. Nuestra experiencia eleva el rendimiento de su empresa con soluciones innovadoras y perspectivas estratégicas.",
+    expertiseDescription:
+      "Explore nuestra gama de habilidades en áreas clave de negocios. Nuestra experiencia eleva el rendimiento de su empresa con soluciones innovadoras y perspectivas estratégicas.",
+    expertiseDescriptionShort:
+      "Explore nuestra gama de habilidades en áreas clave de negocios. Nuestra experiencia eleva el rendimiento de su empresa con soluciones innovadoras y perspectivas estratégicas.",
     transformBusiness: "Transforme Su Negocio Hoy",
     quickTools: {
       title: "Herramientas Rápidas",
@@ -349,7 +365,7 @@ const translations = {
           "Planificación Estratégica",
           "Análisis Financiero",
           "Gestión de Proyectos",
-          "Satisfacción del Cliente"
+          "Satisfacción del Cliente",
         ],
         dataAnalysis: [
           "Inteligencia de Negocios",
@@ -357,7 +373,7 @@ const translations = {
           "Modelado de Datos",
           "Programación Python",
           "Excel Avanzado",
-          "Inteligencia Artificial"
+          "Inteligencia Artificial",
         ],
         consultingTeaching: [
           "Consultoría Empresarial",
@@ -365,37 +381,37 @@ const translations = {
           "Formación Financiera",
           "Gestión Lean",
           "Planeación Estratégica",
-          "Desarrollo de Soluciones"
+          "Desarrollo de Soluciones",
         ],
         designInnovation: [
           "Diseño",
           "Innovación",
           "Creatividad",
           "Desarrollo de Productos",
-          "Soluciones Innovadoras"
+          "Soluciones Innovadoras",
         ],
         healthLeadership: [
           "Liderazgo",
           "Inclusión y Diversidad",
           "Inteligencia Emocional",
           "Programas de Bienestar",
-          "Políticas de Salud y Seguridad"
-        ]
-      }
+          "Políticas de Salud y Seguridad",
+        ],
+      },
     },
     footerText: "© InMotion - Servicios de Tecnología y Gestión",
     solutions: {
       inprocess: {
-        description: 'Optimización del proceso'
+        description: "Optimización del proceso",
       },
       fourMenu: {
-        description: 'Solución de Menú Web'
+        description: "Solución de Menú Web",
       },
       rex: {
-        description: 'Plataforma de Gestión Inmobiliaria'
-      }
-    }
-  }
+        description: "Plataforma de Gestión Inmobiliaria",
+      },
+    },
+  },
 };
 
 // Exporta o objeto 'translations' para que ele possa ser utilizado em outros componentes do aplicativo.
