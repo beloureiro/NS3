@@ -61,8 +61,8 @@ const TabsContent = ({ children, value, className }) => {
   ) : null;
 };
 
-const InProcessMethodology = () => {
-  const [language, setLanguage] = useState("en");
+const InProcessMethodology = ({ language, setLanguage }) => {
+  // Removemos o useState do language pois agora vem via props
   const [selectedItem, setSelectedItem] = useState(null);
 
   const translations = {
@@ -212,6 +212,7 @@ const InProcessMethodology = () => {
     },
   };
 
+  // Usa o language que vem via props
   const t = translations[language];
   const currentExplanation = explanations[selectedItem] || explanations.default;
 

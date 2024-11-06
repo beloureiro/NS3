@@ -12,6 +12,7 @@ import IndependentWidthPage from "../tools/WidthPage/IndependentWidthPage";
 import Solutions from "../AppComponents/Solutions";
 import InProcess from "../Solutions/Inprocess";
 import ContactSection from "../AppComponents/ContactSection";
+import InProcessMethodology from "../Solutions/Inprocess";
 
 // Header component: displays the main title of the page
 function Header({ title }) {
@@ -112,7 +113,12 @@ const AppRoutes = ({
       <Route path="/5w2h" element={<ActionPlanApp />} />
       <Route path="/process-flow" element={<ProcessFlowDiagramApp />} />
       <Route path="/independent-width" element={<IndependentWidthPage />} />
-      <Route path="/inprocess" element={<InProcess />} />
+      <Route
+        path="/inprocess"
+        element={
+          <InProcessMethodology language={language} setLanguage={setLanguage} />
+        }
+      />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

@@ -6,6 +6,7 @@ import logo from "../assets/rsz_1design_inmotion_181818.png";
 import Footer from "../AppComponents/Footer";
 import PageHeader from "../AppComponents/PageHeader";
 import "../index.css";
+import InProcessMethodology from "../Solutions/Inprocess"; // Certifique-se de importar o componente
 
 // Componente de conteúdo do App
 function AppContent() {
@@ -23,7 +24,7 @@ function AppContent() {
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
-      <PageHeader language={language} logo={logo} />
+      <PageHeader language={language} setLanguage={setLanguage} logo={logo} />
 
       {/* Container de conteúdo central com largura condicional */}
       <div className="w-full max-w-4xl text-center flex flex-col items-center relative">
