@@ -9,13 +9,13 @@ const Solutions = ({ language }) => {
     {
       name: "AICare",
       description: t.aicare.description,
-      path: "/aicare",
-      titleColor: "#8A2BE2", // Vibrant purple to complement existing colors
+      path: "https://ai-cac.streamlit.app/", // External link
+      titleColor: "#1ba8f0",
     },
     {
       name: "InProcess",
       description: t.inprocess.description,
-      path: "/inprocess",
+      path: "/inprocess", // Internal link
       titleColor: "#00ff9d",
     },
     {
@@ -34,21 +34,39 @@ const Solutions = ({ language }) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      {solutions.map((solution, index) => (
-        <Link
-          key={index}
-          to={solution.path}
-          className="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors duration-300"
-        >
-          <h3
-            className="text-xl font-bold mb-2"
-            style={{ color: solution.titleColor }}
+      {solutions.map((solution, index) =>
+        solution.path.startsWith("http") ? (
+          <a
+            key={index}
+            href={solution.path}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors duration-300"
           >
-            {solution.name}
-          </h3>
-          <p className="text-gray-300">{solution.description}</p>
-        </Link>
-      ))}
+            <h3
+              className="text-xl font-bold mb-2"
+              style={{ color: solution.titleColor }}
+            >
+              {solution.name}
+            </h3>
+            <p className="text-gray-300">{solution.description}</p>
+          </a>
+        ) : (
+          <Link
+            key={index}
+            to={solution.path}
+            className="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors duration-300"
+          >
+            <h3
+              className="text-xl font-bold mb-2"
+              style={{ color: solution.titleColor }}
+            >
+              {solution.name}
+            </h3>
+            <p className="text-gray-300">{solution.description}</p>
+          </Link>
+        )
+      )}
     </div>
   );
 };

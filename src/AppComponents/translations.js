@@ -81,7 +81,7 @@ const translations = {
         description: "Real State Platform",
       },
       aicare: {
-        description: "AI-Powered Healthcare Platform",
+        description: "AI Healthcare",
       },
     },
   },
