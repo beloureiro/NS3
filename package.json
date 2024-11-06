@@ -19,7 +19,7 @@
     "echarts": "^5.5.1",
     "filepond": "^4.31.2",
     "framer-motion": "^11.3.21",
-    "lucide-react": "^0.263.1",
+    "lucide-react": "^0.454.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dnd": "^16.0.1",

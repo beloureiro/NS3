@@ -8,8 +8,7 @@ import {
   Search,
   ClipboardCheck,
   BarChart,
-  // ChevronLeft, // Removed
-  // Globe,        // Removed
+  Waypoints, // Corrected import to Waypoint
 } from "lucide-react";
 // Remove logo import since it's not needed anymore
 import ContactSection from "../AppComponents/ContactSection";
@@ -117,7 +116,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
         content:
           "InProcess integra Processos, Pessoas e Tecnologia para estabilizar operações, capacitar equipes e acelerar fluxos de trabalho. Com o foco em criar processos padronizados, uma equipe engajada e uma melhor experiência para o cliente, essa metodologia promove um atendimento mais eficiente e uma equipe mais produtiva.",
       },
-      icon: <Activity className="w-8 h-8 text-blue-400" />,
+      icon: <Waypoints className="w-8 h-8 text-blue-400" />, // Changed icon to waypoints
     },
     diagnostico: {
       en: {
@@ -230,7 +229,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
           <Card className="bg-gray-800 border-gray-700">
             <CardContent className="p-6">
               <div className="flex items-center space-x-4 mb-8">
-                <Activity className="w-10 h-10 text-[#00ff9d]" />
+                <Waypoints className="w-10 h-10 text-[#00ff9d]" />{" "}
+                {/* Changed icon to waypoints */}
                 <div>
                   <h1 className="text-3xl font-bold text-[#00ff9d]">
                     {t.title}
