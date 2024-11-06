@@ -1,44 +1,50 @@
 import React, { useState } from "react";
-// Remove Link import since back arrow is removed
-// import { Link } from "react-router-dom";
 import {
-  Activity,
   Users,
   Cpu,
   Search,
   ClipboardCheck,
   BarChart,
-  Waypoints, // Corrected import to Waypoint
+  Waypoints,
+  Workflow,
 } from "lucide-react";
-// Remove logo import since it's not needed anymore
 import ContactSection from "../AppComponents/ContactSection";
-import { translations, explanations } from "./InprocessLanguage"; // Import translations and explanations
+import { translations, explanations } from "./InprocessLanguage";
 
-// Componentes auxiliares
+// Component for creating a card with a specific background and border style
 const Card = ({ children, className }) => (
-  <div className={`bg-gray-800 border-gray-700 ${className}`}>{children}</div>
+  <div className={`bg-gray-800 border-gray-700 rounded-[5px] ${className}`}>{children}</div>
 );
 
+// Component for the content inside the card with padding
 const CardContent = ({ children, className }) => (
   <div className={`p-6 ${className}`}>{children}</div>
 );
 
 const TabContext = React.createContext();
 
-const Tabs = ({ children, defaultValue, className }) => {
+// Tabs component with state management for active tab
+const Tabs = ({ children, defaultValue, className, onTabChange }) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
+  const handleTabChange = (value) => {
+    setActiveTab(value);
+    onTabChange(value);
+  };
+
   return (
-    <TabContext.Provider value={{ activeTab, setActiveTab }}>
+    <TabContext.Provider value={{ activeTab, setActiveTab: handleTabChange }}>
       <div className={className}>{children}</div>
     </TabContext.Provider>
   );
 };
 
+// Component for the list of tabs
 const TabsList = ({ children, className }) => (
   <div className={className}>{children}</div>
 );
 
+// Component for individual tab triggers
 const TabsTrigger = ({ children, value, className }) => {
   const { activeTab, setActiveTab } = React.useContext(TabContext);
 
@@ -54,6 +60,7 @@ const TabsTrigger = ({ children, value, className }) => {
   );
 };
 
+// Component for tab content that displays only when active
 const TabsContent = ({ children, value, className }) => {
   const { activeTab } = React.useContext(TabContext);
   return activeTab === value ? (
@@ -61,30 +68,64 @@ const TabsContent = ({ children, value, className }) => {
   ) : null;
 };
 
+// Main component for the InProcess Methodology section
 const InProcessMethodology = ({ language, setLanguage }) => {
-  // Removemos o useState do language pois agora vem via props
   const [selectedItem, setSelectedItem] = useState(null);
+  const [currentTab, setCurrentTab] = useState("overview");
 
-  // Usa o language que vem via props
+  // Get translations based on selected language
   const t = translations[language];
-  const currentExplanation = explanations[selectedItem] || explanations.default;
+
+  // Mapping tabs to explanation keys
+  const tabToExplanationMap = {
+    overview: "default",
+    diagnostic: "diagnostico",
+    action: "planoAcao",
+  };
+
+  // Function to get the current explanation based on tab and selected item
+  const getCurrentExplanation = (tab, item) => {
+    if (item) {
+      return explanations[item] || explanations.default;
+    }
+    const explanationKey = tabToExplanationMap[tab];
+    return explanations[explanationKey] || explanations.default;
+  };
+
+  // Function to get the appropriate icon based on type
+  const getIcon = (type) => {
+    const icons = {
+      default: <Waypoints className="w-8 h-8 text-blue-400" />,
+      processos: <Workflow className="w-8 h-8 text-blue-400" />,
+      pessoas: <Users className="w-8 h-8 text-purple-400" />,
+      tecnologia: <Cpu className="w-8 h-8 text-green-400" />,
+      diagnostico: <Search className="w-8 h-8 text-blue-400" />,
+      planoAcao: <ClipboardCheck className="w-8 h-8 text-green-400" />,
+      metricas: <Search className="w-8 h-8 text-blue-400" />,
+      beneficios: <BarChart className="w-8 h-8 text-yellow-400" />,
+    };
+    return icons[type] || icons.default;
+  };
+
+  const currentExplanation = getCurrentExplanation(currentTab, selectedItem);
+
+  // Handler for tab changes
+  const handleTabChange = (newTab) => {
+    setCurrentTab(newTab);
+    setSelectedItem(null);
+  };
 
   return (
     <div className="bg-black text-white flex flex-col">
-      {/* Header Section - Simplified */}
-      <div className="w-full max-w-6xl mx-auto px-6 py-4">
-        {/* Removed language button and back arrow */}
-      </div>
+      {/* Increased max-width to max-w-8xl for a wider main container */}
+      <div className="w-full max-w-8xl mx-auto px-6 py-4"></div>
 
-      {/* Main Content */}
       <div>
-        <div className="max-w-6xl mx-auto px-6">
-          {/* ...existing Card and content... */}
+        <div className="max-w-8xl mx-auto px-6">
           <Card className="bg-gray-800 border-gray-700">
             <CardContent className="p-6">
               <div className="flex items-center space-x-4 mb-8">
-                <Waypoints className="w-10 h-10 text-[#00ff9d]" />{" "}
-                {/* Changed icon to waypoints */}
+                <Waypoints className="w-10 h-10 text-[#00ff9d]" />
                 <div>
                   <h1 className="text-3xl font-bold text-[#00ff9d]">
                     {t.title}
@@ -93,11 +134,15 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </div>
               </div>
 
-              <Tabs defaultValue="overview" className="space-y-6">
-                <TabsList className="grid grid-cols-3 gap-4 bg-gray-700 p-1">
+              <Tabs
+                defaultValue="overview"
+                className="space-y-6"
+                onTabChange={handleTabChange}
+              >
+                <TabsList className="grid grid-cols-3 gap-4 bg-gray-700 p-1 rounded-[5px]">
                   <TabsTrigger
                     value="overview"
-                    className="bg-gray-700 text-white p-2 rounded"
+                    className="bg-gray-700 text-white p-2 rounded-[5px]"
                   >
                     <div className="flex items-center space-x-2">
                       <Search className="w-4 h-4" />
@@ -106,7 +151,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </TabsTrigger>
                   <TabsTrigger
                     value="diagnostic"
-                    className="bg-gray-700 text-white p-2 rounded"
+                    className="bg-gray-700 text-white p-2 rounded-[5px]"
                   >
                     <div className="flex items-center space-x-2">
                       <ClipboardCheck className="w-4 h-4" />
@@ -115,7 +160,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </TabsTrigger>
                   <TabsTrigger
                     value="action"
-                    className="bg-gray-700 text-white p-2 rounded"
+                    className="bg-gray-700 text-white p-2 rounded-[5px]"
                   >
                     <div className="flex items-center space-x-2">
                       <BarChart className="w-4 h-4" />
@@ -127,17 +172,17 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 <TabsContent value="overview" className="space-y-4">
                   <div className="grid grid-cols-3 gap-6">
                     <div
-                      className="bg-gray-700 p-6 rounded-lg border border-gray-600 hover:border-blue-500 transition-colors cursor-pointer"
+                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 hover:border-blue-500 transition-colors cursor-pointer"
                       onClick={() => setSelectedItem("processos")}
                     >
                       <div className="flex items-center space-x-2 mb-4">
-                        <Cpu className="w-8 h-8 text-blue-400" />
+                        <Workflow className="w-8 h-8 text-blue-400" />
                         <h3 className="text-lg font-semibold">{t.processes}</h3>
                       </div>
                       <p className="text-gray-400">{t.processesDesc}</p>
                     </div>
                     <div
-                      className="bg-gray-700 p-6 rounded-lg border border-gray-600 hover:border-purple-500 transition-colors cursor-pointer"
+                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 hover:border-purple-500 transition-colors cursor-pointer"
                       onClick={() => setSelectedItem("pessoas")}
                     >
                       <div className="flex items-center space-x-2 mb-4">
@@ -147,11 +192,11 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                       <p className="text-gray-400">{t.peopleDesc}</p>
                     </div>
                     <div
-                      className="bg-gray-700 p-6 rounded-lg border border-gray-600 hover:border-green-500 transition-colors cursor-pointer"
+                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 hover:border-green-500 transition-colors cursor-pointer"
                       onClick={() => setSelectedItem("tecnologia")}
                     >
                       <div className="flex items-center space-x-2 mb-4">
-                        <Activity className="w-8 h-8 text-green-400" />
+                        <Cpu className="w-8 h-8 text-green-400" />
                         <h3 className="text-lg font-semibold">
                           {t.technology}
                         </h3>
@@ -164,7 +209,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 <TabsContent value="diagnostic" className="space-y-6">
                   <div className="grid gap-6">
                     <div
-                      className="bg-gray-700 p-6 rounded-lg border border-gray-600 cursor-pointer"
+                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 cursor-pointer"
                       onClick={() => setSelectedItem("diagnostico")}
                     >
                       <h3 className="text-xl font-semibold mb-4">
@@ -186,7 +231,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 <TabsContent value="action" className="space-y-6">
                   <div className="grid gap-6">
                     <div
-                      className="bg-gray-700 p-6 rounded-lg border border-gray-600 cursor-pointer"
+                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 cursor-pointer"
                       onClick={() => setSelectedItem("planoAcao")}
                     >
                       <h3 className="text-xl font-semibold mb-4">
@@ -207,9 +252,9 @@ const InProcessMethodology = ({ language, setLanguage }) => {
               </Tabs>
 
               <div className="mt-8">
-                <div className="bg-gray-700 p-6 rounded-lg border border-gray-600">
+                <div className="bg-gray-700 p-6 rounded-[5px] border border-gray-600">
                   <div className="flex items-center space-x-4 mb-4">
-                    {currentExplanation.icon}
+                    {getIcon(selectedItem || tabToExplanationMap[currentTab])}
                     <h3 className="text-xl font-semibold text-[#00ff9d]">
                       {currentExplanation[language].title}
                     </h3>

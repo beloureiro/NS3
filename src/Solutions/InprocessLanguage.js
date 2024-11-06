@@ -1,13 +1,3 @@
-import {
-  Waypoints,
-  Search,
-  ClipboardCheck,
-  Cpu,
-  Users,
-  Activity,
-  BarChart,
-} from "lucide-react"; // Import necessary icons
-
 export const translations = {
   en: {
     title: "InProcess Methodology",
@@ -59,7 +49,6 @@ export const explanations = {
       content:
         "InProcess integra Processos, Pessoas e Tecnologia para estabilizar operações, capacitar equipes e acelerar fluxos de trabalho. Com o foco em criar processos padronizados, uma equipe engajada e uma melhor experiência para o cliente, essa metodologia promove um atendimento mais eficiente e uma equipe mais produtiva.",
     },
-    icon: <Waypoints className="w-8 h-8 text-blue-400" />,
   },
   diagnostico: {
     en: {
@@ -72,7 +61,6 @@ export const explanations = {
       content:
         "Conhecer a dor do cliente, conectá-la às etapas do processo e identificar pontos de melhoria são os objetivos do diagnóstico. A partir do mapeamento detalhado, identificamos pontos críticos que impactam diretamente o desempenho e a experiência do cliente. Utilizamos métricas como Complexidade de Execução (ECL) e Índice de Satisfação do Cliente (CSI) para orientar aprimoramentos específicos.",
     },
-    icon: <Search className="w-8 h-8 text-blue-400" />,
   },
   planoAcao: {
     en: {
@@ -85,7 +73,6 @@ export const explanations = {
       content:
         "Após o diagnóstico, um plano de ações é criado para gerenciar e acompanhar as intervenções necessárias. Cada ação é detalhada com prazos específicos e status atualizados, garantindo o cumprimento das prioridades estabelecidas. A InProcess oferece uma ferramenta de auditoria integrada para monitorar a performance dos processos ajustados.",
     },
-    icon: <ClipboardCheck className="w-8 h-8 text-green-400" />,
   },
   processos: {
     en: {
@@ -98,7 +85,6 @@ export const explanations = {
       content:
         "Implementamos processos padronizados e eficientes que garantem consistência nas operações. Através de análise detalhada e otimização contínua, estabelecemos fluxos de trabalho que maximizam a produtividade e minimizam erros.",
     },
-    icon: <Cpu className="w-8 h-8 text-blue-400" />,
   },
   pessoas: {
     en: {
@@ -111,7 +97,6 @@ export const explanations = {
       content:
         "O foco em pessoas garante que cada membro da equipe esteja capacitado e motivado. Desenvolvemos programas de treinamento específicos e criamos um ambiente que promove o crescimento profissional e o engajamento.",
     },
-    icon: <Users className="w-8 h-8 text-purple-400" />,
   },
   tecnologia: {
     en: {
@@ -124,7 +109,6 @@ export const explanations = {
       content:
         "Utilizamos soluções tecnológicas avançadas para automatizar processos e melhorar a eficiência. Nossa abordagem integra ferramentas modernas que facilitam o trabalho e aumentam a precisão das operações.",
     },
-    icon: <Activity className="w-8 h-8 text-green-400" />,
   },
   metricas: {
     en: {
@@ -137,7 +121,6 @@ export const explanations = {
       content:
         "Utilizamos métricas como Complexidade de Execução (ECL) e Índice de Satisfação do Cliente (CSI) para orientar aprimoramentos específicos. Nossa análise inclui feedbacks internos e externos, processados com inteligência artificial para identificar pontos de melhoria precisos.",
     },
-    icon: <Search className="w-8 h-8 text-blue-400" />,
   },
   beneficios: {
     en: {
@@ -150,6 +133,5 @@ export const explanations = {
       content:
         "A implementação da metodologia resulta em benefícios mensuráveis: redução significativa de falhas operacionais, aumento na satisfação do cliente, maior engajamento da equipe e otimização dos recursos. É especialmente eficaz em empresas de serviços que buscam excelência operacional.",
     },
-    icon: <BarChart className="w-8 h-8 text-yellow-400" />,
   },
 };
