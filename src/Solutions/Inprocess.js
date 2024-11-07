@@ -44,10 +44,7 @@ const Tabs = ({ children, defaultValue, className, onTabChange }) => {
   );
 };
 
-// Component for the list of tabs
-const TabsList = ({ children, className }) => (
-  <div className={className}>{children}</div>
-);
+// Remove the unused TabsList component
 
 // Component for individual tab triggers
 const TabsTrigger = ({ children, value, className }) => {
@@ -57,7 +54,7 @@ const TabsTrigger = ({ children, value, className }) => {
     <button
       className={`${className} ${
         activeTab === value ? "bg-[#00ff9d] text-black" : ""
-      }`}
+      } hover:bg-gray-600 hover:text-white transition-colors`}
       onClick={() => setActiveTab(value)}
     >
       {children}
