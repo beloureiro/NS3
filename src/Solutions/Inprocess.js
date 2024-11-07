@@ -8,6 +8,7 @@ import {
   Waypoints,
   Workflow,
   ArrowRight,
+  LayoutList, // Import the LayoutList icon
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
@@ -103,8 +104,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
       processos: <Workflow className="w-8 h-8 text-blue-400" />,
       pessoas: <Users className="w-8 h-8 text-purple-400" />,
       tecnologia: <Cpu className="w-8 h-8 text-green-400" />,
-      diagnostico: <Search className="w-8 h-8 text-blue-400" />,
-      planoAcao: <ClipboardCheck className="w-8 h-8 text-green-400" />,
+      diagnostico: <ClipboardCheck className="w-8 h-8 text-blue-400" />, // Ensure the icon is ClipboardCheck
+      planoAcao: <LayoutList className="w-8 h-8 text-green-400" />, // Update the icon here
       metricas: <Search className="w-8 h-8 text-blue-400" />,
       beneficios: <BarChart className="w-8 h-8 text-yellow-400" />,
     };
@@ -218,7 +219,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                       >
                         2
                       </div>
-                      <BarChart className="w-4 h-4" />
+                      <LayoutList className="w-4 h-4" />{" "}
+                      {/* Update the icon here */}
                       <span>{t.actionPlan}</span>
                     </div>
                   </TabsTrigger>
