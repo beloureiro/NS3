@@ -42,12 +42,12 @@ export const explanations = {
     en: {
       title: "InProcess: Integrated Transformation",
       content:
-        "InProcess integrates Processes, People and Technology to stabilize operations, empower teams and accelerate workflows. Focusing on creating standardized processes, an engaged team and a better customer experience, this methodology promotes more efficient service and a more productive team.",
+        "The InProcess methodology integrates Processes, People, and Technology to enhance and stabilize operations, empower teams, and accelerate workflows. By improving and standardizing processes before stabilizing them, it increases team engagement and enhances the customer experience, eliminating recurring issues and refining operations to align with the organization’s goals.",
     },
     pt: {
       title: "InProcess: Transformação Integrada",
       content:
-        "InProcess integra Processos, Pessoas e Tecnologia para estabilizar operações, capacitar equipes e acelerar fluxos de trabalho. Com o foco em criar processos padronizados, uma equipe engajada e uma melhor experiência para o cliente, essa metodologia promove um atendimento mais eficiente e uma equipe mais produtiva.",
+        "A metodologia InProcess integra Processos, Pessoas e Tecnologia para aprimorar e estabilizar operações, capacitar equipes e acelerar fluxos de trabalho. Ao melhorar e padronizar processos antes de estabilizá-los, aumenta o engajamento da equipe e melhora a experiência do cliente, eliminando problemas recorrentes e refinando as operações de acordo com os objetivos da organização.",
     },
   },
   diagnostico: {
