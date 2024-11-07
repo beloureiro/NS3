@@ -39,7 +39,7 @@ const Solutions = ({ language }) => {
   return (
     <div
       className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 max-w-3xl mx-auto"
-      style={{ maxWidth: "1200px" }} // Adjust the maximum width of the container
+      style={{ maxWidth: "850px" }} // Adjust the maximum width of the container
     >
       {solutions.map((solution, index) =>
         // Check if the path is an external link
