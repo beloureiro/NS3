@@ -7,25 +7,15 @@ import Footer from "../AppComponents/Footer";
 import PageHeader from "../AppComponents/PageHeader";
 import "../index.css";
 
-// Componente de conteúdo do App
 function AppContent() {
-  // Estado para controlar a exibição de ferramentas
   const [showTools, setShowTools] = useState(false);
-
-  // Estado para controlar o idioma atual
   const [language, setLanguage] = useState("en");
-
-  // Seleciona as traduções para o idioma atual
   const t = translations[language];
-
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col items-center justify-center p-4">
       <PageHeader language={language} setLanguage={setLanguage} logo={logo} />
-
-      {/* Container de conteúdo central com largura condicional */}
-      <div className="w-full max-w-4xl text-center flex flex-col items-center relative">
-        {/* Rotas principais do aplicativo */}
+      <div className="w-full text-center flex flex-col items-center relative">
         <AppRoutes
           language={language}
           showTools={showTools}
@@ -34,15 +24,12 @@ function AppContent() {
           logo={logo}
           setLanguage={setLanguage}
         />
-
-        {/* Componente de rodapé */}
         <Footer language={language} />
       </div>
     </div>
   );
 }
 
-// Componente principal App
 function App() {
   return (
     <Router basename="/NS3">

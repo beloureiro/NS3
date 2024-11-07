@@ -13,7 +13,9 @@ import { translations, explanations } from "./InprocessLanguage";
 
 // Component for creating a card with a specific background and border style
 const Card = ({ children, className }) => (
-  <div className={`bg-gray-800 border-gray-700 rounded-[5px] ${className}`}>{children}</div>
+  <div className={`bg-gray-800 border-gray-700 rounded-[5px] ${className}`}>
+    {children}
+  </div>
 );
 
 // Component for the content inside the card with padding
@@ -21,6 +23,7 @@ const CardContent = ({ children, className }) => (
   <div className={`p-6 ${className}`}>{children}</div>
 );
 
+// Context for managing tab state
 const TabContext = React.createContext();
 
 // Tabs component with state management for active tab
@@ -118,9 +121,11 @@ const InProcessMethodology = ({ language, setLanguage }) => {
   return (
     <div className="bg-black text-white flex flex-col">
       <div>
-        <div className="max-w-screen-2xl mx-auto px-6">
+        {/* Main container with reduced width */}
+        <div className="max-w-screen-lg mx-auto px-6">
           <Card className="bg-gray-800 border-gray-700">
             <CardContent className="p-6">
+              {/* Header section with title and subtitle */}
               <div className="flex items-center space-x-4 mb-8">
                 <Waypoints className="w-10 h-10 text-[#00ff9d]" />
                 <div>
@@ -131,11 +136,13 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </div>
               </div>
 
+              {/* Tabs component */}
               <Tabs
                 defaultValue="overview"
                 className="space-y-6"
                 onTabChange={handleTabChange}
               >
+                {/* Tabs list */}
                 <TabsList className="grid grid-cols-3 gap-4 bg-gray-700 p-1 rounded-[5px]">
                   <TabsTrigger
                     value="overview"
@@ -166,6 +173,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </TabsTrigger>
                 </TabsList>
 
+                {/* Tabs content for each tab */}
                 <TabsContent value="overview" className="space-y-4">
                   <div className="grid grid-cols-3 gap-6">
                     <div
@@ -248,6 +256,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </TabsContent>
               </Tabs>
 
+              {/* Explanation section based on selected tab and item */}
               <div className="mt-8">
                 <div className="bg-gray-700 p-6 rounded-[5px] border border-gray-600">
                   <div className="flex items-center space-x-4 mb-4">
@@ -266,6 +275,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
         </div>
       </div>
 
+      {/* Contact section */}
       <ContactSection title="Contact Us" className="mt-4 mb-2" />
     </div>
   );
