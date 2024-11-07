@@ -51,7 +51,12 @@ const Solutions = ({ language }) => {
             rel="noopener noreferrer"
             className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors duration-300"
             // Set minHeight and maxHeight to control the height of the card
-            style={{ minHeight: "100px", maxHeight: "150px", width: "100%", padding: "10px" }}
+            style={{
+              minHeight: "100px",
+              maxHeight: "150px",
+              width: "100%",
+              padding: "10px",
+            }}
           >
             <h3
               className="text-lg font-bold mb-2"
@@ -68,7 +73,12 @@ const Solutions = ({ language }) => {
             to={solution.path}
             className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors duration-300"
             // Set minHeight and maxHeight to control the height of the card
-            style={{ minHeight: "100px", maxHeight: "150px", width: "100%", padding: "10px" }}
+            style={{
+              minHeight: "100px",
+              maxHeight: "150px",
+              width: "100%",
+              padding: "10px",
+            }}
           >
             <h3
               className="text-lg font-bold mb-2"
