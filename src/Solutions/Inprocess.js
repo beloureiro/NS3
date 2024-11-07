@@ -7,6 +7,7 @@ import {
   BarChart,
   Waypoints,
   Workflow,
+  ArrowRight,
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
@@ -142,36 +143,86 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 className="space-y-6"
                 onTabChange={handleTabChange}
               >
-                {/* Tabs list */}
-                <TabsList className="grid grid-cols-3 gap-4 bg-gray-700 p-1 rounded-[5px]">
+                {/* Tabs list with arrows and numbers */}
+                <div className="relative flex justify-between items-center w-full bg-gray-700 p-1 rounded-lg">
                   <TabsTrigger
                     value="overview"
-                    className="bg-gray-700 text-white p-2 rounded-[5px]"
+                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all"
                   >
-                    <div className="flex items-center space-x-2">
-                      <Search className="w-4 h-4" />
-                      <span>{t.overview}</span>
-                    </div>
+                    <Search className="w-4 h-4" />
+                    <span>{t.overview}</span>
                   </TabsTrigger>
+
+                  <div className="flex items-center">
+                    <div
+                      className={`h-0.5 w-8 transition-colors duration-300 ${
+                        currentTab === "overview"
+                          ? "bg-gray-600"
+                          : "bg-[#00ff9d]"
+                      }`}
+                    />
+                    <ArrowRight
+                      className={`w-5 h-5 transition-colors duration-300 ${
+                        currentTab === "overview"
+                          ? "text-gray-400"
+                          : "text-[#00ff9d]"
+                      }`}
+                    />
+                  </div>
+
                   <TabsTrigger
                     value="diagnostic"
-                    className="bg-gray-700 text-white p-2 rounded-[5px]"
+                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all"
                   >
                     <div className="flex items-center space-x-2">
+                      <div
+                        className={`flex items-center justify-center w-5 h-5 rounded-full border ${
+                          currentTab === "diagnostic" || currentTab === "action"
+                            ? "bg-[#00ff9d] text-black border-[#00ff9d]"
+                            : "bg-transparent text-white border-white"
+                        }`}
+                      >
+                        1
+                      </div>
                       <ClipboardCheck className="w-4 h-4" />
                       <span>{t.diagnostic}</span>
                     </div>
                   </TabsTrigger>
+
+                  <div className="flex items-center">
+                    <div
+                      className={`h-0.5 w-8 transition-colors duration-300 ${
+                        currentTab === "action" ? "bg-[#00ff9d]" : "bg-gray-600"
+                      }`}
+                    />
+                    <ArrowRight
+                      className={`w-5 h-5 transition-colors duration-300 ${
+                        currentTab === "action"
+                          ? "text-[#00ff9d]"
+                          : "text-gray-400"
+                      }`}
+                    />
+                  </div>
+
                   <TabsTrigger
                     value="action"
-                    className="bg-gray-700 text-white p-2 rounded-[5px]"
+                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all"
                   >
                     <div className="flex items-center space-x-2">
+                      <div
+                        className={`flex items-center justify-center w-5 h-5 rounded-full border ${
+                          currentTab === "action"
+                            ? "bg-[#00ff9d] text-black border-[#00ff9d]"
+                            : "bg-transparent text-white border-white"
+                        }`}
+                      >
+                        2
+                      </div>
                       <BarChart className="w-4 h-4" />
                       <span>{t.actionPlan}</span>
                     </div>
                   </TabsTrigger>
-                </TabsList>
+                </div>
 
                 {/* Tabs content for each tab */}
                 <TabsContent value="overview" className="space-y-4">
