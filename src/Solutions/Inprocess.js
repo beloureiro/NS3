@@ -75,7 +75,7 @@ const TabsContent = ({ children, value, className }) => {
   ) : null;
 };
 
-// New Advanced Analysis Explanation Section with enhanced styling
+// New Advanced Analysis Explanation Section with enhanced styling and adjusted icon spacing
 const AdvancedAnalysisExplanation = () => {
   return (
     <div className="bg-slate-800 p-6 rounded-lg">
@@ -92,10 +92,12 @@ const AdvancedAnalysisExplanation = () => {
 
         {/* AI Processing Step */}
         <div className="bg-slate-700 p-4 rounded-lg flex flex-col items-center">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-7 mb-2">
+            {/* Aumentei o valor do gap para 4 para dar mais espaço entre os ícones */}
             <Cpu className="text-emerald-400" size={28} />
             <Plus className="text-emerald-400" size={18} />
-            <ChartNetwork className="text-emerald-400" size={28} /> {/* chart-network icon */}
+            <ChartNetwork className="text-emerald-400" size={28} />{" "}
+            {/* chart-network icon */}
           </div>
           <p className="text-slate-300 text-sm text-center">
             Processamento IA correlacionado ao mapeamento
