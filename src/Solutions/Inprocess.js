@@ -53,7 +53,10 @@ const TabsTrigger = ({ children, value, className }) => {
       className={`${className} ${
         activeTab === value ? "bg-[#00ff9d] text-black" : ""
       } hover:bg-gray-600 hover:text-white transition-colors`}
-      onClick={() => setActiveTab(value)}
+      onClick={() => {
+        // Prevent tab change if 'overview' is already active
+        if (activeTab !== value) setActiveTab(value);
+      }}
     >
       {children}
     </button>
@@ -110,10 +113,12 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
   const currentExplanation = getCurrentExplanation(currentTab, selectedItem);
 
-  // Handler for tab changes
+  // Handler for tab changes with conditional reset
   const handleTabChange = (newTab) => {
-    setCurrentTab(newTab);
-    setSelectedItem(null); // Reset selectedItem on tab change
+    if (newTab !== "overview" || currentTab !== "overview") {
+      setCurrentTab(newTab);
+      setSelectedItem(null); // Reset selectedItem on tab change, unless overview is already active
+    }
   };
 
   return (
