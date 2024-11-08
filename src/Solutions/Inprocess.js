@@ -12,14 +12,16 @@ import {
   ArrowRightLeft,
   Grid2x2,
   Plus,
-  ChartNetwork, // Directly importing chart-network icon as ChartNetwork
+  ChartNetwork,
+  Target,
+  Activity,
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
 
 // Component for creating a card with specific background and border style
 const Card = ({ children, className }) => (
-  <div className={`bg-gray-800 border-gray-700 rounded-[5px] ${className}`}>
+  <div className={`bg-gray-800 border-gray-700 rounded-[10px] ${className}`}>
     {children}
   </div>
 );
@@ -58,7 +60,6 @@ const TabsTrigger = ({ children, value, className }) => {
         activeTab === value ? "bg-[#00ff9d] text-black" : ""
       } hover:bg-gray-600 hover:text-white transition-colors`}
       onClick={() => {
-        // Prevent tab change if 'overview' is already active
         if (activeTab !== value) setActiveTab(value);
       }}
     >
@@ -80,32 +81,48 @@ const AdvancedAnalysisExplanation = ({ language }) => {
   const t = translations[language];
   return (
     <div className="bg-slate-800 p-6 rounded-lg">
-      <div className="flex items-center justify-center gap-6"> {/* Ajuste do espaçamento entre os elementos */}
-        
-        {/* Step 1 - Process Mapping */}
-        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center"> {/* Ajuste do padding */}
-          <Waypoints className="text-emerald-400 mb-3" size={34} /> {/* Ajuste do tamanho do ícone */}
-          <p className="text-slate-300 text-base text-center">{t.processMapping}</p> {/* Ajuste do tamanho do texto */}
-        </div>
-
-        <ArrowRightLeft className="text-emerald-400" size={28} /> {/* Ajuste do tamanho do ícone de seta */}
-
-        {/* Step 2 - AI Processing */}
+      <div className="flex items-center justify-center gap-6">
         <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
-          <div className="flex items-center gap-5 mb-3"> {/* Ajuste do espaçamento entre os ícones */}
-            <Cpu className="text-emerald-400" size={34} /> {/* Ajuste do tamanho do ícone */}
+          <Waypoints className="text-emerald-400 mb-3" size={34} />
+          <p className="text-slate-300 text-base text-center">{t.processMapping}</p>
+        </div>
+        <ArrowRightLeft className="text-emerald-400" size={28} />
+        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
+          <div className="flex items-center gap-5 mb-3">
+            <Cpu className="text-emerald-400" size={34} />
             <Plus className="text-emerald-400" size={20} />
             <ChartNetwork className="text-emerald-400" size={34} />
           </div>
-          <p className="text-slate-300 text-base text-center">{t.aiProcessing}</p> {/* Ajuste do tamanho do texto */}
+          <p className="text-slate-300 text-base text-center">{t.aiProcessing}</p>
         </div>
-
-        <ArrowRightLeft className="text-emerald-400" size={28} /> {/* Ajuste do tamanho do ícone de seta */}
-
-        {/* Step 3 - Complexity Matrix */}
+        <ArrowRightLeft className="text-emerald-400" size={28} />
         <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
-          <Grid2x2 className="text-emerald-400 mb-3" size={34} /> {/* Ajuste do tamanho do ícone */}
-          <p className="text-slate-300 text-base text-center">{t.complexityMatrix}</p> {/* Ajuste do tamanho do texto */}
+          <Grid2x2 className="text-emerald-400 mb-3" size={34} />
+          <p className="text-slate-300 text-base text-center">{t.complexityMatrix}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Action Plan and Audit Explanation similar to the Diagnostic & Classification style
+const ActionAuditExplanation = () => {
+  return (
+    <div className="bg-slate-800 p-6 rounded-lg"> {/* Ajuste de padding para similaridade */}
+      <div className="flex items-center justify-center gap-6"> {/* Ajuste de espaçamento entre elementos */}
+        
+        {/* Plano de Ação - estilo similar ao Process Mapping */}
+        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center"> {/* Ajuste de padding e bordas */}
+          <Target className="text-emerald-400 mb-3" size={34} /> {/* Tamanho do ícone ajustado para 34 */}
+          <p className="text-slate-300 text-base text-center">Plano de ação</p> {/* Fonte ajustada para text-base */}
+        </div>
+        
+        <ArrowRightLeft className="text-emerald-400" size={28} /> {/* Tamanho do ícone de seta ajustado */}
+
+        {/* Ferramenta de Auditoria - estilo similar ao AI Processing */}
+        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
+          <Activity className="text-emerald-400 mb-3" size={34} /> {/* Ícone ajustado para 34 */}
+          <p className="text-slate-300 text-base text-center">Ferramenta de auditoria</p> {/* Fonte ajustada para text-base */}
         </div>
       </div>
     </div>
@@ -114,21 +131,17 @@ const AdvancedAnalysisExplanation = ({ language }) => {
 
 // Main component for the InProcess Methodology section
 const InProcessMethodology = ({ language, setLanguage }) => {
-  // Initial state of selectedItem is set to "processos" to show "Processes" explanation by default
   const [selectedItem, setSelectedItem] = useState("processos");
   const [currentTab, setCurrentTab] = useState("overview");
 
-  // Get translations based on selected language
   const t = translations[language];
 
-  // Mapping tabs to explanation keys
   const tabToExplanationMap = {
     overview: "default",
     diagnostic: "diagnostico",
     action: "planoAcao",
   };
 
-  // Function to get the current explanation based on tab and selected item
   const getCurrentExplanation = (tab, item) => {
     if (item) {
       return explanations[item] || explanations.default;
@@ -137,7 +150,6 @@ const InProcessMethodology = ({ language, setLanguage }) => {
     return explanations[explanationKey] || explanations.default;
   };
 
-  // Function to get the appropriate icon based on type
   const getIcon = (type) => {
     const icons = {
       default: <Waypoints className="w-8 h-8 text-blue-400" />,
@@ -154,46 +166,33 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
   const currentExplanation = getCurrentExplanation(currentTab, selectedItem);
 
-  // Handler for tab changes with conditional reset
   const handleTabChange = (newTab) => {
     if (newTab !== "overview") {
       setCurrentTab(newTab);
-      setSelectedItem(null); // Reset selectedItem on tab change, unless 'overview' is already active
+      setSelectedItem(null);
     } else {
       setCurrentTab("overview");
-      setSelectedItem("processos"); // Reset to "processos" when switching back to 'overview'
+      setSelectedItem("processos");
     }
   };
 
   return (
     <div className="bg-black text-white flex flex-col">
       <div>
-        {/* Main container with reduced width */}
         <div className="max-w-screen-lg mx-auto px-6">
           <Card className="bg-gray-800 border-gray-700">
             <CardContent className="p-6">
-              {/* Header section with title, icon, and aligned subtitle */}
               <div className="flex items-center mb-4 space-x-4">
                 <Waypoints className="w-10 h-10 text-[#00ff9d]" />
                 <h1 className="text-3xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
               <p className="text-white text-lg text-left mb-4">{t.subtitle}</p>
 
-              {/* Language switch button removed */}
-              {/* <button
-                onClick={() => setLanguage(language === "en" ? "pt" : "en")}
-                className="mb-4 px-4 py-2 bg-gray-700 text-white rounded-md"
-              >
-                {language === "en" ? "Switch to Portuguese" : "Switch to English"}
-              </button> */}
-
-              {/* (1) Tabs component */}
               <Tabs
                 defaultValue="overview"
                 className="space-y-6"
                 onTabChange={handleTabChange}
               >
-                {/* Tabs list with arrows and numbers */}
                 <div className="relative flex justify-between items-center w-full bg-gray-700 p-1 rounded-lg">
                   <TabsTrigger
                     value="overview"
@@ -274,7 +273,6 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </TabsTrigger>
                 </div>
 
-                {/* (2) Tabs content for overview */}
                 <TabsContent value="overview" className="space-y-4">
                   <div className="grid grid-cols-3 gap-6">
                     <div
@@ -324,36 +322,15 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </div>
                 </TabsContent>
 
-                {/* (3) Tabs content for diagnostic */}
                 <TabsContent value="diagnostic" className="space-y-6">
-                  {/* New Advanced Analysis Explanation */}
                   <AdvancedAnalysisExplanation language={language} />
                 </TabsContent>
 
                 <TabsContent value="action" className="space-y-6">
-                  <div className="grid gap-6">
-                    <div
-                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 cursor-pointer"
-                      onClick={() => setSelectedItem("planoAcao")}
-                    >
-                      <h3 className="text-xl font-semibold mb-4">
-                        {t.actionPlanTitle}
-                      </h3>
-                      <div className="text-gray-400 space-y-4">
-                        <p>{t.transformationProcess}</p>
-                        <ul className="grid grid-cols-2 gap-4">
-                          <li>Priorização de ações</li>
-                          <li>Cronograma detalhado</li>
-                          <li>Monitoramento contínuo</li>
-                          <li>Auditoria integrada</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                  <ActionAuditExplanation />
                 </TabsContent>
               </Tabs>
 
-              {/* (4) Explanation section */}
               <div className="mt-8">
                 <div
                   className={`bg-gray-700 p-6 rounded-[5px] border ${
@@ -382,7 +359,6 @@ const InProcessMethodology = ({ language, setLanguage }) => {
         </div>
       </div>
 
-      {/* Contact section */}
       <ContactSection title="Contact Us" className="mt-4 mb-2" />
     </div>
   );
