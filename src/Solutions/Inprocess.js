@@ -9,12 +9,10 @@ import {
   Workflow,
   ArrowRight,
   LayoutList,
-  GitCompare,
   ArrowRightLeft,
   Grid2x2,
-  Brain,
   Plus,
-  Network, // Assuming `Network` is equivalent to `chart-network`
+  ChartNetwork, // Directly importing chart-network icon as ChartNetwork
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
@@ -77,43 +75,41 @@ const TabsContent = ({ children, value, className }) => {
   ) : null;
 };
 
-// New Advanced Analysis Explanation Section
+// New Advanced Analysis Explanation Section with enhanced styling
 const AdvancedAnalysisExplanation = () => {
   return (
-    <div className="bg-slate-800 p-4 rounded-lg">
-      <div className="flex items-center justify-center gap-2">
+    <div className="bg-slate-800 p-6 rounded-lg">
+      <div className="flex items-center justify-center gap-4">
         {/* Process Mapping Step */}
-        <div className="bg-slate-700 p-3 rounded-lg">
-          <div className="flex flex-col items-center text-center">
-            <GitCompare className="text-emerald-400 mb-2" size={24} />
-            <p className="text-slate-300 text-xs">Mapeamento do processo</p>
-          </div>
+        <div className="bg-slate-700 p-4 rounded-lg flex flex-col items-center">
+          <Waypoints className="text-emerald-400 mb-2" size={28} />
+          <p className="text-slate-300 text-sm text-center">
+            Mapeamento do processo
+          </p>
         </div>
 
-        <ArrowRightLeft className="text-emerald-400 mx-2" size={20} />
+        <ArrowRightLeft className="text-emerald-400" size={24} />
 
         {/* AI Processing Step */}
-        <div className="bg-slate-700 p-3 rounded-lg">
-          <div className="flex flex-col items-center text-center">
-            <div className="flex items-center gap-1">
-              <Brain className="text-emerald-400" size={24} />
-              <Plus className="text-emerald-400" size={16} />
-              <Network className="text-emerald-400" size={24} />
-            </div>
-            <p className="text-slate-300 text-xs">
-              Processamento IA correlacionado ao mapeamento
-            </p>
+        <div className="bg-slate-700 p-4 rounded-lg flex flex-col items-center">
+          <div className="flex items-center gap-2 mb-2">
+            <Cpu className="text-emerald-400" size={28} />
+            <Plus className="text-emerald-400" size={18} />
+            <ChartNetwork className="text-emerald-400" size={28} /> {/* chart-network icon */}
           </div>
+          <p className="text-slate-300 text-sm text-center">
+            Processamento IA correlacionado ao mapeamento
+          </p>
         </div>
 
-        <ArrowRightLeft className="text-emerald-400 mx-2" size={20} />
+        <ArrowRightLeft className="text-emerald-400" size={24} />
 
         {/* Complexity Matrix Step */}
-        <div className="bg-slate-700 p-3 rounded-lg">
-          <div className="flex flex-col items-center text-center">
-            <Grid2x2 className="text-emerald-400 mb-2" size={24} />
-            <p className="text-slate-300 text-xs">Matriz de complexidade</p>
-          </div>
+        <div className="bg-slate-700 p-4 rounded-lg flex flex-col items-center">
+          <Grid2x2 className="text-emerald-400 mb-2" size={28} />
+          <p className="text-slate-300 text-sm text-center">
+            Matriz de complexidade
+          </p>
         </div>
       </div>
     </div>
