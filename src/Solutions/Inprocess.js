@@ -8,12 +8,12 @@ import {
   Waypoints,
   Workflow,
   ArrowRight,
-  LayoutList, // Import the LayoutList icon
+  LayoutList,
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
 
-// Component for creating a card with a specific background and border style
+// Component for creating a card with specific background and border style
 const Card = ({ children, className }) => (
   <div className={`bg-gray-800 border-gray-700 rounded-[5px] ${className}`}>
     {children}
@@ -73,7 +73,7 @@ const TabsContent = ({ children, value, className }) => {
 
 // Main component for the InProcess Methodology section
 const InProcessMethodology = ({ language, setLanguage }) => {
-  // Set initial state of selectedItem to "processos" to show "Processes" explanation by default
+  // Initial state of selectedItem is set to "processos" to show "Processes" explanation by default
   const [selectedItem, setSelectedItem] = useState("processos");
   const [currentTab, setCurrentTab] = useState("overview");
 
@@ -115,9 +115,12 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
   // Handler for tab changes with conditional reset
   const handleTabChange = (newTab) => {
-    if (newTab !== "overview" || currentTab !== "overview") {
+    if (newTab !== "overview") {
       setCurrentTab(newTab);
-      setSelectedItem(null); // Reset selectedItem on tab change, unless overview is already active
+      setSelectedItem(null); // Reset selectedItem on tab change, unless 'overview' is already active
+    } else {
+      setCurrentTab("overview");
+      setSelectedItem("processos"); // Reset to "processos" when switching back to 'overview'
     }
   };
 
