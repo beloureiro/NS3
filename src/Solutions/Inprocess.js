@@ -123,11 +123,11 @@ const InProcessMethodology = ({ language, setLanguage }) => {
           <Card className="bg-gray-800 border-gray-700">
             <CardContent className="p-6">
               {/* Header section with title, icon, and aligned subtitle */}
-              <div className="flex items-center mb-8 space-x-4">
+              <div className="flex items-center mb-4 space-x-4">
                 <Waypoints className="w-10 h-10 text-[#00ff9d]" />
                 <h1 className="text-3xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
-              <p className="text-gray-400 text-left mb-4">{t.subtitle}</p>
+              <p className="text-white text-lg text-left mb-4">{t.subtitle}</p>
 
               {/* Tabs component */}
               <Tabs
