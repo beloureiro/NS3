@@ -9,6 +9,12 @@ import {
   Workflow,
   ArrowRight,
   LayoutList,
+  GitCompare,
+  ArrowRightLeft,
+  Grid2x2,
+  Brain,
+  Plus,
+  Network, // Assuming `Network` is equivalent to `chart-network`
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
@@ -69,6 +75,49 @@ const TabsContent = ({ children, value, className }) => {
   return activeTab === value ? (
     <div className={className}>{children}</div>
   ) : null;
+};
+
+// New Advanced Analysis Explanation Section
+const AdvancedAnalysisExplanation = () => {
+  return (
+    <div className="bg-slate-800 p-4 rounded-lg">
+      <div className="flex items-center justify-center gap-2">
+        {/* Process Mapping Step */}
+        <div className="bg-slate-700 p-3 rounded-lg">
+          <div className="flex flex-col items-center text-center">
+            <GitCompare className="text-emerald-400 mb-2" size={24} />
+            <p className="text-slate-300 text-xs">Mapeamento do processo</p>
+          </div>
+        </div>
+
+        <ArrowRightLeft className="text-emerald-400 mx-2" size={20} />
+
+        {/* AI Processing Step */}
+        <div className="bg-slate-700 p-3 rounded-lg">
+          <div className="flex flex-col items-center text-center">
+            <div className="flex items-center gap-1">
+              <Brain className="text-emerald-400" size={24} />
+              <Plus className="text-emerald-400" size={16} />
+              <Network className="text-emerald-400" size={24} />
+            </div>
+            <p className="text-slate-300 text-xs">
+              Processamento IA correlacionado ao mapeamento
+            </p>
+          </div>
+        </div>
+
+        <ArrowRightLeft className="text-emerald-400 mx-2" size={20} />
+
+        {/* Complexity Matrix Step */}
+        <div className="bg-slate-700 p-3 rounded-lg">
+          <div className="flex flex-col items-center text-center">
+            <Grid2x2 className="text-emerald-400 mb-2" size={24} />
+            <p className="text-slate-300 text-xs">Matriz de complexidade</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 // Main component for the InProcess Methodology section
@@ -275,26 +324,10 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </div>
                 </TabsContent>
 
+                {/* (3) Tabs content for diagnostic */}
                 <TabsContent value="diagnostic" className="space-y-6">
-                  <div className="grid gap-6">
-                    <div
-                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 cursor-pointer"
-                      onClick={() => setSelectedItem("diagnostico")}
-                    >
-                      <h3 className="text-xl font-semibold mb-4">
-                        {t.advancedAnalysis}
-                      </h3>
-                      <div className="text-gray-400 space-y-4">
-                        <p>{t.metrics}</p>
-                        <ul className="list-disc list-inside space-y-2">
-                          <li>Complexidade de Execução (ECL)</li>
-                          <li>Índice de Satisfação do Cliente (CSI)</li>
-                          <li>Matriz de Complexidade e Satisfação</li>
-                          <li>Análise de Feedback com IA</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                  {/* New Advanced Analysis Explanation */}
+                  <AdvancedAnalysisExplanation />
                 </TabsContent>
 
                 <TabsContent value="action" className="space-y-6">
@@ -320,7 +353,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </TabsContent>
               </Tabs>
 
-              {/* (3) Explanation section */}
+              {/* (4) Explanation section */}
               <div className="mt-8">
                 <div
                   className={`bg-gray-700 p-6 rounded-[5px] border ${
