@@ -44,8 +44,6 @@ const Tabs = ({ children, defaultValue, className, onTabChange }) => {
   );
 };
 
-// Remove the unused TabsList component
-
 // Component for individual tab triggers
 const TabsTrigger = ({ children, value, className }) => {
   const { activeTab, setActiveTab } = React.useContext(TabContext);
@@ -124,16 +122,12 @@ const InProcessMethodology = ({ language, setLanguage }) => {
         <div className="max-w-screen-lg mx-auto px-6">
           <Card className="bg-gray-800 border-gray-700">
             <CardContent className="p-6">
-              {/* Header section with title and subtitle */}
-              <div className="flex items-center space-x-4 mb-8">
+              {/* Header section with title, icon, and aligned subtitle */}
+              <div className="flex items-center mb-8 space-x-4">
                 <Waypoints className="w-10 h-10 text-[#00ff9d]" />
-                <div>
-                  <h1 className="text-3xl font-bold text-[#00ff9d]">
-                    {t.title}
-                  </h1>
-                  <p className="text-gray-400">{t.subtitle}</p>
-                </div>
+                <h1 className="text-3xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
+              <p className="text-gray-400 text-left mb-4">{t.subtitle}</p>
 
               {/* Tabs component */}
               <Tabs

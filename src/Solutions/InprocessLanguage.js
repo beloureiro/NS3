@@ -1,15 +1,16 @@
 export const translations = {
   en: {
     title: "InProcess Methodology",
-    subtitle: "Integrating Processes, People and Technology",
+    subtitle:
+      "Integrates Processes, People, and Technology to enhance and stabilize operations, empower teams, and accelerate workflows.",
     back: "Back",
     overview: "Overview",
     diagnostic: "Diagnostic & Classification",
     actionPlan: "Action Plan & Audit",
     processes: "Processes",
-    processesDesc: "Operations stabilization and standardization",
+    processesDesc: "Aligned and Efficient Processes",
     people: "People",
-    peopleDesc: "Team training and engagement",
+    peopleDesc: "Engaged People",
     technology: "Technology",
     technologyDesc: "Innovative technological solutions",
     advancedAnalysis: "Advanced Analysis and Classification",
@@ -19,15 +20,16 @@ export const translations = {
   },
   pt: {
     title: "Metodologia InProcess",
-    subtitle: "Integrando Processos, Pessoas e Tecnologia",
+    subtitle:
+      "Integra Processos, Pessoas e Tecnologia para aprimorar e estabilizar operações, capacitar equipes e acelerar fluxos de trabalho.",
     back: "Voltar",
     overview: "Visão Geral",
     diagnostic: "Diagnóstico & Classificação",
     actionPlan: "Plano de Ação & Auditoria",
     processes: "Processos",
-    processesDesc: "Estabilização e padronização de operações",
+    processesDesc: "Processos Eficientes e Alinhados",
     people: "Pessoas",
-    peopleDesc: "Capacitação e engajamento de equipes",
+    peopleDesc: "Pessoas Engajadas",
     technology: "Tecnologia",
     technologyDesc: "Soluções tecnológicas inovadoras",
     advancedAnalysis: "Análise Avançada e Classificação",
@@ -76,38 +78,38 @@ export const explanations = {
   },
   processos: {
     en: {
-      title: "Standardized Processes",
+      title: "Aligned and Efficient Processes",
       content:
-        "We implement standardized and efficient processes that ensure consistency in operations. Through detailed analysis and continuous optimization, we establish workflows that maximize productivity and minimize errors.",
+        "We map and review processes to ensure a superior customer experience. Well-designed processes lead to consistent results and keep teams aligned, with optimized workflows that maximize productivity and eliminate operational errors.",
     },
     pt: {
-      title: "Processos Padronizados",
+      title: "Processos Eficientes e Alinhados",
       content:
-        "Implementamos processos padronizados e eficientes que garantem consistência nas operações. Através de análise detalhada e otimização contínua, estabelecemos fluxos de trabalho que maximizam a produtividade e minimizam erros.",
+        "Mapeamos e revisamos processos para assegurar uma experiência superior ao cliente. Processos bem desenhados conduzem a resultados consistentes e garantem equipes orientadas, com fluxos de trabalho otimizados que maximizam a produtividade e eliminam falhas operacionais.",
     },
   },
   pessoas: {
     en: {
       title: "Engaged People",
       content:
-        "Focusing on people ensures that each team member is trained and motivated. We develop specific training programs and create an environment that promotes professional growth and engagement.",
+        "People drive excellence and are the most valuable asset in a company. When they take ownership of processes and are engaged in redesign efforts, this involvement ensures and aligns processes with the organization’s goals.",
     },
     pt: {
       title: "Pessoas Engajadas",
       content:
-        "O foco em pessoas garante que cada membro da equipe esteja capacitado e motivado. Desenvolvemos programas de treinamento específicos e criamos um ambiente que promove o crescimento profissional e o engajamento.",
+        "As pessoas são responsáveis pela excelência e representam o ativo mais valioso de uma empresa. Quando se tornam donas dos processos e estão engajadas no redesenho, esse envolvimento assegura e direciona os processos para resultados alinhados aos objetivos organizacionais.",
     },
   },
   tecnologia: {
     en: {
       title: "Innovative Technology",
       content:
-        "We use advanced technological solutions to automate processes and improve efficiency. Our approach integrates modern tools that facilitate work and increase operational accuracy.",
+        "Technology is the third driver of the solution, optimizing processes and boosting results. Machine learning and artificial intelligence are used to correlate data with process stages, identifying improvement opportunities and prioritization needs. This focus enables the creation of customized management solutions tailored to each client’s specific reality.",
     },
     pt: {
       title: "Tecnologia Inovadora",
       content:
-        "Utilizamos soluções tecnológicas avançadas para automatizar processos e melhorar a eficiência. Nossa abordagem integra ferramentas modernas que facilitam o trabalho e aumentam a precisão das operações.",
+        "A tecnologia é a terceira alavanca da solução, otimizando processos e impulsionando resultados. Machine learning e inteligência artificial são utilizados para correlacionar dados com as etapas dos processos, identificando oportunidades de melhoria e de priorização. Esse foco possibilita a criação de soluções de gestão personalizadas, adaptadas à realidade de cada cliente.",
     },
   },
   metricas: {
