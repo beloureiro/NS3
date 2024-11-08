@@ -75,43 +75,37 @@ const TabsContent = ({ children, value, className }) => {
   ) : null;
 };
 
-// New Advanced Analysis Explanation Section with enhanced styling and adjusted icon spacing
-const AdvancedAnalysisExplanation = () => {
+// Advanced Analysis Explanation with customizable size and spacing
+const AdvancedAnalysisExplanation = ({ language }) => {
+  const t = translations[language];
   return (
     <div className="bg-slate-800 p-6 rounded-lg">
-      <div className="flex items-center justify-center gap-4">
-        {/* Process Mapping Step */}
-        <div className="bg-slate-700 p-4 rounded-lg flex flex-col items-center">
-          <Waypoints className="text-emerald-400 mb-2" size={28} />
-          <p className="text-slate-300 text-sm text-center">
-            Mapeamento do processo
-          </p>
+      <div className="flex items-center justify-center gap-6"> {/* Ajuste do espaçamento entre os elementos */}
+        
+        {/* Step 1 - Process Mapping */}
+        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center"> {/* Ajuste do padding */}
+          <Waypoints className="text-emerald-400 mb-3" size={34} /> {/* Ajuste do tamanho do ícone */}
+          <p className="text-slate-300 text-base text-center">{t.processMapping}</p> {/* Ajuste do tamanho do texto */}
         </div>
 
-        <ArrowRightLeft className="text-emerald-400" size={24} />
+        <ArrowRightLeft className="text-emerald-400" size={28} /> {/* Ajuste do tamanho do ícone de seta */}
 
-        {/* AI Processing Step */}
-        <div className="bg-slate-700 p-4 rounded-lg flex flex-col items-center">
-          <div className="flex items-center gap-7 mb-2">
-            {/* Aumentei o valor do gap para 4 para dar mais espaço entre os ícones */}
-            <Cpu className="text-emerald-400" size={28} />
-            <Plus className="text-emerald-400" size={18} />
-            <ChartNetwork className="text-emerald-400" size={28} />{" "}
-            {/* chart-network icon */}
+        {/* Step 2 - AI Processing */}
+        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
+          <div className="flex items-center gap-5 mb-3"> {/* Ajuste do espaçamento entre os ícones */}
+            <Cpu className="text-emerald-400" size={34} /> {/* Ajuste do tamanho do ícone */}
+            <Plus className="text-emerald-400" size={20} />
+            <ChartNetwork className="text-emerald-400" size={34} />
           </div>
-          <p className="text-slate-300 text-sm text-center">
-            Processamento IA correlacionado ao mapeamento
-          </p>
+          <p className="text-slate-300 text-base text-center">{t.aiProcessing}</p> {/* Ajuste do tamanho do texto */}
         </div>
 
-        <ArrowRightLeft className="text-emerald-400" size={24} />
+        <ArrowRightLeft className="text-emerald-400" size={28} /> {/* Ajuste do tamanho do ícone de seta */}
 
-        {/* Complexity Matrix Step */}
-        <div className="bg-slate-700 p-4 rounded-lg flex flex-col items-center">
-          <Grid2x2 className="text-emerald-400 mb-2" size={28} />
-          <p className="text-slate-300 text-sm text-center">
-            Matriz de complexidade
-          </p>
+        {/* Step 3 - Complexity Matrix */}
+        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
+          <Grid2x2 className="text-emerald-400 mb-3" size={34} /> {/* Ajuste do tamanho do ícone */}
+          <p className="text-slate-300 text-base text-center">{t.complexityMatrix}</p> {/* Ajuste do tamanho do texto */}
         </div>
       </div>
     </div>
@@ -184,6 +178,14 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 <h1 className="text-3xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
               <p className="text-white text-lg text-left mb-4">{t.subtitle}</p>
+
+              {/* Language switch button removed */}
+              {/* <button
+                onClick={() => setLanguage(language === "en" ? "pt" : "en")}
+                className="mb-4 px-4 py-2 bg-gray-700 text-white rounded-md"
+              >
+                {language === "en" ? "Switch to Portuguese" : "Switch to English"}
+              </button> */}
 
               {/* (1) Tabs component */}
               <Tabs
@@ -325,7 +327,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 {/* (3) Tabs content for diagnostic */}
                 <TabsContent value="diagnostic" className="space-y-6">
                   {/* New Advanced Analysis Explanation */}
-                  <AdvancedAnalysisExplanation />
+                  <AdvancedAnalysisExplanation language={language} />
                 </TabsContent>
 
                 <TabsContent value="action" className="space-y-6">

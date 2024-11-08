@@ -17,6 +17,9 @@ export const translations = {
     metrics: "We use advanced metrics to classify processes:",
     actionPlanTitle: "Action Plan and Audit",
     transformationProcess: "Complete management of the transformation process:",
+    processMapping: "Process Mapping",
+    aiProcessing: "AI Processing Correlated to Mapping",
+    complexityMatrix: "Complexity Matrix",
   },
   pt: {
     title: "Metodologia InProcess",
@@ -36,6 +39,9 @@ export const translations = {
     metrics: "Utilizamos métricas avançadas para classificar processos:",
     actionPlanTitle: "Plano de Ação e Auditoria",
     transformationProcess: "Gestão completa do processo de transformação:",
+    processMapping: "Mapeamento do processo",
+    aiProcessing: "Processamento IA correlacionado ao mapeamento",
+    complexityMatrix: "Matriz de complexidade",
   },
 };
 
