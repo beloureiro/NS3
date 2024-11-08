@@ -70,7 +70,8 @@ const TabsContent = ({ children, value, className }) => {
 
 // Main component for the InProcess Methodology section
 const InProcessMethodology = ({ language, setLanguage }) => {
-  const [selectedItem, setSelectedItem] = useState(null);
+  // Set initial state of selectedItem to "processos" to show "Processes" explanation by default
+  const [selectedItem, setSelectedItem] = useState("processos");
   const [currentTab, setCurrentTab] = useState("overview");
 
   // Get translations based on selected language
@@ -99,8 +100,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
       processos: <Workflow className="w-8 h-8 text-blue-400" />,
       pessoas: <Users className="w-8 h-8 text-purple-400" />,
       tecnologia: <Cpu className="w-8 h-8 text-green-400" />,
-      diagnostico: <ClipboardCheck className="w-8 h-8 text-blue-400" />, // Ensure the icon is ClipboardCheck
-      planoAcao: <LayoutList className="w-8 h-8 text-green-400" />, // Update the icon here
+      diagnostico: <ClipboardCheck className="w-8 h-8 text-blue-400" />,
+      planoAcao: <LayoutList className="w-8 h-8 text-green-400" />,
       metricas: <Search className="w-8 h-8 text-blue-400" />,
       beneficios: <BarChart className="w-8 h-8 text-yellow-400" />,
     };
@@ -112,7 +113,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
   // Handler for tab changes
   const handleTabChange = (newTab) => {
     setCurrentTab(newTab);
-    setSelectedItem(null);
+    setSelectedItem(null); // Reset selectedItem on tab change
   };
 
   return (
@@ -129,7 +130,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
               </div>
               <p className="text-white text-lg text-left mb-4">{t.subtitle}</p>
 
-              {/* Tabs component */}
+              {/* (1) Tabs component */}
               <Tabs
                 defaultValue="overview"
                 className="space-y-6"
@@ -210,18 +211,21 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                       >
                         2
                       </div>
-                      <LayoutList className="w-4 h-4" />{" "}
-                      {/* Update the icon here */}
+                      <LayoutList className="w-4 h-4" />
                       <span>{t.actionPlan}</span>
                     </div>
                   </TabsTrigger>
                 </div>
 
-                {/* Tabs content for each tab */}
+                {/* (2) Tabs content for overview */}
                 <TabsContent value="overview" className="space-y-4">
                   <div className="grid grid-cols-3 gap-6">
                     <div
-                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 hover:border-blue-500 transition-colors cursor-pointer"
+                      className={`bg-gray-700 p-6 rounded-[5px] border ${
+                        selectedItem === "processos"
+                          ? "border-blue-500"
+                          : "border-gray-600"
+                      } hover:border-blue-500 transition-colors cursor-pointer`}
                       onClick={() => setSelectedItem("processos")}
                     >
                       <div className="flex items-center space-x-2 mb-4">
@@ -231,7 +235,11 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                       <p className="text-gray-400">{t.processesDesc}</p>
                     </div>
                     <div
-                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 hover:border-purple-500 transition-colors cursor-pointer"
+                      className={`bg-gray-700 p-6 rounded-[5px] border ${
+                        selectedItem === "pessoas"
+                          ? "border-purple-500"
+                          : "border-gray-600"
+                      } hover:border-purple-500 transition-colors cursor-pointer`}
                       onClick={() => setSelectedItem("pessoas")}
                     >
                       <div className="flex items-center space-x-2 mb-4">
@@ -241,7 +249,11 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                       <p className="text-gray-400">{t.peopleDesc}</p>
                     </div>
                     <div
-                      className="bg-gray-700 p-6 rounded-[5px] border border-gray-600 hover:border-green-500 transition-colors cursor-pointer"
+                      className={`bg-gray-700 p-6 rounded-[5px] border ${
+                        selectedItem === "tecnologia"
+                          ? "border-green-500"
+                          : "border-gray-600"
+                      } hover:border-green-500 transition-colors cursor-pointer`}
                       onClick={() => setSelectedItem("tecnologia")}
                     >
                       <div className="flex items-center space-x-2 mb-4">
@@ -300,9 +312,19 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </TabsContent>
               </Tabs>
 
-              {/* Explanation section based on selected tab and item */}
+              {/* (3) Explanation section */}
               <div className="mt-8">
-                <div className="bg-gray-700 p-6 rounded-[5px] border border-gray-600">
+                <div
+                  className={`bg-gray-700 p-6 rounded-[5px] border ${
+                    selectedItem === "processos"
+                      ? "border-blue-500"
+                      : selectedItem === "pessoas"
+                      ? "border-purple-500"
+                      : selectedItem === "tecnologia"
+                      ? "border-green-500"
+                      : "border-gray-600"
+                  }`}
+                >
                   <div className="flex items-center space-x-4 mb-4">
                     {getIcon(selectedItem || tabToExplanationMap[currentTab])}
                     <h3 className="text-xl font-semibold text-[#00ff9d]">
