@@ -331,12 +331,12 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         <h3 className="text-emerald-400 font-semibold text-md mb-2">
                           {" "}
                           {/* Adjusted font size */}
-                          Action Plan
+                          {t.actionPlan}
                         </h3>
                         <p className="text-slate-300 text-sm text-center max-w-xs">
                           {" "}
                           {/* Adjusted font size */}
-                          Manage and track interventions along timelines
+                          {t.manageTrack}
                         </p>
                       </div>
 
@@ -344,11 +344,11 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         <ArrowRightLeft className="text-emerald-400 w-5 h-5 mb-1" />{" "}
                         {/* Reduced icon size */}
                         <span className="text-slate-400 text-xs">
-                          Continuous
+                          {t.continuous}
                         </span>{" "}
                         {/* Adjusted font size */}
                         <span className="text-slate-400 text-xs">
-                          Monitoring
+                          {t.monitoring}
                         </span>{" "}
                         {/* Adjusted font size */}
                       </div>
@@ -365,12 +365,12 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         <h3 className="text-emerald-400 font-semibold text-md mb-2">
                           {" "}
                           {/* Adjusted font size */}
-                          Audit Tool
+                          {t.auditTool}
                         </h3>
                         <p className="text-slate-300 text-sm text-center max-w-xs">
                           {" "}
                           {/* Adjusted font size */}
-                          Monitor and evaluate process performance
+                          {t.monitorEvaluate}
                         </p>
                       </div>
                     </div>

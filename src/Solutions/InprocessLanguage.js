@@ -21,6 +21,10 @@ export const translations = {
     aiProcessing: "AI Processing Correlated to Mapping",
     complexityMatrix: "Complexity Matrix",
     auditTool: "Audit Tool",
+    manageTrack: "Manage and track along timelines",
+    continuous: "Continuous",
+    monitoring: "Monitoring",
+    monitorEvaluate: "Monitor and evaluate process performance",
   },
   pt: {
     title: "Metodologia InProcess",
@@ -44,6 +48,10 @@ export const translations = {
     aiProcessing: "Processamento IA correlacionado ao mapeamento",
     complexityMatrix: "Matriz de complexidade",
     auditTool: "Ferramenta de auditoria",
+    manageTrack: "Gerenciar e acompanhar ao longo do tempo",
+    continuous: "Contínuo",
+    monitoring: "Monitoramento",
+    monitorEvaluate: "Monitorar e avaliar o desempenho do processo",
   },
 };
 
