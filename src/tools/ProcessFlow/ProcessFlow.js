@@ -373,166 +373,170 @@ const ProcessFlowDiagramApp = ({ language = 'en' }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="bg-[#000000] text-[#b3b3b3] min-h-screen w-full p-4 sm:p-8">
-        {/* Header section with the title and subtitle */}
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
-          <div className="text-center flex-1">
-            <h1 className="text-3xl font-bold mb-2 text-[#ffffff]">
-              {t.title}
-            </h1>
-            <p className="text-lg italic text-[#808080]">{t.subtitle}</p>
-          </div>
-        </div>
-        {/* Tutorial component */}
-        <Tutorial
-          language={language}
-          isOpen={isTutorialOpen}
-          toggleTutorial={toggleTutorial}
-        />
-        {/* Form to set the process title and description */}
-        <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-6 border border-[#333333]">
-          {!isTitleSet ? (
-            <div className="mb-4">
-              {/* Input for process title */}
-              <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder={t.enterProcessTitle}
-                className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-4 focus:border-[#00ff9d] focus:outline-none"
-              />
-              {/* Textarea for process description */}
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder={t.enterProcessDescription}
-                className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-4 focus:border-[#00ff9d] focus:outline-none"
-              />
-              <div className="flex justify-between items-center">
-                {/* Button to set the title */}
-                <button
-                  onClick={setProcessTitle}
-                  className="bg-[#00cc7d] hover:bg-[#00ff9d] text-[#000000] font-medium p-2 rounded transition-colors duration-200"
-                >
-                  {t.setProcessTitle}
-                </button>
-                {/* Button to import a diagram */}
-                <label className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded cursor-pointer transition-colors duration-200">
-                  <Upload className="mr-2" /> {t.importDiagram}
-                  <input
-                    type="file"
-                    accept=".json"
-                    onChange={handleImport}
-                    className="hidden"
-                  />
-                </label>
-              </div>
+      <div className="bg-[#000000] text-[#b3b3b3] w-full p-4 pt-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Header section with updated title color */}
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
+            <div className="text-center flex-1">
+              <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-[#00ff9d] to-[#00cc7d] text-transparent bg-clip-text">
+                {t.title}
+              </h1>
+              <p className="text-lg italic text-[#808080]">{t.subtitle}</p>
             </div>
-          ) : (
-            /* Form to add a new process */
-            <AddProcessForm
-              processes={processes}
-              currentLevel={currentLevel}
-              setCurrentLevel={setCurrentLevel}
-              processName={processName}
-              setProcessName={setProcessName}
-              parentProcess={parentProcess}
-              setParentProcess={setParentProcess}
-              addProcess={addProcess}
-              error={error}
-              setError={setError}
-              t={t}
-              className="bg-[#0d0d0d] text-[#b3b3b3] border-[#333333] focus:border-[#00ff9d]"
-            />
-          )}
-        </div>
-        {/* Display the process title and description */}
-        {isTitleSet && (
-          <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-5 relative border border-[#333333]">
-            {isEditingTitle ? (
+          </div>
+          {/* Tutorial component */}
+          <Tutorial
+            language={language}
+            isOpen={isTutorialOpen}
+            toggleTutorial={toggleTutorial}
+          />
+          {/* Form to set the process title and description */}
+          <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-6 border border-[#333333]">
+            {!isTitleSet ? (
               <div className="mb-4">
-                {/* Input fields to edit title and description */}
+                {/* Input for process title */}
                 <input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-2 focus:border-[#00ff9d] focus:outline-none"
+                  placeholder={t.enterProcessTitle}
+                  className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-4 focus:border-[#00ff9d] focus:outline-none"
                 />
+                {/* Textarea for process description */}
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-2 focus:border-[#00ff9d] focus:outline-none"
+                  placeholder={t.enterProcessDescription}
+                  className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-4 focus:border-[#00ff9d] focus:outline-none"
                 />
-                <button
-                  onClick={setProcessTitle}
-                  className="bg-[#00ff9d] hover:bg-[#00cc7d] text-[#000000] font-medium p-2 rounded transition-colors duration-200"
-                >
-                  {t.setProcessTitle}
-                </button>
+                <div className="flex justify-between items-center">
+                  {/* Button to set the title */}
+                  <button
+                    onClick={setProcessTitle}
+                    className="bg-[#00cc7d] hover:bg-[#00ff9d] text-[#000000] font-medium p-2 rounded transition-colors duration-200"
+                  >
+                    {t.setProcessTitle}
+                  </button>
+                  {/* Button to import a diagram */}
+                  <label className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded cursor-pointer transition-colors duration-200">
+                    <Upload className="mr-2" /> {t.importDiagram}
+                    <input
+                      type="file"
+                      accept=".json"
+                      onChange={handleImport}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
               </div>
             ) : (
-              <>
-                <div className="border-b border-[#333333] pb-4 flex flex-col items-center">
-                  <h2 className="text-xl font-semibold text-[#ffffff] text-center">
-                    {title}
-                  </h2>
-                  {description && (
-                    <p className="text-[#cccccc] mt-1 text-center">
-                      {description}
-                    </p>
-                  )}
-                </div>
-                <button
-                  onClick={editTitle}
-                  className="absolute top-2 right-2 text-[#808080] hover:text-[#b3b3b3] transition-colors duration-200"
-                  title={t.editTitle}
-                >
-                  <MoreVertical className="h-5 w-5" />
-                </button>
-              </>
+              /* Form to add a new process */
+              <AddProcessForm
+                processes={processes}
+                currentLevel={currentLevel}
+                setCurrentLevel={setCurrentLevel}
+                processName={processName}
+                setProcessName={setProcessName}
+                parentProcess={parentProcess}
+                setParentProcess={setParentProcess}
+                addProcess={addProcess}
+                error={error}
+                setError={setError}
+                t={t}
+                className="bg-[#0d0d0d] text-[#b3b3b3] border-[#333333] focus:border-[#00ff9d]"
+              />
             )}
           </div>
-        )}
-        {/* Display the process flow diagram */}
-        {isTitleSet && (
-          <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg overflow-x-auto mb-6 border border-[#333333]">
-            <ProcessLevel
-              processes={processes}
-              level="1"
-              isRoot={true}
-              selectedId={selectedId}
-              onSelect={handleSelect}
-              onEdit={handleEdit}
-              onMove={handleMove}
-              onDelete={handleDelete}
-              className="bg-[#0d0d0d] text-[#b3b3b3] border-[#333333]"
-            />
+          {/* Display the process title and description */}
+          {isTitleSet && (
+            <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-5 relative border border-[#333333]">
+              {isEditingTitle ? (
+                <div className="mb-4">
+                  {/* Input fields to edit title and description */}
+                  <input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-2 focus:border-[#00ff9d] focus:outline-none"
+                  />
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-2 focus:border-[#00ff9d] focus:outline-none"
+                  />
+                  <button
+                    onClick={setProcessTitle}
+                    className="bg-[#00ff9d] hover:bg-[#00cc7d] text-[#000000] font-medium p-2 rounded transition-colors duration-200"
+                  >
+                    {t.setProcessTitle}
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="border-b border-[#333333] pb-4 flex flex-col items-center">
+                    <h2 className="text-xl font-semibold text-[#ffffff] text-center">
+                      {title}
+                    </h2>
+                    {description && (
+                      <p className="text-[#cccccc] mt-1 text-center">
+                        {description}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={editTitle}
+                    className="absolute top-2 right-2 text-[#808080] hover:text-[#b3b3b3] transition-colors duration-200"
+                    title={t.editTitle}
+                  >
+                    <MoreVertical className="h-5 w-5" />
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+          {/* Display the process flow diagram */}
+          {isTitleSet && (
+            <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg overflow-x-auto mb-6 border border-[#333333]">
+              <ProcessLevel
+                processes={processes}
+                level="1"
+                isRoot={true}
+                selectedId={selectedId}
+                onSelect={handleSelect}
+                onEdit={handleEdit}
+                onMove={handleMove}
+                onDelete={handleDelete}
+                className="bg-[#0d0d0d] text-[#b3b3b3] border-[#333333]"
+              />
+            </div>
+          )}
+          {/* Export and Import buttons */}
+          {isTitleSet && (
+            <div className="flex justify-end space-x-2 mb-2">
+              <button
+                onClick={handleExport}
+                className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200"
+              >
+                <Download className="mr-2" /> {t.exportDiagram}
+              </button>
+              <button
+                onClick={() => handleImportClick(fileInputRef)}
+                className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200"
+              >
+                <Upload className="mr-2" /> {t.importDiagram}
+              </button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImport}
+                style={{ display: "none" }}
+                accept=".json"
+              />
+            </div>
+          )}
+          {/* Contact section */}
+          <div className="mt-8">
+            <ContactSection />
           </div>
-        )}
-        {/* Export and Import buttons */}
-        {isTitleSet && (
-          <div className="flex justify-end space-x-2">
-            <button
-              onClick={handleExport}
-              className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200"
-            >
-              <Download className="mr-2" /> {t.exportDiagram}
-            </button>
-            <button
-              onClick={() => handleImportClick(fileInputRef)}
-              className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200"
-            >
-              <Upload className="mr-2" /> {t.importDiagram}
-            </button>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleImport}
-              style={{ display: "none" }}
-              accept=".json"
-            />
-          </div>
-        )}
-        {/* Contact section */}
-        <ContactSection />
+        </div>
       </div>
     </DndProvider>
   );
