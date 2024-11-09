@@ -14,7 +14,6 @@ import {
   Plus,
   ChartNetwork,
   Target,
-  Activity,
   SquareActivity,
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
@@ -77,33 +76,39 @@ const TabsContent = ({ children, value, className }) => {
   ) : null;
 };
 
-// Advanced Analysis Explanation with customizable size and spacing
+// Advanced Analysis Explanation with reduced padding and size adjustments
 const AdvancedAnalysisExplanation = ({ language }) => {
   const t = translations[language];
   return (
-    <div className="bg-slate-800 p-6 rounded-lg">
-      <div className="flex items-center justify-center gap-6">
-        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
-          <Waypoints className="text-emerald-400 mb-3" size={34} />
-          <p className="text-slate-300 text-base text-center">
+    <div className="bg-slate-800 p-4 rounded-lg">
+      {" "}
+      {/* Adjusted padding to reduce height */}
+      <div className="flex items-center justify-center gap-4">
+        {" "}
+        {/* Reduced gap between elements */}
+        <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+          {" "}
+          {/* Reduced padding and controlled width */}
+          <Waypoints className="text-emerald-400 mb-2" size={28} />{" "}
+          {/* Reduced icon size */}
+          <p className="text-slate-300 text-sm text-center">
             {t.processMapping}
           </p>
         </div>
-        <ArrowRightLeft className="text-emerald-400" size={28} />
-        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
-          <div className="flex items-center gap-5 mb-3">
-            <Cpu className="text-emerald-400" size={34} />
-            <Plus className="text-emerald-400" size={20} />
-            <ChartNetwork className="text-emerald-400" size={34} />
+        <ArrowRightLeft className="text-emerald-400" size={24} />{" "}
+        {/* Reduced icon size */}
+        <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+          <div className="flex items-center gap-4 mb-2">
+            <Cpu className="text-emerald-400" size={28} />
+            <Plus className="text-emerald-400" size={18} />
+            <ChartNetwork className="text-emerald-400" size={28} />
           </div>
-          <p className="text-slate-300 text-base text-center">
-            {t.aiProcessing}
-          </p>
+          <p className="text-slate-300 text-sm text-center">{t.aiProcessing}</p>
         </div>
-        <ArrowRightLeft className="text-emerald-400" size={28} />
-        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
-          <Grid2x2 className="text-emerald-400 mb-3" size={34} />
-          <p className="text-slate-300 text-base text-center">
+        <ArrowRightLeft className="text-emerald-400" size={24} />
+        <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+          <Grid2x2 className="text-emerald-400 mb-2" size={28} />
+          <p className="text-slate-300 text-sm text-center">
             {t.complexityMatrix}
           </p>
         </div>
@@ -112,27 +117,7 @@ const AdvancedAnalysisExplanation = ({ language }) => {
   );
 };
 
-// Action Plan and Audit Explanation similar to the Diagnostic & Classification style
-const ActionAuditExplanation = ({ language }) => {
-  const t = translations[language];
-  return (
-    <div className="bg-slate-800 p-6 rounded-lg">
-      <div className="flex items-center justify-center gap-6">
-        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
-          <Target className="text-emerald-400 mb-3" size={34} />
-          <p className="text-slate-300 text-base text-center">{t.actionPlan}</p>
-        </div>
-        <ArrowRightLeft className="text-emerald-400" size={28} />
-        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
-          <SquareActivity className="text-emerald-400 mb-3" size={34} />
-          <p className="text-slate-300 text-base text-center">{t.auditTool}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Main component for the InProcess Methodology section
+// Integrated Action and Audit Explanation with further reduced component dimensions for a more compact rectangular layout
 const InProcessMethodology = ({ language, setLanguage }) => {
   const [selectedItem, setSelectedItem] = useState("processos");
   const [currentTab, setCurrentTab] = useState("overview");
@@ -193,13 +178,13 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
               <Tabs
                 defaultValue="overview"
-                className="space-y-6"
+                className="space-y-4"
                 onTabChange={handleTabChange}
               >
                 <div className="relative flex justify-between items-center w-full bg-gray-700 p-1 rounded-lg">
                   <TabsTrigger
                     value="overview"
-                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all"
+                    className="relative flex items-center space-x-2 px-4 py-1 rounded-md transition-all"
                   >
                     <Search className="w-4 h-4" />
                     <span>{t.overview}</span>
@@ -224,7 +209,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
                   <TabsTrigger
                     value="diagnostic"
-                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all"
+                    className="relative flex items-center space-x-2 px-4 py-1 rounded-md transition-all"
                   >
                     <div className="flex items-center space-x-2">
                       <div
@@ -258,7 +243,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
                   <TabsTrigger
                     value="action"
-                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all"
+                    className="relative flex items-center space-x-2 px-4 py-1 rounded-md transition-all"
                   >
                     <div className="flex items-center space-x-2">
                       <div
@@ -279,42 +264,42 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 <TabsContent value="overview" className="space-y-4">
                   <div className="grid grid-cols-3 gap-6">
                     <div
-                      className={`bg-gray-700 p-6 rounded-[5px] border ${
+                      className={`bg-gray-700 p-4 rounded-[5px] border ${
                         selectedItem === "processos"
                           ? "border-blue-500"
                           : "border-gray-600"
                       } hover:border-blue-500 transition-colors cursor-pointer`}
                       onClick={() => setSelectedItem("processos")}
                     >
-                      <div className="flex items-center space-x-2 mb-4">
+                      <div className="flex items-center space-x-2 mb-2">
                         <Workflow className="w-8 h-8 text-blue-400" />
                         <h3 className="text-lg font-semibold">{t.processes}</h3>
                       </div>
                       <p className="text-gray-400">{t.processesDesc}</p>
                     </div>
                     <div
-                      className={`bg-gray-700 p-6 rounded-[5px] border ${
+                      className={`bg-gray-700 p-4 rounded-[5px] border ${
                         selectedItem === "pessoas"
                           ? "border-purple-500"
                           : "border-gray-600"
                       } hover:border-purple-500 transition-colors cursor-pointer`}
                       onClick={() => setSelectedItem("pessoas")}
                     >
-                      <div className="flex items-center space-x-2 mb-4">
+                      <div className="flex items-center space-x-2 mb-2">
                         <Users className="w-8 h-8 text-purple-400" />
                         <h3 className="text-lg font-semibold">{t.people}</h3>
                       </div>
                       <p className="text-gray-400">{t.peopleDesc}</p>
                     </div>
                     <div
-                      className={`bg-gray-700 p-6 rounded-[5px] border ${
+                      className={`bg-gray-700 p-4 rounded-[5px] border ${
                         selectedItem === "tecnologia"
                           ? "border-green-500"
                           : "border-gray-600"
                       } hover:border-green-500 transition-colors cursor-pointer`}
                       onClick={() => setSelectedItem("tecnologia")}
                     >
-                      <div className="flex items-center space-x-2 mb-4">
+                      <div className="flex items-center space-x-2 mb-2">
                         <Cpu className="w-8 h-8 text-green-400" />
                         <h3 className="text-lg font-semibold">
                           {t.technology}
@@ -329,12 +314,71 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   <AdvancedAnalysisExplanation language={language} />
                 </TabsContent>
 
-                <TabsContent value="action" className="space-y-6">
-                  <ActionAuditExplanation language={language} />
+                <TabsContent value="action" className="space-y-4">
+                  <div className="bg-slate-800 p-3 rounded-lg my-4">
+                    {" "}
+                    {/* Reduced padding further */}
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="bg-slate-700 p-2 rounded-lg flex flex-col items-center transform hover:scale-105 transition-transform cursor-pointer w-full md:w-[35%]">
+                        {" "}
+                        {/* Adjusted width to be more rectangular */}
+                        <div className="bg-slate-600/50 p-2 rounded-full mb-2">
+                          {" "}
+                          {/* Reduced icon padding */}
+                          <Target className="text-emerald-400 w-8 h-8" />{" "}
+                          {/* Further reduced icon size */}
+                        </div>
+                        <h3 className="text-emerald-400 font-semibold text-md mb-2">
+                          {" "}
+                          {/* Adjusted font size */}
+                          Action Plan
+                        </h3>
+                        <p className="text-slate-300 text-sm text-center max-w-xs">
+                          {" "}
+                          {/* Adjusted font size */}
+                          Manage and track interventions along timelines
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col items-center justify-center">
+                        <ArrowRightLeft className="text-emerald-400 w-5 h-5 mb-1" />{" "}
+                        {/* Reduced icon size */}
+                        <span className="text-slate-400 text-xs">
+                          Continuous
+                        </span>{" "}
+                        {/* Adjusted font size */}
+                        <span className="text-slate-400 text-xs">
+                          Monitoring
+                        </span>{" "}
+                        {/* Adjusted font size */}
+                      </div>
+
+                      <div className="bg-slate-700 p-2 rounded-lg flex flex-col items-center transform hover:scale-105 transition-transform cursor-pointer w-full md:w-[35%]">
+                        {" "}
+                        {/* Adjusted width to be more rectangular */}
+                        <div className="bg-slate-600/50 p-2 rounded-full mb-2">
+                          {" "}
+                          {/* Reduced icon padding */}
+                          <SquareActivity className="text-emerald-400 w-8 h-8" />{" "}
+                          {/* Further reduced icon size */}
+                        </div>
+                        <h3 className="text-emerald-400 font-semibold text-md mb-2">
+                          {" "}
+                          {/* Adjusted font size */}
+                          Audit Tool
+                        </h3>
+                        <p className="text-slate-300 text-sm text-center max-w-xs">
+                          {" "}
+                          {/* Adjusted font size */}
+                          Monitor and evaluate process performance
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </TabsContent>
               </Tabs>
 
-              <div className="mt-8">
+              <div className="mt-4">
                 <div
                   className={`bg-gray-700 p-6 rounded-[5px] border ${
                     selectedItem === "processos"
