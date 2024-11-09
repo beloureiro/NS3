@@ -19,9 +19,12 @@ import {
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
 
-// Component for creating a card with specific background and border style
+// Component for creating a card with specific background and border style and fixed height
 const Card = ({ children, className }) => (
-  <div className={`bg-gray-800 border-gray-700 rounded-[10px] ${className}`}>
+  <div
+    className={`bg-gray-800 border-gray-700 rounded-[10px] ${className}`}
+    style={{ minHeight: "60px" }} // Set a minimum height to keep it consistent across tabs
+  >
     {children}
   </div>
 );
@@ -81,22 +84,14 @@ const AdvancedAnalysisExplanation = ({ language }) => {
   const t = translations[language];
   return (
     <div className="bg-slate-800 p-4 rounded-lg">
-      {" "}
-      {/* Adjusted padding to reduce height */}
       <div className="flex items-center justify-center gap-4">
-        {" "}
-        {/* Reduced gap between elements */}
         <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
-          {" "}
-          {/* Reduced padding and controlled width */}
-          <Waypoints className="text-emerald-400 mb-2" size={28} />{" "}
-          {/* Reduced icon size */}
+          <Waypoints className="text-emerald-400 mb-2" size={28} />
           <p className="text-slate-300 text-sm text-center">
             {t.processMapping}
           </p>
         </div>
-        <ArrowRightLeft className="text-emerald-400" size={24} />{" "}
-        {/* Reduced icon size */}
+        <ArrowRightLeft className="text-emerald-400" size={24} />
         <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
           <div className="flex items-center gap-4 mb-2">
             <Cpu className="text-emerald-400" size={28} />
@@ -169,6 +164,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
       <div>
         <div className="max-w-screen-lg mx-auto px-6">
           <Card className="bg-gray-800 border-gray-700">
+            {/* Main content area */}
             <CardContent className="p-6">
               <div className="flex items-center mb-4 space-x-4">
                 <Waypoints className="w-10 h-10 text-[#00ff9d]" />
@@ -181,6 +177,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 className="space-y-4"
                 onTabChange={handleTabChange}
               >
+                {/* Tab navigation */}
                 <div className="relative flex justify-between items-center w-full bg-gray-700 p-1 rounded-lg">
                   <TabsTrigger
                     value="overview"
@@ -261,6 +258,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </TabsTrigger>
                 </div>
 
+                {/* Tab content */}
                 <TabsContent value="overview" className="space-y-4">
                   <div className="grid grid-cols-3 gap-6">
                     <div
@@ -316,60 +314,37 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
                 <TabsContent value="action" className="space-y-4">
                   <div className="bg-slate-800 p-3 rounded-lg my-4">
-                    {" "}
-                    {/* Reduced padding further */}
                     <div className="flex items-center justify-center gap-3">
                       <div className="bg-slate-700 p-2 rounded-lg flex flex-col items-center transform hover:scale-105 transition-transform cursor-pointer w-full md:w-[35%]">
-                        {" "}
-                        {/* Adjusted width to be more rectangular */}
                         <div className="bg-slate-600/50 p-2 rounded-full mb-2">
-                          {" "}
-                          {/* Reduced icon padding */}
-                          <Target className="text-emerald-400 w-8 h-8" />{" "}
-                          {/* Further reduced icon size */}
+                          <Target className="text-emerald-400 w-8 h-8" />
                         </div>
                         <h3 className="text-emerald-400 font-semibold text-md mb-2">
-                          {" "}
-                          {/* Adjusted font size */}
                           {t.actionPlanOnly}
                         </h3>
                         <p className="text-slate-300 text-sm text-center max-w-xs">
-                          {" "}
-                          {/* Adjusted font size */}
                           {t.manageTrack}
                         </p>
                       </div>
 
                       <div className="flex flex-col items-center justify-center">
-                        <ArrowRightLeft className="text-emerald-400 w-5 h-5 mb-1" />{" "}
-                        {/* Reduced icon size */}
+                        <ArrowRightLeft className="text-emerald-400 w-5 h-5 mb-1" />
                         <span className="text-slate-400 text-xs">
                           {t.continuous}
-                        </span>{" "}
-                        {/* Adjusted font size */}
+                        </span>
                         <span className="text-slate-400 text-xs">
                           {t.monitoring}
-                        </span>{" "}
-                        {/* Adjusted font size */}
+                        </span>
                       </div>
 
                       <div className="bg-slate-700 p-2 rounded-lg flex flex-col items-center transform hover:scale-105 transition-transform cursor-pointer w-full md:w-[35%]">
-                        {" "}
-                        {/* Adjusted width to be more rectangular */}
                         <div className="bg-slate-600/50 p-2 rounded-full mb-2">
-                          {" "}
-                          {/* Reduced icon padding */}
-                          <SquareActivity className="text-emerald-400 w-8 h-8" />{" "}
-                          {/* Further reduced icon size */}
+                          <SquareActivity className="text-emerald-400 w-8 h-8" />
                         </div>
                         <h3 className="text-emerald-400 font-semibold text-md mb-2">
-                          {" "}
-                          {/* Adjusted font size */}
                           {t.auditTool}
                         </h3>
                         <p className="text-slate-300 text-sm text-center max-w-xs">
-                          {" "}
-                          {/* Adjusted font size */}
                           {t.monitorEvaluate}
                         </p>
                       </div>
