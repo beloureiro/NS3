@@ -15,6 +15,7 @@ import {
   ChartNetwork,
   Target,
   Activity,
+  SquareActivity,
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
@@ -84,7 +85,9 @@ const AdvancedAnalysisExplanation = ({ language }) => {
       <div className="flex items-center justify-center gap-6">
         <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
           <Waypoints className="text-emerald-400 mb-3" size={34} />
-          <p className="text-slate-300 text-base text-center">{t.processMapping}</p>
+          <p className="text-slate-300 text-base text-center">
+            {t.processMapping}
+          </p>
         </div>
         <ArrowRightLeft className="text-emerald-400" size={28} />
         <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
@@ -93,12 +96,16 @@ const AdvancedAnalysisExplanation = ({ language }) => {
             <Plus className="text-emerald-400" size={20} />
             <ChartNetwork className="text-emerald-400" size={34} />
           </div>
-          <p className="text-slate-300 text-base text-center">{t.aiProcessing}</p>
+          <p className="text-slate-300 text-base text-center">
+            {t.aiProcessing}
+          </p>
         </div>
         <ArrowRightLeft className="text-emerald-400" size={28} />
         <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
           <Grid2x2 className="text-emerald-400 mb-3" size={34} />
-          <p className="text-slate-300 text-base text-center">{t.complexityMatrix}</p>
+          <p className="text-slate-300 text-base text-center">
+            {t.complexityMatrix}
+          </p>
         </div>
       </div>
     </div>
@@ -106,23 +113,19 @@ const AdvancedAnalysisExplanation = ({ language }) => {
 };
 
 // Action Plan and Audit Explanation similar to the Diagnostic & Classification style
-const ActionAuditExplanation = () => {
+const ActionAuditExplanation = ({ language }) => {
+  const t = translations[language];
   return (
-    <div className="bg-slate-800 p-6 rounded-lg"> {/* Ajuste de padding para similaridade */}
-      <div className="flex items-center justify-center gap-6"> {/* Ajuste de espaçamento entre elementos */}
-        
-        {/* Plano de Ação - estilo similar ao Process Mapping */}
-        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center"> {/* Ajuste de padding e bordas */}
-          <Target className="text-emerald-400 mb-3" size={34} /> {/* Tamanho do ícone ajustado para 34 */}
-          <p className="text-slate-300 text-base text-center">Plano de ação</p> {/* Fonte ajustada para text-base */}
-        </div>
-        
-        <ArrowRightLeft className="text-emerald-400" size={28} /> {/* Tamanho do ícone de seta ajustado */}
-
-        {/* Ferramenta de Auditoria - estilo similar ao AI Processing */}
+    <div className="bg-slate-800 p-6 rounded-lg">
+      <div className="flex items-center justify-center gap-6">
         <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
-          <Activity className="text-emerald-400 mb-3" size={34} /> {/* Ícone ajustado para 34 */}
-          <p className="text-slate-300 text-base text-center">Ferramenta de auditoria</p> {/* Fonte ajustada para text-base */}
+          <Target className="text-emerald-400 mb-3" size={34} />
+          <p className="text-slate-300 text-base text-center">{t.actionPlan}</p>
+        </div>
+        <ArrowRightLeft className="text-emerald-400" size={28} />
+        <div className="bg-slate-700 p-5 rounded-lg flex flex-col items-center">
+          <SquareActivity className="text-emerald-400 mb-3" size={34} />
+          <p className="text-slate-300 text-base text-center">{t.auditTool}</p>
         </div>
       </div>
     </div>
@@ -327,7 +330,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </TabsContent>
 
                 <TabsContent value="action" className="space-y-6">
-                  <ActionAuditExplanation />
+                  <ActionAuditExplanation language={language} />
                 </TabsContent>
               </Tabs>
 

@@ -6,7 +6,7 @@ export const translations = {
     back: "Back",
     overview: "Overview",
     diagnostic: "Diagnostic & Classification",
-    actionPlan: "Action Plan & Audit",
+    actionPlan: "Action Plan",
     processes: "Processes",
     processesDesc: "Aligned and Efficient Processes",
     people: "People",
@@ -20,6 +20,7 @@ export const translations = {
     processMapping: "Process Mapping",
     aiProcessing: "AI Processing Correlated to Mapping",
     complexityMatrix: "Complexity Matrix",
+    auditTool: "Audit Tool",
   },
   pt: {
     title: "Metodologia InProcess",
@@ -28,7 +29,7 @@ export const translations = {
     back: "Voltar",
     overview: "Visão Geral",
     diagnostic: "Diagnóstico & Classificação",
-    actionPlan: "Plano de Ação & Auditoria",
+    actionPlan: "Plano de Ação",
     processes: "Processos",
     processesDesc: "Processos Eficientes e Alinhados",
     people: "Pessoas",
@@ -42,6 +43,7 @@ export const translations = {
     processMapping: "Mapeamento do processo",
     aiProcessing: "Processamento IA correlacionado ao mapeamento",
     complexityMatrix: "Matriz de complexidade",
+    auditTool: "Ferramenta de auditoria",
   },
 };
 
