@@ -1,21 +1,42 @@
-import React, { useState, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronLeft, Globe, MoreVertical, Download, Upload } from 'lucide-react';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { translations } from './utils';
-import AddProcessForm from './AddProcessForm';
-import { exportProcessFlow, importProcessFlow, handleImportClick } from './ProcessFlowExportImport';
-import Tutorial from './Tutorial'; // Importando o componente Tutorial
+import React, { useState, useCallback, useRef } from "react";
+import { Link } from "react-router-dom";
+import {
+  ChevronLeft,
+  Globe,
+  MoreVertical,
+  Download,
+  Upload,
+} from "lucide-react";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { translations } from "./utils";
+import AddProcessForm from "./AddProcessForm";
+import {
+  exportProcessFlow,
+  importProcessFlow,
+  handleImportClick,
+} from "./ProcessFlowExportImport";
+import Tutorial from "./Tutorial"; // Importando o componente Tutorial
+import ContactSection from "../../AppComponents/ContactSection";
 
 // Componente para renderizar uma caixa de processo individual
-const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onMove, onDelete }) => {
+const ProcessBox = ({
+  id,
+  level,
+  name,
+  isRoot,
+  isSelected,
+  onSelect,
+  onEdit,
+  onMove,
+  onDelete,
+}) => {
   const [isEditing, setIsEditing] = useState(false); // Estado para controlar se o nome do processo está sendo editado
   const [editedName, setEditedName] = useState(name); // Estado para armazenar o nome do processo durante a edição
 
   // Configuração para permitir que o componente seja arrastável
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: 'process',
+    type: "process",
     item: { id, level }, // Informações do item arrastado
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(), // Controla o estado de arrastamento
@@ -24,23 +45,30 @@ const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onM
 
   // Configuração para permitir que o componente seja um alvo de drop (receber um item arrastado)
   const [, drop] = useDrop(() => ({
-    accept: 'process', // Define o tipo de item que pode ser solto
+    accept: "process", // Define o tipo de item que pode ser solto
     drop: (item) => onMove(item.id, id), // Função a ser chamada ao soltar um item
   }));
 
   // Função para determinar o estilo da caixa com base no nível do processo
   const getStyle = () => {
-    let style = 'p-2 text-center rounded min-w-[120px] shadow-md flex items-center ';
+    let style =
+      "p-2 text-center rounded min-w-[120px] shadow-md flex items-center ";
     if (isRoot) {
-      style += 'text-white font-bold ';
+      style += "text-white font-bold ";
     }
     switch (level) {
-      case '1': return style + 'bg-gray-700 text-white font-bold';
-      case '2': return style + 'bg-gray-600 text-white';
-      case '3': return style + 'bg-gray-500 text-white';
-      case '4': return style + 'bg-gray-400 text-black h-7';
-      case '5': return 'text-white flex items-center pl-4 text-left';
-      default: return style + 'bg-gray-200 text-black';
+      case "1":
+        return style + "bg-gray-700 text-white font-bold";
+      case "2":
+        return style + "bg-gray-600 text-white";
+      case "3":
+        return style + "bg-gray-500 text-white";
+      case "4":
+        return style + "bg-gray-400 text-black h-7";
+      case "5":
+        return "text-white flex items-center pl-4 text-left";
+      default:
+        return style + "bg-gray-200 text-black";
     }
   };
 
@@ -57,18 +85,20 @@ const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onM
 
   // Função para salvar a edição ao pressionar Enter
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleBlur();
     }
   };
 
   return (
-    <div 
+    <div
       ref={(node) => drag(drop(node))} // Configura o elemento para ser arrastável e recebível
-      className={`${getStyle()} ${isSelected ? 'ring-2 ring-blue-500' : ''} ${isDragging ? 'opacity-50' : ''}`} // Aplica estilos condicionalmente
+      className={`${getStyle()} ${isSelected ? "ring-2 ring-blue-500" : ""} ${
+        isDragging ? "opacity-50" : ""
+      }`} // Aplica estilos condicionalmente
       onClick={() => onSelect(id)} // Seleciona o processo ao clicar
       onDoubleClick={handleDoubleClick} // Inicia a edição ao clicar duas vezes
-      style={{ position: 'relative' }} // Para posicionar o ícone
+      style={{ position: "relative" }} // Para posicionar o ícone
     >
       {isEditing ? (
         <input
@@ -81,12 +111,23 @@ const ProcessBox = ({ id, level, name, isRoot, isSelected, onSelect, onEdit, onM
           className="bg-transparent text-inherit w-full text-center"
         />
       ) : (
-        <span className="flex-1">{level === '5' ? (<><span className="mr-1">▸</span> {name}</>) : name}</span> // Exibe o nome do processo ou uma seta caso seja um item de nível 5
+        <span className="flex-1">
+          {level === "5" ? (
+            <>
+              <span className="mr-1">▸</span> {name}
+            </>
+          ) : (
+            name
+          )}
+        </span> // Exibe o nome do processo ou uma seta caso seja um item de nível 5
       )}
-      <button 
-        onClick={(e) => { e.stopPropagation(); onDelete(id); }} // Impede a propagação do evento
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(id);
+        }} // Impede a propagação do evento
         className="absolute top-1 right-1 text-red-500 opacity-0 hover:opacity-100 transition-opacity"
-        style={{ transition: 'opacity 0.2s' }} // Transição suave
+        style={{ transition: "opacity 0.2s" }} // Transição suave
       >
         🗑️
       </button>
@@ -105,23 +146,34 @@ const ArrowRight = () => (
 );
 
 // Componente para renderizar uma linha vertical
-const VerticalLine = () => (
-  <div className="w-0.5 h-4 bg-green-500 my-1"></div>
-);
+const VerticalLine = () => <div className="w-0.5 h-4 bg-green-500 my-1"></div>;
 
 // Componente principal para renderizar um nível do processo
-const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, onEdit, onMove, onDelete }) => {
+const ProcessLevel = ({
+  processes,
+  level,
+  isRoot = false,
+  selectedId,
+  onSelect,
+  onEdit,
+  onMove,
+  onDelete,
+}) => {
   const isHorizontal = parseInt(level) <= 3; // Define se o layout será horizontal ou vertical
 
   return (
-    <div className={`relative ${isHorizontal ? 'flex flex-row items-start' : 'flex flex-col'}`}>
+    <div
+      className={`relative ${
+        isHorizontal ? "flex flex-row items-start" : "flex flex-col"
+      }`}
+    >
       {processes.map((process, index) => (
         <React.Fragment key={process.id}>
-          <div className={`flex flex-col ${level === '4' ? 'mb-1' : ''}`}>
-            <ProcessBox 
+          <div className={`flex flex-col ${level === "4" ? "mb-1" : ""}`}>
+            <ProcessBox
               id={process.id}
-              level={level} 
-              name={process.name} 
+              level={level}
+              name={process.name}
               isRoot={isRoot && index === 0} // Define se é o processo raiz
               isSelected={selectedId === process.id} // Verifica se o processo está selecionado
               onSelect={onSelect} // Função de seleção
@@ -130,11 +182,15 @@ const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, 
               onDelete={onDelete} // Função de exclusão
             />
             {process.children && process.children.length > 0 && (
-              <div className={`flex flex-col items-center ${level === '4' ? 'mt-1' : 'mt-2'}`}>
+              <div
+                className={`flex flex-col items-center ${
+                  level === "4" ? "mt-1" : "mt-2"
+                }`}
+              >
                 <VerticalLine /> {/* Renderiza a linha vertical */}
-                <ProcessLevel 
-                  processes={process.children} 
-                  level={(parseInt(level) + 1).toString()} 
+                <ProcessLevel
+                  processes={process.children}
+                  level={(parseInt(level) + 1).toString()}
                   selectedId={selectedId}
                   onSelect={onSelect}
                   onEdit={onEdit}
@@ -156,13 +212,13 @@ const ProcessLevel = ({ processes, level, isRoot = false, selectedId, onSelect, 
 // Componente principal da aplicação de diagrama de fluxo de processos
 const ProcessFlowDiagramApp = () => {
   const [processes, setProcesses] = useState([]); // Estado para armazenar a lista de processos
-  const [currentLevel, setCurrentLevel] = useState('1'); // Estado para armazenar o nível atual de processo
-  const [processName, setProcessName] = useState(''); // Estado para armazenar o nome do processo sendo adicionado
-  const [parentProcess, setParentProcess] = useState(''); // Estado para armazenar o processo pai selecionado
-  const [error, setError] = useState(''); // Estado para armazenar mensagens de erro
-  const [language, setLanguage] = useState('en'); // Estado para armazenar o idioma da aplicação
-  const [title, setTitle] = useState(''); // Estado para armazenar o título do diagrama
-  const [description, setDescription] = useState(''); // Estado para armazenar a descrição do diagrama
+  const [currentLevel, setCurrentLevel] = useState("1"); // Estado para armazenar o nível atual de processo
+  const [processName, setProcessName] = useState(""); // Estado para armazenar o nome do processo sendo adicionado
+  const [parentProcess, setParentProcess] = useState(""); // Estado para armazenar o processo pai selecionado
+  const [error, setError] = useState(""); // Estado para armazenar mensagens de erro
+  const [language, setLanguage] = useState("en"); // Estado para armazenar o idioma da aplicação
+  const [title, setTitle] = useState(""); // Estado para armazenar o título do diagrama
+  const [description, setDescription] = useState(""); // Estado para armazenar a descrição do diagrama
   const [isTitleSet, setIsTitleSet] = useState(false); // Estado para indicar se o título foi definido
   const [isEditingTitle, setIsEditingTitle] = useState(false); // Estado para controlar a edição do título
   const [selectedId, setSelectedId] = useState(null); // Estado para armazenar o ID do processo selecionado
@@ -173,15 +229,20 @@ const ProcessFlowDiagramApp = () => {
 
   // Função para alternar a visibilidade do tutorial
   const toggleTutorial = () => {
-    setIsTutorialOpen(prev => !prev);
+    setIsTutorialOpen((prev) => !prev);
   };
 
   // Função para adicionar um novo processo
   const addProcess = (name, parentId) => {
-    const newProcess = { id: Date.now().toString(), level: currentLevel, name, children: [] };
-    
-    setProcesses(prevProcesses => {
-      if (currentLevel === '1') {
+    const newProcess = {
+      id: Date.now().toString(),
+      level: currentLevel,
+      name,
+      children: [],
+    };
+
+    setProcesses((prevProcesses) => {
+      if (currentLevel === "1") {
         return [...prevProcesses, newProcess]; // Adiciona o processo como raiz se for de nível 1
       } else {
         const updatedProcesses = [...prevProcesses];
@@ -197,9 +258,9 @@ const ProcessFlowDiagramApp = () => {
           }
           return false;
         };
-        
+
         if (!addToParent(updatedProcesses)) {
-          setError('Failed to add process. Please check the hierarchy.'); // Exibe erro se não for possível adicionar
+          setError("Failed to add process. Please check the hierarchy."); // Exibe erro se não for possível adicionar
         }
         return updatedProcesses;
       }
@@ -213,9 +274,9 @@ const ProcessFlowDiagramApp = () => {
 
   // Função para editar o nome de um processo
   const handleEdit = useCallback((id, newName) => {
-    setProcesses(prevProcesses => {
+    setProcesses((prevProcesses) => {
       const updateProcess = (items) => {
-        return items.map(item => {
+        return items.map((item) => {
           if (item.id === id) {
             return { ...item, name: newName }; // Atualiza o nome do processo
           }
@@ -233,10 +294,10 @@ const ProcessFlowDiagramApp = () => {
   const handleMove = useCallback((draggedId, targetId) => {
     if (draggedId === targetId) return;
 
-    setProcesses(prevProcesses => {
+    setProcesses((prevProcesses) => {
       let draggedItem;
       const removeItem = (items) => {
-        return items.filter(item => {
+        return items.filter((item) => {
           if (item.id === draggedId) {
             draggedItem = item; // Remove o item arrastado
             return false;
@@ -249,9 +310,12 @@ const ProcessFlowDiagramApp = () => {
       };
 
       const addItem = (items) => {
-        return items.map(item => {
+        return items.map((item) => {
           if (item.id === targetId) {
-            return { ...item, children: [...(item.children || []), draggedItem] }; // Adiciona o item ao novo pai
+            return {
+              ...item,
+              children: [...(item.children || []), draggedItem],
+            }; // Adiciona o item ao novo pai
           }
           if (item.children) {
             return { ...item, children: addItem(item.children) };
@@ -267,12 +331,14 @@ const ProcessFlowDiagramApp = () => {
 
   // Função para excluir um processo
   const handleDelete = useCallback((id) => {
-    setProcesses(prevProcesses => {
+    setProcesses((prevProcesses) => {
       const removeProcess = (items) => {
-        return items.filter(item => item.id !== id).map(item => ({
-          ...item,
-          children: removeProcess(item.children)
-        }));
+        return items
+          .filter((item) => item.id !== id)
+          .map((item) => ({
+            ...item,
+            children: removeProcess(item.children),
+          }));
       };
       return removeProcess(prevProcesses);
     });
@@ -280,7 +346,7 @@ const ProcessFlowDiagramApp = () => {
 
   // Função para alternar entre os idiomas
   const toggleLanguage = () => {
-    setLanguage(lang => lang === 'en' ? 'pt' : 'en');
+    setLanguage((lang) => (lang === "en" ? "pt" : "en"));
   };
 
   // Função para definir o título do diagrama
@@ -305,13 +371,13 @@ const ProcessFlowDiagramApp = () => {
   const handleImport = (event) => {
     const file = event.target.files && event.target.files[0];
     if (!file) {
-      console.error('No file selected');
+      console.error("No file selected");
       return;
     }
 
-    if (file.type !== 'application/json') {
+    if (file.type !== "application/json") {
       alert(t.fileNotSupported); // Exibe alerta se o tipo de arquivo não for suportado
-      event.target.value = ''; // Limpa o valor do input para permitir a seleção do mesmo arquivo novamente
+      event.target.value = ""; // Limpa o valor do input para permitir a seleção do mesmo arquivo novamente
       return;
     }
 
@@ -323,24 +389,30 @@ const ProcessFlowDiagramApp = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="bg-[#000000] text-[#b3b3b3] min-h-screen w-full p-4 sm:p-8">
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
-          <Link to="/" className="text-[#00ff9d] hover:text-[#00cc7d] flex items-center mb-4 sm:mb-0">
+          <Link
+            to="/"
+            className="text-[#00ff9d] hover:text-[#00cc7d] flex items-center mb-4 sm:mb-0"
+          >
             <ChevronLeft className="mr-2" /> {t.backToHome}
           </Link>
           <div className="text-center flex-1">
-            <h1 className="text-3xl font-bold mb-2 text-[#ffffff]">{t.title}</h1>
+            <h1 className="text-3xl font-bold mb-2 text-[#ffffff]">
+              {t.title}
+            </h1>
             <p className="text-lg italic text-[#808080]">{t.subtitle}</p>
           </div>
-          <button onClick={toggleLanguage} className="flex items-center bg-[#1a1a1a] text-[#b3b3b3] p-2 rounded hover:bg-[#333333] transition-colors duration-200">
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center bg-[#1a1a1a] text-[#b3b3b3] p-2 rounded hover:bg-[#333333] transition-colors duration-200"
+          >
             <Globe className="mr-2" /> {language.toUpperCase()}
           </button>
         </div>
-
-        <Tutorial 
-          language={language} 
-          isOpen={isTutorialOpen} 
+        <Tutorial
+          language={language}
+          isOpen={isTutorialOpen}
           toggleTutorial={toggleTutorial} // Passa a função como prop
         />
-
         <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-6 border border-[#333333]">
           {!isTitleSet ? (
             <div className="mb-4">
@@ -365,12 +437,17 @@ const ProcessFlowDiagramApp = () => {
                 </button>
                 <label className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded cursor-pointer transition-colors duration-200">
                   <Upload className="mr-2" /> {t.importDiagram}
-                  <input type="file" accept=".json" onChange={handleImport} className="hidden" />
+                  <input
+                    type="file"
+                    accept=".json"
+                    onChange={handleImport}
+                    className="hidden"
+                  />
                 </label>
               </div>
             </div>
           ) : (
-            <AddProcessForm 
+            <AddProcessForm
               processes={processes}
               currentLevel={currentLevel}
               setCurrentLevel={setCurrentLevel}
@@ -386,7 +463,6 @@ const ProcessFlowDiagramApp = () => {
             />
           )}
         </div>
-
         {isTitleSet && (
           <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-5 relative border border-[#333333]">
             {isEditingTitle ? (
@@ -411,8 +487,14 @@ const ProcessFlowDiagramApp = () => {
             ) : (
               <>
                 <div className="border-b border-[#333333] pb-4 flex flex-col items-center">
-                  <h2 className="text-xl font-semibold text-[#ffffff] text-center">{title}</h2>
-                  {description && <p className="text-[#cccccc] mt-1 text-center">{description}</p>}
+                  <h2 className="text-xl font-semibold text-[#ffffff] text-center">
+                    {title}
+                  </h2>
+                  {description && (
+                    <p className="text-[#cccccc] mt-1 text-center">
+                      {description}
+                    </p>
+                  )}
                 </div>
                 <button
                   onClick={editTitle}
@@ -425,12 +507,11 @@ const ProcessFlowDiagramApp = () => {
             )}
           </div>
         )}
-
         {isTitleSet && (
           <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg overflow-x-auto mb-6 border border-[#333333]">
-            <ProcessLevel 
-              processes={processes} 
-              level="1" 
+            <ProcessLevel
+              processes={processes}
+              level="1"
               isRoot={true}
               selectedId={selectedId}
               onSelect={handleSelect}
@@ -441,24 +522,30 @@ const ProcessFlowDiagramApp = () => {
             />
           </div>
         )}
-
         {isTitleSet && (
           <div className="flex justify-end space-x-2">
-            <button onClick={handleExport} className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200">
+            <button
+              onClick={handleExport}
+              className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200"
+            >
               <Download className="mr-2" /> {t.exportDiagram}
             </button>
-            <button onClick={() => handleImportClick(fileInputRef)} className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200">
+            <button
+              onClick={() => handleImportClick(fileInputRef)}
+              className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded transition-colors duration-200"
+            >
               <Upload className="mr-2" /> {t.importDiagram}
             </button>
             <input
               type="file"
               ref={fileInputRef}
               onChange={handleImport}
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               accept=".json"
             />
           </div>
         )}
+        <ContactSection /> {/* Moved ContactSection to the end */}
       </div>
     </DndProvider>
   );
