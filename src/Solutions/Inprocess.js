@@ -331,7 +331,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         <h3 className="text-emerald-400 font-semibold text-md mb-2">
                           {" "}
                           {/* Adjusted font size */}
-                          {t.actionPlan}
+                          {t.actionPlanOnly}
                         </h3>
                         <p className="text-slate-300 text-sm text-center max-w-xs">
                           {" "}
