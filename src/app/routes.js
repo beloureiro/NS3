@@ -108,7 +108,7 @@ const AppRoutes = ({
       {/* Define routes for other pages */}
       <Route path="/decision-helper" element={<DecisionHelper />} />
       <Route path="/5w2h" element={<ActionPlanApp />} />
-      <Route path="/process-flow" element={<ProcessFlowDiagramApp />} />
+      <Route path="/process-flow" element={<ProcessFlowDiagramApp language={language} />} />
       <Route path="/independent-width" element={<IndependentWidthPage />} />
       <Route
         path="/inprocess"

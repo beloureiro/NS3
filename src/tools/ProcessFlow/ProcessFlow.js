@@ -1,25 +1,19 @@
+// ProcessFlowDiagramApp.js
 import React, { useState, useCallback, useRef } from "react";
-import { Link } from "react-router-dom";
-import {
-  ChevronLeft,
-  Globe,
-  MoreVertical,
-  Download,
-  Upload,
-} from "lucide-react";
+import { MoreVertical, Download, Upload } from "lucide-react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { translations } from "./utils";
+import { translations } from "./utils"; // Caminho corrigido para translations
 import AddProcessForm from "./AddProcessForm";
 import {
   exportProcessFlow,
   importProcessFlow,
   handleImportClick,
 } from "./ProcessFlowExportImport";
-import Tutorial from "./Tutorial"; // Importando o componente Tutorial
-import ContactSection from "../../AppComponents/ContactSection";
+import Tutorial from "./Tutorial"; // Importing the Tutorial component
+import ContactSection from "../../AppComponents/ContactSection"; // Caminho corrigido para ContactSection
 
-// Componente para renderizar uma caixa de processo individual
+// Component to render an individual process box
 const ProcessBox = ({
   id,
   level,
@@ -31,25 +25,25 @@ const ProcessBox = ({
   onMove,
   onDelete,
 }) => {
-  const [isEditing, setIsEditing] = useState(false); // Estado para controlar se o nome do processo está sendo editado
-  const [editedName, setEditedName] = useState(name); // Estado para armazenar o nome do processo durante a edição
+  const [isEditing, setIsEditing] = useState(false); // State to control if the process name is being edited
+  const [editedName, setEditedName] = useState(name); // State to store the process name during editing
 
-  // Configuração para permitir que o componente seja arrastável
+  // Setup to make the component draggable
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "process",
-    item: { id, level }, // Informações do item arrastado
+    item: { id, level }, // Information about the dragged item
     collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(), // Controla o estado de arrastamento
+      isDragging: !!monitor.isDragging(), // Controls the dragging state
     }),
   }));
 
-  // Configuração para permitir que o componente seja um alvo de drop (receber um item arrastado)
+  // Setup to make the component a drop target
   const [, drop] = useDrop(() => ({
-    accept: "process", // Define o tipo de item que pode ser solto
-    drop: (item) => onMove(item.id, id), // Função a ser chamada ao soltar um item
+    accept: "process", // Defines the type of item that can be dropped
+    drop: (item) => onMove(item.id, id), // Function to call when an item is dropped
   }));
 
-  // Função para determinar o estilo da caixa com base no nível do processo
+  // Function to determine the style of the box based on the process level
   const getStyle = () => {
     let style =
       "p-2 text-center rounded min-w-[120px] shadow-md flex items-center ";
@@ -72,18 +66,18 @@ const ProcessBox = ({
     }
   };
 
-  // Função para iniciar a edição do nome ao clicar duas vezes
+  // Function to start editing the name on double click
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
 
-  // Função para finalizar a edição do nome ao perder o foco
+  // Function to finish editing the name on blur
   const handleBlur = () => {
     setIsEditing(false);
-    onEdit(id, editedName); // Chama a função de edição passada como prop
+    onEdit(id, editedName); // Calls the edit function passed as prop
   };
 
-  // Função para salvar a edição ao pressionar Enter
+  // Function to save the edit on Enter key press
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleBlur();
@@ -92,21 +86,21 @@ const ProcessBox = ({
 
   return (
     <div
-      ref={(node) => drag(drop(node))} // Configura o elemento para ser arrastável e recebível
+      ref={(node) => drag(drop(node))} // Makes the element draggable and droppable
       className={`${getStyle()} ${isSelected ? "ring-2 ring-blue-500" : ""} ${
         isDragging ? "opacity-50" : ""
-      }`} // Aplica estilos condicionalmente
-      onClick={() => onSelect(id)} // Seleciona o processo ao clicar
-      onDoubleClick={handleDoubleClick} // Inicia a edição ao clicar duas vezes
-      style={{ position: "relative" }} // Para posicionar o ícone
+      }`} // Applies styles conditionally
+      onClick={() => onSelect(id)} // Selects the process on click
+      onDoubleClick={handleDoubleClick} // Starts editing on double click
+      style={{ position: "relative" }} // For positioning the delete icon
     >
       {isEditing ? (
         <input
           type="text"
           value={editedName}
-          onChange={(e) => setEditedName(e.target.value)} // Atualiza o nome do processo durante a edição
-          onBlur={handleBlur} // Salva a edição ao perder o foco
-          onKeyPress={handleKeyPress} // Salva a edição ao pressionar Enter
+          onChange={(e) => setEditedName(e.target.value)} // Updates the process name during editing
+          onBlur={handleBlur} // Saves the edit on blur
+          onKeyPress={handleKeyPress} // Saves the edit on Enter key press
           autoFocus
           className="bg-transparent text-inherit w-full text-center"
         />
@@ -119,15 +113,15 @@ const ProcessBox = ({
           ) : (
             name
           )}
-        </span> // Exibe o nome do processo ou uma seta caso seja um item de nível 5
+        </span> // Displays the process name or an arrow if it's a level 5 item
       )}
       <button
         onClick={(e) => {
           e.stopPropagation();
           onDelete(id);
-        }} // Impede a propagação do evento
+        }} // Stops event propagation
         className="absolute top-1 right-1 text-red-500 opacity-0 hover:opacity-100 transition-opacity"
-        style={{ transition: "opacity 0.2s" }} // Transição suave
+        style={{ transition: "opacity 0.2s" }} // Smooth transition
       >
         🗑️
       </button>
@@ -135,7 +129,7 @@ const ProcessBox = ({
   );
 };
 
-// Componente para renderizar uma seta apontando para a direita
+// Component to render a right-pointing arrow
 const ArrowRight = () => (
   <div className="flex items-center justify-center h-full">
     <div className="flex items-center">
@@ -145,10 +139,10 @@ const ArrowRight = () => (
   </div>
 );
 
-// Componente para renderizar uma linha vertical
+// Component to render a vertical line
 const VerticalLine = () => <div className="w-0.5 h-4 bg-green-500 my-1"></div>;
 
-// Componente principal para renderizar um nível do processo
+// Main component to render a level of processes
 const ProcessLevel = ({
   processes,
   level,
@@ -159,7 +153,7 @@ const ProcessLevel = ({
   onMove,
   onDelete,
 }) => {
-  const isHorizontal = parseInt(level) <= 3; // Define se o layout será horizontal ou vertical
+  const isHorizontal = parseInt(level) <= 3; // Determines if the layout is horizontal or vertical
 
   return (
     <div
@@ -174,12 +168,12 @@ const ProcessLevel = ({
               id={process.id}
               level={level}
               name={process.name}
-              isRoot={isRoot && index === 0} // Define se é o processo raiz
-              isSelected={selectedId === process.id} // Verifica se o processo está selecionado
-              onSelect={onSelect} // Função de seleção
-              onEdit={onEdit} // Função de edição
-              onMove={onMove} // Função de movimentação
-              onDelete={onDelete} // Função de exclusão
+              isRoot={isRoot && index === 0} // Determines if it's the root process
+              isSelected={selectedId === process.id} // Checks if the process is selected
+              onSelect={onSelect} // Select function
+              onEdit={onEdit} // Edit function
+              onMove={onMove} // Move function
+              onDelete={onDelete} // Delete function
             />
             {process.children && process.children.length > 0 && (
               <div
@@ -187,7 +181,7 @@ const ProcessLevel = ({
                   level === "4" ? "mt-1" : "mt-2"
                 }`}
               >
-                <VerticalLine /> {/* Renderiza a linha vertical */}
+                <VerticalLine /> {/* Renders the vertical line */}
                 <ProcessLevel
                   processes={process.children}
                   level={(parseInt(level) + 1).toString()}
@@ -200,39 +194,36 @@ const ProcessLevel = ({
               </div>
             )}
           </div>
-          {index < processes.length - 1 && isHorizontal && (
-            <ArrowRight /> // Renderiza a seta entre processos
-          )}
+          {index < processes.length - 1 && isHorizontal && <ArrowRight />}
         </React.Fragment>
       ))}
     </div>
   );
 };
 
-// Componente principal da aplicação de diagrama de fluxo de processos
-const ProcessFlowDiagramApp = () => {
-  const [processes, setProcesses] = useState([]); // Estado para armazenar a lista de processos
-  const [currentLevel, setCurrentLevel] = useState("1"); // Estado para armazenar o nível atual de processo
-  const [processName, setProcessName] = useState(""); // Estado para armazenar o nome do processo sendo adicionado
-  const [parentProcess, setParentProcess] = useState(""); // Estado para armazenar o processo pai selecionado
-  const [error, setError] = useState(""); // Estado para armazenar mensagens de erro
-  const [language, setLanguage] = useState("en"); // Estado para armazenar o idioma da aplicação
-  const [title, setTitle] = useState(""); // Estado para armazenar o título do diagrama
-  const [description, setDescription] = useState(""); // Estado para armazenar a descrição do diagrama
-  const [isTitleSet, setIsTitleSet] = useState(false); // Estado para indicar se o título foi definido
-  const [isEditingTitle, setIsEditingTitle] = useState(false); // Estado para controlar a edição do título
-  const [selectedId, setSelectedId] = useState(null); // Estado para armazenar o ID do processo selecionado
-  const fileInputRef = useRef(null); // Referência ao input de arquivo para importação
-  const [isTutorialOpen, setIsTutorialOpen] = useState(false); // Estado para controlar a visibilidade do tutorial
+// Main application component for the process flow diagram
+const ProcessFlowDiagramApp = ({ language = 'en' }) => {
+  const [processes, setProcesses] = useState([]); // State to store the list of processes
+  const [currentLevel, setCurrentLevel] = useState("1"); // State to store the current process level
+  const [processName, setProcessName] = useState(""); // State to store the name of the process being added
+  const [parentProcess, setParentProcess] = useState(""); // State to store the selected parent process
+  const [error, setError] = useState(""); // State to store error messages
+  const [title, setTitle] = useState(""); // State to store the diagram title
+  const [description, setDescription] = useState(""); // State to store the diagram description
+  const [isTitleSet, setIsTitleSet] = useState(false); // State to indicate if the title has been set
+  const [isEditingTitle, setIsEditingTitle] = useState(false); // State to control title editing
+  const [selectedId, setSelectedId] = useState(null); // State to store the selected process ID
+  const fileInputRef = useRef(null); // Reference to the file input for import
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false); // State to control tutorial visibility
 
-  const t = translations[language]; // Obtenção das traduções com base no idioma atual
+  const t = translations[language] || translations['en']; // Get translations based on the current language
 
-  // Função para alternar a visibilidade do tutorial
+  // Function to toggle the tutorial visibility
   const toggleTutorial = () => {
     setIsTutorialOpen((prev) => !prev);
   };
 
-  // Função para adicionar um novo processo
+  // Function to add a new process
   const addProcess = (name, parentId) => {
     const newProcess = {
       id: Date.now().toString(),
@@ -243,13 +234,13 @@ const ProcessFlowDiagramApp = () => {
 
     setProcesses((prevProcesses) => {
       if (currentLevel === "1") {
-        return [...prevProcesses, newProcess]; // Adiciona o processo como raiz se for de nível 1
+        return [...prevProcesses, newProcess]; // Adds the process as root if level 1
       } else {
         const updatedProcesses = [...prevProcesses];
         const addToParent = (items) => {
           for (let item of items) {
             if (item.id === parentId) {
-              item.children.push(newProcess); // Adiciona o processo ao pai correspondente
+              item.children.push(newProcess); // Adds the process to the corresponding parent
               return true;
             }
             if (item.children && addToParent(item.children)) {
@@ -260,25 +251,25 @@ const ProcessFlowDiagramApp = () => {
         };
 
         if (!addToParent(updatedProcesses)) {
-          setError("Failed to add process. Please check the hierarchy."); // Exibe erro se não for possível adicionar
+          setError("Failed to add process. Please check the hierarchy."); // Displays error if unable to add
         }
         return updatedProcesses;
       }
     });
   };
 
-  // Função para selecionar um processo
+  // Function to select a process
   const handleSelect = useCallback((id) => {
     setSelectedId(id);
   }, []);
 
-  // Função para editar o nome de um processo
+  // Function to edit the name of a process
   const handleEdit = useCallback((id, newName) => {
     setProcesses((prevProcesses) => {
       const updateProcess = (items) => {
         return items.map((item) => {
           if (item.id === id) {
-            return { ...item, name: newName }; // Atualiza o nome do processo
+            return { ...item, name: newName }; // Updates the process name
           }
           if (item.children) {
             return { ...item, children: updateProcess(item.children) };
@@ -290,7 +281,7 @@ const ProcessFlowDiagramApp = () => {
     });
   }, []);
 
-  // Função para mover um processo para um novo pai
+  // Function to move a process to a new parent
   const handleMove = useCallback((draggedId, targetId) => {
     if (draggedId === targetId) return;
 
@@ -299,7 +290,7 @@ const ProcessFlowDiagramApp = () => {
       const removeItem = (items) => {
         return items.filter((item) => {
           if (item.id === draggedId) {
-            draggedItem = item; // Remove o item arrastado
+            draggedItem = item; // Removes the dragged item
             return false;
           }
           if (item.children) {
@@ -315,7 +306,7 @@ const ProcessFlowDiagramApp = () => {
             return {
               ...item,
               children: [...(item.children || []), draggedItem],
-            }; // Adiciona o item ao novo pai
+            }; // Adds the item to the new parent
           }
           if (item.children) {
             return { ...item, children: addItem(item.children) };
@@ -325,11 +316,11 @@ const ProcessFlowDiagramApp = () => {
       };
 
       let newProcesses = removeItem(prevProcesses);
-      return addItem(newProcesses); // Atualiza a estrutura dos processos
+      return addItem(newProcesses); // Updates the process structure
     });
   }, []);
 
-  // Função para excluir um processo
+  // Function to delete a process
   const handleDelete = useCallback((id) => {
     setProcesses((prevProcesses) => {
       const removeProcess = (items) => {
@@ -344,12 +335,7 @@ const ProcessFlowDiagramApp = () => {
     });
   }, []);
 
-  // Função para alternar entre os idiomas
-  const toggleLanguage = () => {
-    setLanguage((lang) => (lang === "en" ? "pt" : "en"));
-  };
-
-  // Função para definir o título do diagrama
+  // Function to set the process diagram title
   const setProcessTitle = () => {
     if (title.trim()) {
       setIsTitleSet(true);
@@ -357,17 +343,17 @@ const ProcessFlowDiagramApp = () => {
     }
   };
 
-  // Função para iniciar a edição do título
+  // Function to start editing the title
   const editTitle = () => {
     setIsEditingTitle(true);
   };
 
-  // Função para exportar o diagrama
+  // Function to export the diagram
   const handleExport = () => {
     exportProcessFlow(processes, title, description, t);
   };
 
-  // Função para importar um diagrama a partir de um arquivo
+  // Function to import a diagram from a file
   const handleImport = (event) => {
     const file = event.target.files && event.target.files[0];
     if (!file) {
@@ -376,52 +362,45 @@ const ProcessFlowDiagramApp = () => {
     }
 
     if (file.type !== "application/json") {
-      alert(t.fileNotSupported); // Exibe alerta se o tipo de arquivo não for suportado
-      event.target.value = ""; // Limpa o valor do input para permitir a seleção do mesmo arquivo novamente
+      alert(t.fileNotSupported); // Alerts if the file type is not supported
+      event.target.value = ""; // Clears the input value to allow re-selection
       return;
     }
 
     importProcessFlow(event, setProcesses, setTitle, setDescription, t);
-    setIsTitleSet(true); // Marca que o título foi definido após a importação
+    setIsTitleSet(true); // Marks the title as set after import
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="bg-[#000000] text-[#b3b3b3] min-h-screen w-full p-4 sm:p-8">
+        {/* Header section with the title and subtitle */}
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
-          <Link
-            to="/"
-            className="text-[#00ff9d] hover:text-[#00cc7d] flex items-center mb-4 sm:mb-0"
-          >
-            <ChevronLeft className="mr-2" /> {t.backToHome}
-          </Link>
           <div className="text-center flex-1">
             <h1 className="text-3xl font-bold mb-2 text-[#ffffff]">
               {t.title}
             </h1>
             <p className="text-lg italic text-[#808080]">{t.subtitle}</p>
           </div>
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center bg-[#1a1a1a] text-[#b3b3b3] p-2 rounded hover:bg-[#333333] transition-colors duration-200"
-          >
-            <Globe className="mr-2" /> {language.toUpperCase()}
-          </button>
         </div>
+        {/* Tutorial component */}
         <Tutorial
           language={language}
           isOpen={isTutorialOpen}
-          toggleTutorial={toggleTutorial} // Passa a função como prop
+          toggleTutorial={toggleTutorial}
         />
+        {/* Form to set the process title and description */}
         <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-6 border border-[#333333]">
           {!isTitleSet ? (
             <div className="mb-4">
+              {/* Input for process title */}
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder={t.enterProcessTitle}
                 className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-4 focus:border-[#00ff9d] focus:outline-none"
               />
+              {/* Textarea for process description */}
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -429,12 +408,14 @@ const ProcessFlowDiagramApp = () => {
                 className="w-full bg-[#0d0d0d] text-[#b3b3b3] border border-[#333333] p-2 rounded mb-4 focus:border-[#00ff9d] focus:outline-none"
               />
               <div className="flex justify-between items-center">
+                {/* Button to set the title */}
                 <button
                   onClick={setProcessTitle}
                   className="bg-[#00cc7d] hover:bg-[#00ff9d] text-[#000000] font-medium p-2 rounded transition-colors duration-200"
                 >
                   {t.setProcessTitle}
                 </button>
+                {/* Button to import a diagram */}
                 <label className="flex items-center bg-[#1a1a1a] hover:bg-[#333333] text-[#b3b3b3] p-2 rounded cursor-pointer transition-colors duration-200">
                   <Upload className="mr-2" /> {t.importDiagram}
                   <input
@@ -447,6 +428,7 @@ const ProcessFlowDiagramApp = () => {
               </div>
             </div>
           ) : (
+            /* Form to add a new process */
             <AddProcessForm
               processes={processes}
               currentLevel={currentLevel}
@@ -463,10 +445,12 @@ const ProcessFlowDiagramApp = () => {
             />
           )}
         </div>
+        {/* Display the process title and description */}
         {isTitleSet && (
           <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg mb-5 relative border border-[#333333]">
             {isEditingTitle ? (
               <div className="mb-4">
+                {/* Input fields to edit title and description */}
                 <input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -507,6 +491,7 @@ const ProcessFlowDiagramApp = () => {
             )}
           </div>
         )}
+        {/* Display the process flow diagram */}
         {isTitleSet && (
           <div className="w-full bg-[#1a1a1a] text-[#b3b3b3] p-6 rounded-lg shadow-lg overflow-x-auto mb-6 border border-[#333333]">
             <ProcessLevel
@@ -517,11 +502,12 @@ const ProcessFlowDiagramApp = () => {
               onSelect={handleSelect}
               onEdit={handleEdit}
               onMove={handleMove}
-              onDelete={handleDelete} // Passa a função de exclusão
+              onDelete={handleDelete}
               className="bg-[#0d0d0d] text-[#b3b3b3] border-[#333333]"
             />
           </div>
         )}
+        {/* Export and Import buttons */}
         {isTitleSet && (
           <div className="flex justify-end space-x-2">
             <button
@@ -545,10 +531,11 @@ const ProcessFlowDiagramApp = () => {
             />
           </div>
         )}
-        <ContactSection /> {/* Moved ContactSection to the end */}
+        {/* Contact section */}
+        <ContactSection />
       </div>
     </DndProvider>
   );
 };
 
-export default ProcessFlowDiagramApp; // Exporta o componente para uso em outras partes da aplicação
+export default ProcessFlowDiagramApp;
