@@ -29,9 +29,9 @@ const FlowCard = ({ icon: Icon, title, color, isSelected, onClick }) => {
       className={`bg-slate-800/80 p-4 rounded-lg cursor-pointer transition-all
         ${isSelected ? `border-2 ${borderColor}` : 'border border-slate-700'}
         hover:border-2 ${borderColor} flex flex-col justify-center items-center`} // Add flex, justify-center, items-center
-      style={{ width: '150px', height: '180px' }} // Set fixed width and height
+      style={{ width: '140px', height: '160px' }} // Set fixed width and height
     >
-      <div className="flex flex-col items-center text-center gap-3">
+      <div className="flex flex-col items-center text-center gap-2">
         <div className={`bg-${color}-400/10 p-3 rounded-lg`}>
           <Icon className={`text-${color}-400 w-6 h-6`} />
         </div>
@@ -47,8 +47,8 @@ const FlowCard = ({ icon: Icon, title, color, isSelected, onClick }) => {
 const ArrowConnection = ({ label }) => (
   <div className="flex flex-col items-center justify-center w-10">
     <div className="h-0.5 w-full bg-[#FF6B6B] mb-1" /> {/* Line style; change width, color, or spacing */}
-    <ArrowRight className="text-[#FF6B6B] w-5 h-5" /> {/* Arrow icon color and size - for larger use w-6 h-6 */}
-    <span className="text-xs text-[#FF6B6B] mt-1">{label}</span> {/* Label font size and color - for larger use text-sm */}
+    <ArrowRight className="text-[#FF6B6B] w-6 h-6" /> {/* Increased from w-5 h-5 to w-6 h-6 */}
+    <span className="text-sm text-[#FF6B6B] mt-1">{label}</span> {/* Increased from text-xs to text-sm */}
   </div>
 );
 
@@ -119,7 +119,7 @@ const FourMenu = ({ language = 'en' }) => {
   const t = menuTranslations[language] || menuTranslations.en; // Translation based on language prop
 
   return (
-    <div className="bg-black text-white p-6">
+    <div className="bg-black text-white pt-0 px-6 pb-6 -mt-4">
       <div className="max-w-7xl mx-auto">
         <div className="bg-transparent p-6 rounded-xl">
           <div className="flex items-center justify-between mb-6">
@@ -147,13 +147,13 @@ const FourMenu = ({ language = 'en' }) => {
           </div>
 
           {/* Menu flow with clickable cards */}
-          <div className="flex justify-center items-center gap-2 mb-4">
+          <div className="flex justify-center items-center gap-4">
             <FlowCard
               icon={Globe}
               title={t.siteCard.title}
               color="blue"
               isSelected={selectedItem === 'site'}
-              onClick={() => setSelectedItem('site')} // Adjust state change for other behavior on click
+              onClick={() => setSelectedItem('site')}
             />
             <ArrowConnection label={t.integrates} />
             <FlowCard
@@ -224,14 +224,14 @@ const FourMenu = ({ language = 'en' }) => {
           </div>
 
           {/* Footer text */}
-          <div className="mt-3 text-center text-lg text-white">
+          <div className="mb-1 mt-1 text-center text-lg text-white">
             {t.footer}
           </div>
         </div>
         
-        {/* Contact section for additional contact information */}
-        <div className="mt-8 mb-2">
-          <ContactSection /> {/* Replace with a different component if the contact method changes */}
+        {/* Contact section */}
+        <div className="mt-0 mb-2">
+          <ContactSection />
         </div>
       </div>
     </div>
