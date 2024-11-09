@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
-  ChevronLeft,
-  Globe,
   Check,
   PlusCircle,
   AlertCircle,
@@ -29,7 +27,7 @@ import {
 } from "./actionPlanExportImport";
 import ContactSection from "../../AppComponents/ContactSection";
 
-const ActionPlanApp = () => {
+const ActionPlanApp = ({ language }) => {
   // Estado para controlar a pergunta atual, o plano de ação, a linguagem e erros de validação
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [plans, setPlans] = useState([
@@ -46,7 +44,6 @@ const ActionPlanApp = () => {
     },
   ]);
   const [currentPlan, setCurrentPlan] = useState(0);
-  const [language, setLanguage] = useState("en");
   const [errors, setErrors] = useState({});
   const [editingField, setEditingField] = useState(null);
   const [chartKey, setChartKey] = useState(0); // Estado para forçar a atualização do gráfico
@@ -136,11 +133,6 @@ const ActionPlanApp = () => {
     setCurrentPlan(plans.length);
     setCurrentQuestion(0);
     setErrors({});
-  };
-
-  // Função para alternar entre os idiomas
-  const toggleLanguage = () => {
-    setLanguage((lang) => (lang === "en" ? "pt" : "en"));
   };
 
   // Função para deletar um plano de ação específico
@@ -233,274 +225,265 @@ const ActionPlanApp = () => {
 
   return (
     <div className="w-full bg-black min-h-screen p-6 text-gray-300 font-sans antialiased">
-      {/* Cabeçalho */}
-      <header className="mb-8 flex justify-between items-center">
-        <Link
-          to="/"
-          className="text-[#00ff9d] hover:underline flex items-center"
-        >
-          <ChevronLeft className="mr-2 text-[#00ff9d]" /> {t.backToHome}
-        </Link>
-        <h1 className="text-4xl font-bold text-[#f1f5f9]">{t.title}</h1>
-        <Button onClick={toggleLanguage}>
-          <Globe className="mr-2" /> {language === "en" ? "PT" : "EN"}
-        </Button>
-      </header>
-      <p className="text-lg text-[#f1f5f9] italic text-center mb-8">
-        {t.subtitle}
-      </p>
-      {/* Botões de Importação e Exportação */}
-      <ImportExportButtons
-        onExport={handleExport}
-        onImport={() => handleImportClick(fileInputRef)}
-        t={t}
-        className="mt-4"
-      />
-      <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: "none" }}
-        onChange={handleImport}
-        accept=".json"
-      />
-      {/* Conteúdo principal */}
-      <main className="space-y-8">
-        {/* Seção de entrada */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t.questions[currentQuestion].question}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Timeline
-              currentQuestion={currentQuestion}
-              questions={t.questions}
-            />
-            <motion.div
-              key={currentQuestion}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              {t.questions[currentQuestion].key === "when" ? (
-                <DateInput
-                  value={plans[currentPlan][t.questions[currentQuestion].key]}
-                  onChange={(e) =>
-                    handleInputChange(
-                      t.questions[currentQuestion].key,
-                      e.target.value
-                    )
-                  }
-                />
-              ) : t.questions[currentQuestion].key === "urgency" ||
-                t.questions[currentQuestion].key === "importance" ? (
-                <div className="flex flex-wrap justify-center gap-2">
-                  {t.questions[currentQuestion].key === "urgency" &&
-                    t.urgencyLevels.map((level, index) => (
-                      <Button
-                        key={index}
-                        selected={
-                          plans[currentPlan][
-                            t.questions[currentQuestion].key
-                          ] ===
-                          (index + 1) * 2 - 1
-                        }
-                        onClick={() =>
-                          handleInputChange(
-                            t.questions[currentQuestion].key,
+      {/* Wrapper div with max-width and center alignment */}
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-4xl font-bold text-[#00ff9d] text-center mb-4">{t.title}</h1>
+        <p className="text-lg text-[#f1f5f9] italic text-center mb-8">
+          {t.subtitle}
+        </p>
+        {/* Botões de Importação e Exportação */}
+        <ImportExportButtons
+          onExport={handleExport}
+          onImport={() => handleImportClick(fileInputRef)}
+          t={t}
+          className="mt-4"
+        />
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleImport}
+          accept=".json"
+        />
+        {/* Conteúdo principal */}
+        <main className="space-y-8">
+          {/* Seção de entrada */}
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.questions[currentQuestion].question}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Timeline
+                currentQuestion={currentQuestion}
+                questions={t.questions}
+              />
+              <motion.div
+                key={currentQuestion}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                {t.questions[currentQuestion].key === "when" ? (
+                  <DateInput
+                    value={plans[currentPlan][t.questions[currentQuestion].key]}
+                    onChange={(e) =>
+                      handleInputChange(
+                        t.questions[currentQuestion].key,
+                        e.target.value
+                      )
+                    }
+                  />
+                ) : t.questions[currentQuestion].key === "urgency" ||
+                  t.questions[currentQuestion].key === "importance" ? (
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {t.questions[currentQuestion].key === "urgency" &&
+                      t.urgencyLevels.map((level, index) => (
+                        <Button
+                          key={index}
+                          selected={
+                            plans[currentPlan][
+                              t.questions[currentQuestion].key
+                            ] ===
                             (index + 1) * 2 - 1
-                          )
-                        }
-                      >
-                        {level}
-                      </Button>
-                    ))}
-                  {t.questions[currentQuestion].key === "importance" &&
-                    t.importanceLevels.map((level, index) => (
-                      <Button
-                        key={index}
-                        selected={
-                          plans[currentPlan][
-                            t.questions[currentQuestion].key
-                          ] ===
-                          (index + 1) * 2 - 1
-                        }
-                        onClick={() =>
-                          handleInputChange(
-                            t.questions[currentQuestion].key,
-                            (index + 1) * 2 - 1
-                          )
-                        }
-                      >
-                        {level}
-                      </Button>
-                    ))}
-                </div>
-              ) : (
-                <Input
-                  type="text"
-                  value={plans[currentPlan][t.questions[currentQuestion].key]}
-                  onChange={(e) =>
-                    handleInputChange(
-                      t.questions[currentQuestion].key,
-                      e.target.value
-                    )
-                  }
-                  placeholder={t.inputPlaceholder}
-                />
-              )}
-              {errors[t.questions[currentQuestion].key] && (
-                <p className="text-red-500 mt-2 flex items-center">
-                  <AlertCircle className="mr-2" size={16} />
-                  {errors[t.questions[currentQuestion].key]}
-                </p>
-              )}
-              <div className="flex flex-col sm:flex-row justify-between mt-4 gap-2">
-                <Button
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                >
-                  {t.previous}
-                </Button>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Button onClick={addNewPlan}>
-                    <PlusCircle className="mr-2" /> {t.addNewAction}
-                  </Button>
-                  {currentQuestion === t.questions.length - 1 ? (
-                    <Button onClick={handleNext}>
-                      <Check className="mr-2" /> {t.complete}
-                    </Button>
-                  ) : (
-                    <Button onClick={handleNext}>{t.next}</Button>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </CardContent>
-        </Card>
-
-        {/* Action Plan (Tabela) - Movida para cima */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t.actionPlan}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[600px]">
-                <thead>
-                  <tr>
-                    <th className="text-left py-2 px-4 border-b border-gray-700">
-                      Ação #
-                    </th>
-                    {t.questions.map((q) => (
-                      <th
-                        key={q.key}
-                        className="text-left py-2 px-4 border-b border-gray-700"
-                      >
-                        {q.key.charAt(0).toUpperCase() + q.key.slice(1)}
-                      </th>
-                    ))}
-                    <th className="text-left py-2 px-4 border-b border-gray-700">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {plans.map((plan, index) => (
-                    <tr key={index}>
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        {index + 1}
-                      </td>
-                      {t.questions.map((q) => (
-                        <td
-                          key={q.key}
-                          className="py-2 px-4 border-b border-gray-700"
-                          onDoubleClick={() => handleDoubleClick(index, q.key)}
-                        >
-                          {editingField &&
-                          editingField.index === index &&
-                          editingField.field === q.key ? (
-                            q.key === "urgency" || q.key === "importance" ? (
-                              <select
-                                defaultValue={plan[q.key]}
-                                onBlur={(e) => handleEditSave(e, index, q.key)}
-                                onChange={(e) =>
-                                  handleEditSave(e, index, q.key)
-                                }
-                                autoFocus
-                                className="bg-[#111111] text-gray-300 border border-[#00ff9d] focus:border-[#00ff9d] focus:ring-[#00ff9d] rounded-md p-1 w-full"
-                              >
-                                {[1, 3, 5].map((value) => (
-                                  <option
-                                    key={value}
-                                    value={value}
-                                    style={{
-                                      color: "white",
-                                      backgroundColor: "#1a1a1a",
-                                    }}
-                                  >
-                                    {value === 1
-                                      ? t.low
-                                      : value === 3
-                                      ? t.medium
-                                      : t.high}
-                                  </option>
-                                ))}
-                              </select>
-                            ) : (
-                              <input
-                                type={q.key === "when" ? "date" : "text"}
-                                defaultValue={plan[q.key]}
-                                onBlur={(e) => handleEditSave(e, index, q.key)}
-                                onKeyPress={(e) => {
-                                  if (e.key === "Enter")
-                                    handleEditSave(e, index, q.key);
-                                }}
-                                autoFocus
-                                className="bg-[#111111] text-gray-300 border border-[#00ff9d] focus:border-[#00ff9d] focus:ring-[#00ff9d] rounded-md p-1 w-full"
-                              />
+                          }
+                          onClick={() =>
+                            handleInputChange(
+                              t.questions[currentQuestion].key,
+                              (index + 1) * 2 - 1
                             )
-                          ) : (
-                            plan[q.key]
-                          )}
-                        </td>
-                      ))}
-                      <td className="py-2 px-4 border-b border-gray-700">
-                        <button
-                          onClick={() => deletePlan(index)}
-                          className="bg-red-500 hover:bg-red-700 text-white rounded-full p-1 transition-colors duration-300"
+                          }
                         >
-                          <Trash2 size={16} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+                          {level}
+                        </Button>
+                      ))}
+                    {t.questions[currentQuestion].key === "importance" &&
+                      t.importanceLevels.map((level, index) => (
+                        <Button
+                          key={index}
+                          selected={
+                            plans[currentPlan][
+                              t.questions[currentQuestion].key
+                            ] ===
+                            (index + 1) * 2 - 1
+                          }
+                          onClick={() =>
+                            handleInputChange(
+                              t.questions[currentQuestion].key,
+                              (index + 1) * 2 - 1
+                            )
+                          }
+                        >
+                          {level}
+                        </Button>
+                      ))}
+                  </div>
+                ) : (
+                  <Input
+                    type="text"
+                    value={plans[currentPlan][t.questions[currentQuestion].key]}
+                    onChange={(e) =>
+                      handleInputChange(
+                        t.questions[currentQuestion].key,
+                        e.target.value
+                      )
+                    }
+                    placeholder={t.inputPlaceholder}
+                  />
+                )}
+                {errors[t.questions[currentQuestion].key] && (
+                  <p className="text-red-500 mt-2 flex items-center">
+                    <AlertCircle className="mr-2" size={16} />
+                    {errors[t.questions[currentQuestion].key]}
+                  </p>
+                )}
+                <div className="flex flex-col sm:flex-row justify-between mt-4 gap-2">
+                  <Button
+                    onClick={handlePrevious}
+                    disabled={currentQuestion === 0}
+                  >
+                    {t.previous}
+                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Button onClick={addNewPlan}>
+                      <PlusCircle className="mr-2" /> {t.addNewAction}
+                    </Button>
+                    {currentQuestion === t.questions.length - 1 ? (
+                      <Button onClick={handleNext}>
+                        <Check className="mr-2" /> {t.complete}
+                      </Button>
+                    ) : (
+                      <Button onClick={handleNext}>{t.next}</Button>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </CardContent>
+          </Card>
 
-        {/* Action Overview (Gráfico) - Movido para baixo */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t.actionOverview}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="mb-4">
-              {t.totalActions}: {plans.length}
-            </p>
-            <div className="h-[400px] w-full">
-              <QuadrantChart actions={getChartData()} key={chartKey} />
-            </div>
-            <p className="mt-4 text-center text-gray-400">
-              {t.chartDescription}
-            </p>
-            <Legend />
-          </CardContent>
-        </Card>
-      </main>
-      <ContactSection /> {/* Moved ContactSection to the end */}
+          {/* Action Plan (Tabela) - Movida para cima */}
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.actionPlan}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[600px]">
+                  <thead>
+                    <tr>
+                      <th className="text-left py-2 px-4 border-b border-gray-700">
+                        Ação #
+                      </th>
+                      {t.questions.map((q) => (
+                        <th
+                          key={q.key}
+                          className="text-left py-2 px-4 border-b border-gray-700"
+                        >
+                          {q.key.charAt(0).toUpperCase() + q.key.slice(1)}
+                        </th>
+                      ))}
+                      <th className="text-left py-2 px-4 border-b border-gray-700">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {plans.map((plan, index) => (
+                      <tr key={index}>
+                        <td className="py-2 px-4 border-b border-gray-700">
+                          {index + 1}
+                        </td>
+                        {t.questions.map((q) => (
+                          <td
+                            key={q.key}
+                            className="py-2 px-4 border-b border-gray-700"
+                            onDoubleClick={() => handleDoubleClick(index, q.key)}
+                          >
+                            {editingField &&
+                            editingField.index === index &&
+                            editingField.field === q.key ? (
+                              q.key === "urgency" || q.key === "importance" ? (
+                                <select
+                                  defaultValue={plan[q.key]}
+                                  onBlur={(e) => handleEditSave(e, index, q.key)}
+                                  onChange={(e) =>
+                                    handleEditSave(e, index, q.key)
+                                  }
+                                  autoFocus
+                                  className="bg-[#111111] text-gray-300 border border-[#00ff9d] focus:border-[#00ff9d] focus:ring-[#00ff9d] rounded-md p-1 w-full"
+                                >
+                                  {[1, 3, 5].map((value) => (
+                                    <option
+                                      key={value}
+                                      value={value}
+                                      style={{
+                                        color: "white",
+                                        backgroundColor: "#1a1a1a",
+                                      }}
+                                    >
+                                      {value === 1
+                                        ? t.low
+                                        : value === 3
+                                        ? t.medium
+                                        : t.high}
+                                    </option>
+                                  ))}
+                                </select>
+                              ) : (
+                                <input
+                                  type={q.key === "when" ? "date" : "text"}
+                                  defaultValue={plan[q.key]}
+                                  onBlur={(e) => handleEditSave(e, index, q.key)}
+                                  onKeyPress={(e) => {
+                                    if (e.key === "Enter")
+                                      handleEditSave(e, index, q.key);
+                                  }}
+                                  autoFocus
+                                  className="bg-[#111111] text-gray-300 border border-[#00ff9d] focus:border-[#00ff9d] focus:ring-[#00ff9d] rounded-md p-1 w-full"
+                                />
+                              )
+                            ) : (
+                              plan[q.key]
+                            )}
+                          </td>
+                        ))}
+                        <td className="py-2 px-4 border-b border-gray-700">
+                          <button
+                            onClick={() => deletePlan(index)}
+                            className="bg-red-500 hover:bg-red-700 text-white rounded-full p-1 transition-colors duration-300"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Action Overview (Gráfico) - Movido para baixo */}
+          <Card>
+            <CardHeader>
+              <CardTitle>{t.actionOverview}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-4">
+                {t.totalActions}: {plans.length}
+              </p>
+              <div className="h-[400px] w-full">
+                <QuadrantChart actions={getChartData()} key={chartKey} />
+              </div>
+              <p className="mt-4 text-center text-gray-400">
+                {t.chartDescription}
+              </p>
+              <Legend />
+            </CardContent>
+          </Card>
+        </main>
+        <ContactSection /> {/* Moved ContactSection to the end */}
+      </div>
     </div>
   );
 };
