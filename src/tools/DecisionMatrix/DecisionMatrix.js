@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
 import {
-  Globe,
   Brain,
   ChevronDown,
   Plus,
@@ -32,7 +30,7 @@ import {
 } from "./DecisionMatrixExportImport"; // Importa funções de importação/exportação de decisões
 import ContactSection from "../../AppComponents/ContactSection";
 
-const DecisionHelper = () => {
+const DecisionHelper = ({ language }) => {
   // Definição de estados utilizando o hook useState
   const [alternatives, setAlternatives] = useState([]); // Armazena as alternativas de decisão
   const [decision, setDecision] = useState(null); // Armazena a decisão final
@@ -42,7 +40,6 @@ const DecisionHelper = () => {
     { name: "Urgency", weight: 4 },
   ]); // Armazena os critérios de decisão com pesos
   const [showMatrix, setShowMatrix] = useState(false); // Controla a exibição da matriz de decisão
-  const [language, setLanguage] = useState("en"); // Define o idioma
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false); // Controla a exibição do modal de isenção de responsabilidade
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false); // Indica se há alterações não salvas
 
@@ -50,11 +47,6 @@ const DecisionHelper = () => {
 
   // Obtenção das traduções de acordo com o idioma selecionado
   const t = translations[language];
-
-  // Alterna entre os idiomas (inglês e português)
-  const toggleLanguage = () => {
-    setLanguage((lang) => (lang === "en" ? "pt" : "en"));
-  };
 
   // Hook useEffect para avisar o usuário sobre mudanças não salvas antes de sair da página
   useEffect(() => {
@@ -237,32 +229,20 @@ const DecisionHelper = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-black text-gray-300 font-sans antialiased">
-      {/* Cabeçalho */}
-      <header className="mb-8 flex justify-between items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Cabeçalho do componente */}
-          <div className="flex justify-between items-center py-6">
-            <Link to="/" className="text-[#00ff9d] hover:underline">
-              {t.back}
-            </Link>
-            <h1 className="text-3xl font-bold text-[#f1f5f9]">{t.title}</h1>
-            <Button
-              onClick={toggleLanguage}
-              className="bg-[#f1f5f9] hover:bg-[#00864c] text-black"
-            >
-              <Globe className="mr-2 h-4 w-4 inline" />{" "}
-              {language === "en" ? "PT" : "EN"}
-            </Button>
-          </div>
+    <div className="w-full bg-black text-gray-300 font-sans antialiased">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Mantendo título e subtítulo com a mesma visibilidade */}
+        <h1 className="text-3xl font-bold text-[#00ff9d] text-center mb-2 hover:text-[#00cc7d] transition-colors">
+          {t.title}
+        </h1>
+        <p className="text-lg text-[#f1f5f9] italic text-center mb-4">
+          {t.subtitle}
+        </p>
 
-          {/* Subtítulo centralizado */}
-          <p className="text-lg text-[#f1f5f9] italic text-center mb-8">
-            {t.subtitle}
-          </p>
-
-          {/* Grid layout para organizar os cartões */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Main content container */}
+        <div className="space-y-4 mb-4">
+          {/* Grid layout for cards with reduced gap */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Cartão para descrever o dilema */}
             <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00ff9d]/20">
               <CardHeader>
@@ -343,7 +323,7 @@ const DecisionHelper = () => {
           </div>
 
           {/* Cartão para adicionar e gerenciar alternativas - largura total */}
-          <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mt-6">
+          <Card className="bg-[#1a1a1a] border-[#333333] shadow-[#00864c]/20 mt-4">
             <CardHeader>
               <CardTitle className="text-[#00ff9d]">{t.alternatives}</CardTitle>
             </CardHeader>
@@ -416,7 +396,7 @@ const DecisionHelper = () => {
           </Card>
 
           {/* Cartão que exibe a matriz de decisão em um gráfico - largura total */}
-          <Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mt-6 overflow-hidden">
+          <Card className="bg-[#0a0a0a] border-[#333333] shadow-[#00ff9d]/20 mt-4 overflow-hidden">
             <CardHeader>
               <CardTitle
                 onClick={() => setShowMatrix(!showMatrix)}
@@ -444,7 +424,7 @@ const DecisionHelper = () => {
 
           {/* Exibe o resultado da decisão final */}
           {decision && (
-            <Alert className="mt-6 bg-[#1a1a1a] border-[#00ff9d] text-[#00ff9d]">
+            <Alert className="mt-4 bg-[#1a1a1a] border-[#00ff9d] text-[#00ff9d]">
               <AlertTitle className="text-[#00ff9d] font-bold">
                 {t.finalDecision}
               </AlertTitle>
@@ -454,11 +434,11 @@ const DecisionHelper = () => {
             </Alert>
           )}
 
-          {/* Centraliza os botões e ajusta os ícones */}
-          <div className="flex justify-center mt-4">
+          {/* Import/Export buttons */}
+          <div className="flex justify-center mb-2">
             <ImportExportButtons
               onExport={handleExport}
-              onImport={handleImportClick} // Modificado aqui
+              onImport={handleImportClick}
               language={language}
               className="flex items-center space-x-2"
             />
@@ -466,7 +446,7 @@ const DecisionHelper = () => {
 
           <input
             type="file"
-            ref={fileInputRef} // Modificado aqui
+            ref={fileInputRef}
             style={{ display: "none" }}
             onChange={(e) => {
               importDecisionProcess(
@@ -480,17 +460,21 @@ const DecisionHelper = () => {
             }}
             accept=".json"
           />
-        </div>
 
-        {/* Modal de isenção de responsabilidade */}
-        <DisclaimerModal
-          isOpen={isDisclaimerOpen}
-          onClose={() => setIsDisclaimerOpen(false)}
-          onConfirm={handleDisclaimerConfirm}
-          language={language}
-        />
-      </header>
-      <ContactSection /> {/* Moved ContactSection to the end */}
+          {/* Contact Section mais próximo do footer */}
+          <div className="mt-2">
+            <ContactSection />
+          </div>
+
+          {/* Disclaimer Modal */}
+          <DisclaimerModal
+            isOpen={isDisclaimerOpen}
+            onClose={() => setIsDisclaimerOpen(false)}
+            onConfirm={handleDisclaimerConfirm}
+            language={language}
+          />
+        </div>
+      </div>
     </div>
   );
 };
