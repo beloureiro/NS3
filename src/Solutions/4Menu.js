@@ -26,17 +26,20 @@ const FlowCard = ({ icon: Icon, title, color, isSelected, onClick }) => {
   return (
     <div 
       onClick={onClick}
-      className={`bg-slate-800/80 p-4 rounded-lg cursor-pointer transition-all
-        ${isSelected ? `border-2 ${borderColor}` : 'border border-slate-700'}
-        hover:border-2 ${borderColor} flex flex-col justify-center items-center
-        w-32 h-36 sm:w-36 sm:h-40 md:w-40 md:h-44`} // Responsivo: ajusta largura e altura
+      className={`bg-slate-800/80 p-2 rounded-lg cursor-pointer transition-all duration-300
+        ${isSelected 
+          ? `border-[3px] ${borderColor} scale-105` 
+          : `border-[1.5px] ${borderColor}`
+        }
+        hover:border-[3px] hover:${borderColor} hover:scale-105 flex flex-col justify-center items-center
+        w-24 h-28 sm:w-28 sm:h-32 md:w-32 md:h-36`} // Dimensões ainda mais reduzidas
     >
-      <div className="flex flex-col items-center text-center gap-2">
-        <div className={`bg-${color}-400/10 p-3 rounded-lg`}>
-          <Icon className={`text-${color}-400 w-6 h-6 md:w-8 md:h-8`} /> {/* Responsivo: ajusta tamanho do ícone */}
+      <div className="flex flex-col items-center text-center gap-1"> {/* Reduzido gap para 1 */}
+        <div className={`bg-${color}-400/10 p-1.5 rounded-lg`}> {/* Reduzido padding para 1.5 */}
+          <Icon className={`text-${color}-400 w-5 h-5 md:w-6 md:h-6`} /> {/* Aumentado de w-4/h-4 para w-5/h-5 e md:w-6/md:h-6 */}
         </div>
         <div>
-          <h3 className="text-base md:text-lg font-medium text-white">{title}</h3> {/* Responsivo: ajusta tamanho do texto */}
+          <h3 className="text-[10px] md:text-xs lg:text-sm font-medium text-white whitespace-normal px-0.5">{title}</h3> {/* Texto ainda menor */}
         </div>
       </div>
     </div>
@@ -45,10 +48,10 @@ const FlowCard = ({ icon: Icon, title, color, isSelected, onClick }) => {
 
 // Component for displaying connecting arrows between FlowCards
 const ArrowConnection = ({ label }) => (
-  <div className="flex flex-col items-center justify-center w-10 md:w-12"> {/* Responsivo: ajusta largura */}
-    <div className="h-0.5 w-full bg-[#FF6B6B] mb-1" /> {/* Line style; change width, color, or spacing */}
-    <ArrowRight className="text-[#FF6B6B] w-6 h-6 md:w-8 md:h-8" /> {/* Responsivo: ajusta tamanho do ícone */}
-    <span className="text-sm md:text-base text-[#FF6B6B] mt-1">{label}</span> {/* Responsivo: ajusta tamanho do texto */}
+  <div className="flex flex-col items-center justify-center w-10 md:w-14"> {/* Reduzido ainda mais a largura */}
+    <div className="h-0.5 w-full bg-[#FF6B6B] mb-0.5" /> {/* Reduzido margin bottom */}
+    <ArrowRight className="text-[#FF6B6B] w-3 h-3 md:w-4 md:h-4" /> {/* Ícone ainda menor */}
+    <span className="text-xs md:text-sm text-[#FF6B6B] mt-0.5 text-center whitespace-normal min-w-[50px]">{label}</span> {/* Texto menor e min-width reduzido */}
   </div>
 );
 
@@ -93,19 +96,26 @@ const DetailPanel = ({ selectedItem, t }) => {
 
   const Icon = detail.icon; // Dynamically assign the icon component
 
+  // Define the same border color logic as FlowCard
+  const borderColor = {
+    blue: "border-blue-400",
+    purple: "border-purple-400",
+    emerald: "border-emerald-400"
+  }[detail.color];
+
   return (
-    <div className="mt-4 bg-slate-800/50 p-6 rounded-lg border border-slate-700">
-      <div className="flex items-center gap-4 mb-6">
-        <div className={`bg-${detail.color}-400/10 p-3 rounded-lg`}>
-          <Icon className={`text-${detail.color}-400 w-6 h-6 md:w-8 md:h-8`} /> {/* Responsivo: ajusta tamanho do ícone */}
+    <div className={`mt-3 bg-slate-800/50 p-4 rounded-lg border-2 ${borderColor}`}> {/* Reduzido margin-top e padding */}
+      <div className="flex items-center gap-3 mb-4"> {/* Reduzido gap e margin-bottom */}
+        <div className={`bg-${detail.color}-400/10 p-2 rounded-lg`}> {/* Reduzido padding */}
+          <Icon className={`text-${detail.color}-400 w-5 h-5 md:w-6 md:h-6`} /> {/* Reduzido tamanho do ícone */}
         </div>
-        <h3 className="text-2xl md:text-3xl font-medium text-white">{detail.title}</h3> {/* Responsivo: ajusta tamanho do texto */}
+        <h3 className="text-xl md:text-2xl font-medium text-white">{detail.title}</h3> {/* Reduzido tamanho do texto */}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"> {/* Responsivo: ajusta número de colunas */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"> {/* Reduzido gap */}
         {detail.features.map((feature, idx) => (
-          <div key={idx} className="flex items-center gap-3">
-            <div className={`w-2 h-2 rounded-full bg-${detail.color}-400`} />
-            <span className="text-lg text-slate-300">{feature}</span>
+          <div key={idx} className="flex items-center gap-2"> {/* Reduzido gap */}
+            <div className={`w-1.5 h-1.5 rounded-full bg-${detail.color}-400`} /> {/* Reduzido tamanho do bullet point */}
+            <span className="text-base text-slate-300">{feature}</span> {/* Reduzido tamanho do texto */}
           </div>
         ))}
       </div>
@@ -122,7 +132,7 @@ const FourMenu = ({ language = 'en' }) => {
     <div className="bg-black text-white pt-0 px-6 pb-6 -mt-4">
       <div className="max-w-6xl mx-auto">
         <div className="bg-transparent p-6 rounded-xl">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6"> {/* Responsivo: ajusta direção e alinhamento */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6"> {/* Responsivo: ajusta direão e alinhamento */}
             <div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FF6B6B] flex items-center gap-3">
                 <ChefHat className="text-[#00ff9d] w-12 h-12 md:w-14 md:h-14" /> {/* Responsivo: ajusta tamanho do ícone */}
@@ -147,7 +157,7 @@ const FourMenu = ({ language = 'en' }) => {
           </div>
 
           {/* Menu flow with clickable cards - adjusted sizes */}
-          <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-3"> {/* Reduced gap from 4 to 3 */}
+          <div className="flex flex-row justify-center items-center gap-3 overflow-x-auto md:overflow-x-hidden flex-nowrap py-4 pl-4"> {/* Adicionado pl-4 para evitar corte */}
             <FlowCard
               icon={Globe}
               title={t.siteCard.title}

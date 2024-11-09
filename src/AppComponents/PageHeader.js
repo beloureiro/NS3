@@ -51,7 +51,7 @@ const PageHeader = ({ language, setLanguage, logo }) => {
             />
 
             {/* Subtitle */}
-            <div className="text-lg text-white-600 mt-6">
+            <div className="text-lg text-gray-400 mt-6">
               Your Daily Toolbox for Business Excellence
             </div>
 
