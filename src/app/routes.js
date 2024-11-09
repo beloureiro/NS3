@@ -111,7 +111,15 @@ const AppRoutes = ({
       <Route path="/5w2h" element={<ActionPlanApp language={language} />} />
       <Route path="/process-flow" element={<ProcessFlowDiagramApp language={language} />} />
       <Route path="/independent-width" element={<IndependentWidthPage />} />
-      <Route path="/4menu" element={<FourMenu />} />
+      <Route 
+        path="/4menu" 
+        element={
+          <FourMenu 
+            language={language} 
+            setLanguage={setLanguage}
+          />
+        } 
+      />
       <Route
         path="/inprocess"
         element={
