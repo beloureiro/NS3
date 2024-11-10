@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation, Link } from 'react-router-dom';
 import { ChevronLeft, Globe, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import translations from './translations';
 
 const PageHeader = ({ language, setLanguage, logo }) => {
@@ -27,29 +28,51 @@ const PageHeader = ({ language, setLanguage, logo }) => {
         <title>InMotion - Consulting</title>
         <meta name="description" content={t.description} />
       </Helmet>
-      <div className="w-full p-4 -mt-6">
-        <div className="flex justify-between items-center w-full max-w-4xl mx-auto px-12">
+      <div className="w-full p-4 sm:px-6 -mt-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between items-center max-w-4xl mx-auto px-4 sm:px-12">
           <Link
             to="/"
-            className="text-[#00ff9d] hover:underline flex items-center w-24"
+            className="text-[#00ff9d] hover:underline flex items-center w-full sm:w-24 mb-4 sm:mb-0"
           >
             <ChevronLeft className="mr-2" /> {t.back}
           </Link>
           
-          <div className="flex flex-col items-center">
-            <h1 className="text-3xl font-bold mb-6">{t.title}</h1>
-            <img
+          <div className="flex flex-col items-center text-center sm:text-left">
+            <motion.h1
+              className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {t.title}
+            </motion.h1>
+            <motion.img
               src={logo}
               alt="InMotion Logo"
-              className="h-15 transform transition-transform duration-300 hover:scale-110"
+              className="h-12 sm:h-15 transform transition-transform duration-300 hover:scale-110"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
             />
-            <div className="text-lg text-gray-400 mt-6">
+            <motion.div
+              className="text-sm sm:text-lg text-gray-400 mt-4 sm:mt-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               Your Daily Toolbox for Business Excellence
-            </div>
-            <h2 className="text-xl">{t.subtitle}</h2>
+            </motion.div>
+            <motion.h2
+              className="text-lg sm:text-xl mt-2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {t.subtitle}
+            </motion.h2>
           </div>
 
-          <div className="relative w-24">
+          <div className="relative w-full sm:w-24 mt-4 sm:mt-0">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-800/80 backdrop-blur-md 
@@ -66,25 +89,32 @@ const PageHeader = ({ language, setLanguage, logo }) => {
               />
             </button>
 
-            {isOpen && (
-              <div className="absolute right-0 mt-2 w-32 rounded-lg bg-gray-800/80 backdrop-blur-md 
-                            border border-gray-700 overflow-hidden z-50">
-                {Object.entries(languages).map(([code, name]) => (
-                  <button
-                    key={code}
-                    onClick={() => {
-                      setLanguage(code);
-                      setIsOpen(false);
-                    }}
-                    className={`w-full px-4 py-2 text-left text-sm
-                              hover:bg-gray-700/50 hover:text-[#00ff9d] transition-colors
-                              ${language === code ? 'text-[#00ff9d] bg-gray-700/50' : ''}`}
-                  >
-                    {name}
-                  </button>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute right-0 mt-2 w-full sm:w-32 rounded-lg bg-gray-800/80 backdrop-blur-md 
+                            border border-gray-700 overflow-hidden z-50"
+                >
+                  {Object.entries(languages).map(([code, name]) => (
+                    <button
+                      key={code}
+                      onClick={() => {
+                        setLanguage(code);
+                        setIsOpen(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-sm
+                                hover:bg-gray-700/50 hover:text-[#00ff9d] transition-colors
+                                ${language === code ? 'text-[#00ff9d] bg-gray-700/50' : ''}`}
+                    >
+                      {name}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
