@@ -76,7 +76,8 @@ export const menuTranslations = {
     integrates: "Integrates",
     connects: "Connects",
     notifies: "Notifies",
-    manages: "Manages"
+    manages: "Manages",
+    contactUs: "Contact Us"
   },
   pt: {
     subtitle: "Gestão simplificada para seu estabelecimento",
@@ -160,6 +161,7 @@ export const menuTranslations = {
     integrates: "Integra",
     connects: "Conecta",
     notifies: "Notifica",
-    manages: "Gerencia"
+    manages: "Gerencia",
+    contactUs: "Contacte-nos"
   }
 };
