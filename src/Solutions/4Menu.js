@@ -13,10 +13,11 @@ import {
 } from 'lucide-react'; // Icon imports, can be swapped or updated with additional icons as needed
 import ContactSection from '../AppComponents/ContactSection'; // Custom component; modify if adding new contact methods
 import { menuTranslations } from './4menuLanguage'; // Translations; add new languages or adjust text here
+import { motion, AnimatePresence } from 'framer-motion'; // Add this import at the top with other imports
 
 // Individual menu item card component
-const FlowCard = ({ icon: Icon, title, color, isSelected, onClick }) => {
-  // Define a cor específica para cada card baseado na prop color
+const FlowCard = ({ icon: Icon, title, color, isSelected, onClick, onMouseEnter, onMouseLeave }) => {
+  // Define a specific color for each card based on the 'color' prop
   const borderColor = {
     blue: "border-blue-400",
     purple: "border-purple-400",
@@ -24,37 +25,48 @@ const FlowCard = ({ icon: Icon, title, color, isSelected, onClick }) => {
   }[color];
 
   return (
-    <div 
+    <motion.div 
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className={`bg-slate-800/80 p-2 rounded-lg cursor-pointer transition-all duration-300
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={`
+        bg-slate-800/80 rounded-lg cursor-pointer transition-all duration-300
         ${isSelected 
-          ? `border-[3px] ${borderColor} scale-105` 
-          : `border-[1.5px] ${borderColor}`
+          ? `border-[2px] ${borderColor}` 
+          : `border-[1px] ${borderColor}`
         }
-        hover:border-[3px] hover:${borderColor} hover:scale-105 flex flex-col justify-center items-center
-        min-w-[4.5rem] w-16 h-20 
-        sm:min-w-[5rem] sm:w-20 sm:h-24 
-        md:min-w-[6rem] md:w-24 md:h-28 
-        lg:min-w-[7rem] lg:w-28 lg:h-32
-        md:flex-shrink-0
-        md:flex-grow-0
-        w-full md:w-auto`} // Ajuste para ocupar toda a largura em mobile
+        hover:border-[2px] hover:${borderColor}
+        
+        // Mobile styles
+        w-full max-w-[180px] mx-auto p-2.5 md:max-w-none md:mx-0
+        
+        // Desktop styles (md and up)
+        md:min-w-[6rem] md:w-24 md:h-24
+        lg:min-w-[7rem] lg:w-28 lg:h-28
+        md:flex-shrink-0 md:flex-grow-0
+      `}
     >
-      <div className="flex flex-col items-center text-center gap-1">
-        <div className={`bg-${color}-400/10 p-1.5 rounded-lg`}>
-          <Icon className={`text-${color}-400 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6`} />
+      <div className="
+        // Mobile styles
+        flex items-center space-x-3 md:space-x-0
+        
+        // Desktop styles
+        md:flex-col md:items-center md:text-center md:gap-0
+      ">
+        <div className={`bg-${color}-400/10 p-1.5 rounded-lg shrink-0`}>
+          <Icon className={`text-${color}-400 w-6 h-6 md:w-7 md:h-7`} />
         </div>
-        <div>
-          <h3 className="text-[9px] sm:text-[10px] md:text-xs lg:text-sm font-medium text-white whitespace-normal px-0.5">{title}</h3>
-        </div>
+        <h3 className="text-base font-medium text-white md:text-sm lg:text-base md:whitespace-normal md:-mt-1">{title}</h3>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 // Component for displaying connecting arrows between FlowCards
 const ArrowConnection = ({ label }) => (
-  <div className="flex flex-col items-center justify-center w-10 md:w-14 hidden md:flex"> {/* Oculta em mobile */}
+  <div className="flex flex-col items-center justify-center w-10 md:w-14 hidden md:flex"> {/* Hidden on mobile */}
     <div className="h-0.5 w-full bg-[#FF6B6B] mb-0.5" />
     <ArrowRight className="text-[#FF6B6B] w-3 h-3 md:w-4 md:h-4" />
     <span className="text-xs md:text-sm text-[#FF6B6B] mt-0.5 text-center whitespace-normal min-w-[50px]">{label}</span>
@@ -62,7 +74,8 @@ const ArrowConnection = ({ label }) => (
 );
 
 // Panel to show details and features of each selected item
-const DetailPanel = ({ selectedItem, t }) => {
+const DetailPanel = ({ selectedItem, hoveredItem, t }) => {
+  const itemToShow = hoveredItem || selectedItem; // Use hovered item if available
   // Detail object with properties for each menu item; add or modify items here
   const details = {
     site: {
@@ -97,7 +110,7 @@ const DetailPanel = ({ selectedItem, t }) => {
     }
   };
 
-  const detail = details[selectedItem]; // Get details for the currently selected item
+  const detail = details[itemToShow]; // Get details for the currently selected item
   if (!detail) return null; // Return null if no item is selected
 
   const Icon = detail.icon; // Dynamically assign the icon component
@@ -110,34 +123,55 @@ const DetailPanel = ({ selectedItem, t }) => {
   }[detail.color];
 
   return (
-    <div className={`mt-3 bg-slate-800/50 p-4 rounded-lg border-2 ${borderColor}`}>
-      <div className="flex items-center gap-3 mb-4">
-        <div className={`bg-${detail.color}-400/10 p-2 rounded-lg`}>
-          <Icon className={`text-${detail.color}-400 w-5 h-5 md:w-6 md:h-6`} />
-        </div>
-        <h3 className="text-xl md:text-2xl font-medium text-white">{detail.title}</h3>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {detail.features.map((feature, idx) => (
-          <div key={idx} className="flex items-center gap-2">
-            <div className={`w-1.5 h-1.5 rounded-full bg-${detail.color}-400`} />
-            <span className="text-base text-slate-300">{feature}</span>
+    <AnimatePresence mode="wait">
+      {detail && (
+        <motion.div 
+          key={itemToShow}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className={`mt-3 bg-slate-800/50 p-4 rounded-lg border-2 ${borderColor}`}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`bg-${detail.color}-400/10 p-2 rounded-lg`}>
+              <Icon className={`text-${detail.color}-400 w-5 h-5 md:w-6 md:h-6`} />
+            </div>
+            <h3 className="text-xl md:text-2xl font-medium text-white">{detail.title}</h3>
           </div>
-        ))}
-      </div>
-    </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {detail.features.map((feature, idx) => (
+              <div key={idx} className="flex items-center gap-2">
+                <div className={`w-1.5 h-1.5 rounded-full bg-${detail.color}-400`} />
+                <span className="text-base text-slate-300">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
 // Main component for the menu display
 const FourMenu = ({ language = 'en' }) => {
   const [selectedItem, setSelectedItem] = useState('site'); // State for selected item; adjust default selection if needed
+  const [hoveredItem, setHoveredItem] = useState(null); // State for hovered item
   const t = menuTranslations[language] || menuTranslations.en; // Translation based on language prop
 
   return (
-    <div className="bg-black text-white pt-0 px-2 sm:px-4 md:px-6 pb-6">
-      <div className="max-w-7xl mx-auto flex flex-col">
-        <div className="bg-transparent p-2 sm:p-4 md:p-6 rounded-xl flex-grow">
+    <div className="bg-black text-white px-4 sm:px-6 pb-8">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="max-w-7xl mx-auto flex flex-col"
+      >
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-transparent p-2 sm:p-4 md:p-6 rounded-xl flex-grow"
+        >
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4 md:mb-6">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#FF6B6B] flex items-center gap-2 md:gap-3">
@@ -162,17 +196,67 @@ const FourMenu = ({ language = 'en' }) => {
             </div>
           </div>
 
-          {/* Menu flow with clickable cards */}
+          {/* Menu flow section */}
           <div className="relative">
-            <div className={`flex flex-col md:flex-row justify-start md:justify-center items-center
-                            gap-1 xs:gap-2 sm:gap-3
-                            ${'overflow-x-auto scrollbar-hide py-2 sm:py-4 px-2 sm:px-4 -mx-2 sm:-mx-0 md:overflow-visible md:mx-0'}`}>
+            {/* Mobile Layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
               <FlowCard
                 icon={Globe}
                 title={t.siteCard.title}
                 color="blue"
                 isSelected={selectedItem === 'site'}
                 onClick={() => setSelectedItem('site')}
+                onMouseEnter={() => setHoveredItem('site')}
+                onMouseLeave={() => setHoveredItem(null)}
+              />
+              <FlowCard
+                icon={QrCode}
+                title={t.qrcodeCard.title}
+                color="blue"
+                isSelected={selectedItem === 'qrcode'}
+                onClick={() => setSelectedItem('qrcode')}
+                onMouseEnter={() => setHoveredItem('qrcode')}
+                onMouseLeave={() => setHoveredItem(null)}
+              />
+              <FlowCard
+                icon={Smartphone}
+                title={t.appCard.title}
+                color="purple"
+                isSelected={selectedItem === 'app'}
+                onClick={() => setSelectedItem('app')}
+                onMouseEnter={() => setHoveredItem('app')}
+                onMouseLeave={() => setHoveredItem(null)}
+              />
+              <FlowCard
+                icon={Bell}
+                title={t.alertsCard.title}
+                color="purple"
+                isSelected={selectedItem === 'alerts'}
+                onClick={() => setSelectedItem('alerts')}
+                onMouseEnter={() => setHoveredItem('alerts')}
+                onMouseLeave={() => setHoveredItem(null)}
+              />
+              <FlowCard
+                icon={DollarSign}
+                title={t.tipsCard.title}
+                color="purple"
+                isSelected={selectedItem === 'tips'}
+                onClick={() => setSelectedItem('tips')}
+                onMouseEnter={() => setHoveredItem('tips')}
+                onMouseLeave={() => setHoveredItem(null)}
+              />
+            </div>
+
+            {/* Desktop Layout (hidden on mobile) */}
+            <div className="hidden md:flex justify-start md:justify-center items-center gap-3">
+              <FlowCard
+                icon={Globe}
+                title={t.siteCard.title}
+                color="blue"
+                isSelected={selectedItem === 'site'}
+                onClick={() => setSelectedItem('site')}
+                onMouseEnter={() => setHoveredItem('site')}
+                onMouseLeave={() => setHoveredItem(null)}
               />
               <ArrowConnection label={t.integrates} />
               <FlowCard
@@ -181,6 +265,8 @@ const FourMenu = ({ language = 'en' }) => {
                 color="blue"
                 isSelected={selectedItem === 'qrcode'}
                 onClick={() => setSelectedItem('qrcode')}
+                onMouseEnter={() => setHoveredItem('qrcode')}
+                onMouseLeave={() => setHoveredItem(null)}
               />
               <ArrowConnection label={t.connects} />
               <FlowCard
@@ -189,6 +275,8 @@ const FourMenu = ({ language = 'en' }) => {
                 color="purple"
                 isSelected={selectedItem === 'app'}
                 onClick={() => setSelectedItem('app')}
+                onMouseEnter={() => setHoveredItem('app')}
+                onMouseLeave={() => setHoveredItem(null)}
               />
               <ArrowConnection label={t.notifies} />
               <FlowCard
@@ -197,6 +285,8 @@ const FourMenu = ({ language = 'en' }) => {
                 color="purple"
                 isSelected={selectedItem === 'alerts'}
                 onClick={() => setSelectedItem('alerts')}
+                onMouseEnter={() => setHoveredItem('alerts')}
+                onMouseLeave={() => setHoveredItem(null)}
               />
               <ArrowConnection label={t.manages} />
               <FlowCard
@@ -205,19 +295,29 @@ const FourMenu = ({ language = 'en' }) => {
                 color="purple"
                 isSelected={selectedItem === 'tips'}
                 onClick={() => setSelectedItem('tips')}
+                onMouseEnter={() => setHoveredItem('tips')}
+                onMouseLeave={() => setHoveredItem(null)}
               />
             </div>
 
-            {/* Indicadores de scroll para telas pequenas */}
-            <div className="md:hidden absolute inset-y-0 right-0 bg-gradient-to-l from-black w-8" />
-            <div className="md:hidden absolute inset-y-0 left-0 bg-gradient-to-r from-black w-8" />
+            {/* Mobile connection labels */}
+            <div className="flex flex-col gap-2 mt-4 md:hidden">
+              <div className="text-center text-[#FF6B6B] text-sm">
+                {t.integrates} → {t.connects} → {t.notifies} → {t.manages}
+              </div>
+            </div>
           </div>
 
           {/* Detailed panel */}
-          <DetailPanel selectedItem={selectedItem} t={t} />
+          <DetailPanel selectedItem={selectedItem} hoveredItem={hoveredItem} t={t} />
 
           {/* Additional management sections */}
-          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 bg-slate-800/50 p-3 sm:p-4 md:p-5 rounded-lg">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 bg-slate-800/50 p-3 sm:p-4 md:p-5 rounded-lg"
+          >
             <div className="flex items-center gap-4">
               <div className="bg-emerald-400/10 p-3 rounded-lg">
                 <ClipboardList className="text-emerald-400 w-8 h-8 md:w-10 md:h-10" />
@@ -245,15 +345,20 @@ const FourMenu = ({ language = 'en' }) => {
                 <p className="text-base text-white">{t.teamManagement.description}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact section */}
-          <div className="mt-3 bg-slate-800/50 rounded-lg p-3">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mt-3 bg-slate-800/50 rounded-lg p-3"
+          >
             <ContactSection title={t.contactUs} />
-          </div>
+          </motion.div>
 
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
