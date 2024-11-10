@@ -84,14 +84,14 @@ const AdvancedAnalysisExplanation = ({ language }) => {
   const t = translations[language];
   return (
     <div className="bg-slate-800 p-4 rounded-lg">
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-4">
         <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
           <Waypoints className="text-emerald-400 mb-2" size={28} />
           <p className="text-slate-300 text-sm text-center">
             {t.processMapping}
           </p>
         </div>
-        <ArrowRightLeft className="text-emerald-400" size={24} />
+        <ArrowRightLeft className="text-emerald-400 hidden md:block" size={24} />
         <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
           <div className="flex items-center gap-4 mb-2">
             <Cpu className="text-emerald-400" size={28} />
@@ -100,7 +100,7 @@ const AdvancedAnalysisExplanation = ({ language }) => {
           </div>
           <p className="text-slate-300 text-sm text-center">{t.aiProcessing}</p>
         </div>
-        <ArrowRightLeft className="text-emerald-400" size={24} />
+        <ArrowRightLeft className="text-emerald-400 hidden md:block" size={24} />
         <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
           <Grid2x2 className="text-emerald-400 mb-2" size={28} />
           <p className="text-slate-300 text-sm text-center">
@@ -161,7 +161,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
   return (
     <div className="bg-black text-white">
-      <div className="max-w-screen-lg mx-auto px-6 py-6" style={{ height: 'calc(100vh - 300px)' }}> {/* Ajuste o 300px conforme a altura do seu footer */}
+      <div className="max-w-screen-lg mx-auto px-6 py-6">
         <Card className="bg-gray-800 border-gray-700 h-full">
           <CardContent className="p-6 h-full flex flex-col">
             {/* Header fixo */}
@@ -181,16 +181,17 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 onTabChange={handleTabChange}
               >
                 {/* Tab navigation */}
-                <div className="relative flex justify-between items-center w-full bg-gray-700 p-1 rounded-lg">
+                <div className="relative flex flex-col md:flex-row md:justify-between items-center w-full bg-gray-700 p-1 rounded-lg">
                   <TabsTrigger
                     value="overview"
-                    className="relative flex items-center space-x-2 px-4 py-1 rounded-md transition-all"
+                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all w-full md:w-auto"
                   >
                     <Search className="w-4 h-4" />
                     <span>{t.overview}</span>
                   </TabsTrigger>
 
-                  <div className="flex items-center">
+                  {/* Setas e linhas ocultas em mobile */}
+                  <div className="flex items-center hidden md:flex">
                     <div
                       className={`h-0.5 w-8 transition-colors duration-300 ${
                         currentTab === "overview"
@@ -209,7 +210,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
                   <TabsTrigger
                     value="diagnostic"
-                    className="relative flex items-center space-x-2 px-4 py-1 rounded-md transition-all"
+                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all w-full md:w-auto mt-2 md:mt-0"
                   >
                     <div className="flex items-center space-x-2">
                       <div
@@ -226,7 +227,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                     </div>
                   </TabsTrigger>
 
-                  <div className="flex items-center">
+                  {/* Setas e linhas ocultas em mobile */}
+                  <div className="flex items-center hidden md:flex">
                     <div
                       className={`h-0.5 w-8 transition-colors duration-300 ${
                         currentTab === "action" ? "bg-[#00ff9d]" : "bg-gray-600"
@@ -243,7 +245,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
                   <TabsTrigger
                     value="action"
-                    className="relative flex items-center space-x-2 px-4 py-1 rounded-md transition-all"
+                    className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all w-full md:w-auto mt-2 md:mt-0"
                   >
                     <div className="flex items-center space-x-2">
                       <div
@@ -317,7 +319,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
                 <TabsContent value="action" className="space-y-6">
                   <div className="bg-slate-800 p-4 rounded-lg">
-                    <div className="flex items-center justify-center gap-4">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4">
                       <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
                         <div className="bg-slate-600/50 p-2 rounded-full mb-2">
                           <Target className="text-emerald-400 w-8 h-8" />
@@ -330,7 +332,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         </p>
                       </div>
 
-                      <div className="flex flex-col items-center justify-center">
+                      {/* Setas ocultas em mobile */}
+                      <div className="flex flex-col items-center justify-center hidden md:flex">
                         <ArrowRightLeft className="text-emerald-400 w-5 h-5 mb-1" />
                         <span className="text-slate-400 text-xs">
                           {t.continuous}
