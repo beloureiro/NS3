@@ -20,7 +20,9 @@ import { texts } from "./RexLanguage";
 import ContactSection from "../AppComponents/ContactSection";
 
 const REXPresentation = ({ language }) => {
-  const [selectedFeature, setSelectedFeature] = useState(null);
+  const [selectedFeature, setSelectedFeature] = useState(() => {
+    return texts.features.find(f => f.id === 1);
+  });
   const [hoveredFeature, setHoveredFeature] = useState(null);
 
   // Ajuste das propriedades dos ícones
@@ -106,20 +108,20 @@ const REXPresentation = ({ language }) => {
           <div className="bg-gray-800/90 border-2 border-gray-700 rounded-lg overflow-hidden">
             <div className="p-6 relative">
               <div className="flex items-start justify-between">
-                <div className="flex items-start gap-4">
-                  <div className="p-2 rounded-lg bg-transparent">
-                    {React.cloneElement(icons[feature.id], {
-                      className: "text-[#FFFF08]",
-                    })}
-                  </div>
-                  <div>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 rounded-lg bg-transparent">
+                      {React.cloneElement(icons[feature.id], {
+                        className: "text-[#FFFF08]",
+                      })}
+                    </div>
                     <h2 className="text-xl font-bold text-[#FFFF08]">
                       {feature.title[language]}
                     </h2>
-                    <p className="text-gray-400 mt-2">
-                      {feature.description[language]}
-                    </p>
                   </div>
+                  <p className="text-gray-400">
+                    {feature.description[language]}
+                  </p>
                 </div>
                 <button
                   onClick={() => setSelectedFeature(null)}
