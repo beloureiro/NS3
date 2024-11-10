@@ -35,14 +35,17 @@ const FlowCard = ({ icon: Icon, title, color, isSelected, onClick }) => {
         min-w-[4.5rem] w-16 h-20 
         sm:min-w-[5rem] sm:w-20 sm:h-24 
         md:min-w-[6rem] md:w-24 md:h-28 
-        lg:min-w-[7rem] lg:w-28 lg:h-32`}
+        lg:min-w-[7rem] lg:w-28 lg:h-32
+        md:flex-shrink-0
+        md:flex-grow-0
+        w-full md:w-auto`} // Ajuste para ocupar toda a largura em mobile
     >
-      <div className="flex flex-col items-center text-center gap-1"> {/* Reduzido gap para 1 */}
-        <div className={`bg-${color}-400/10 p-1.5 rounded-lg`}> {/* Reduzido padding para 1.5 */}
-          <Icon className={`text-${color}-400 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6`} /> {/* Ajustado tamanhos dos ícones */}
+      <div className="flex flex-col items-center text-center gap-1">
+        <div className={`bg-${color}-400/10 p-1.5 rounded-lg`}>
+          <Icon className={`text-${color}-400 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6`} />
         </div>
         <div>
-          <h3 className="text-[9px] sm:text-[10px] md:text-xs lg:text-sm font-medium text-white whitespace-normal px-0.5">{title}</h3> {/* Texto ainda menor */}
+          <h3 className="text-[9px] sm:text-[10px] md:text-xs lg:text-sm font-medium text-white whitespace-normal px-0.5">{title}</h3>
         </div>
       </div>
     </div>
@@ -51,10 +54,10 @@ const FlowCard = ({ icon: Icon, title, color, isSelected, onClick }) => {
 
 // Component for displaying connecting arrows between FlowCards
 const ArrowConnection = ({ label }) => (
-  <div className="flex flex-col items-center justify-center w-10 md:w-14"> {/* Reduzido ainda mais a largura */}
-    <div className="h-0.5 w-full bg-[#FF6B6B] mb-0.5" /> {/* Reduzido margin bottom */}
-    <ArrowRight className="text-[#FF6B6B] w-3 h-3 md:w-4 md:h-4" /> {/* Ícone ainda menor */}
-    <span className="text-xs md:text-sm text-[#FF6B6B] mt-0.5 text-center whitespace-normal min-w-[50px]">{label}</span> {/* Texto menor e min-width reduzido */}
+  <div className="flex flex-col items-center justify-center w-10 md:w-14 hidden md:flex"> {/* Oculta em mobile */}
+    <div className="h-0.5 w-full bg-[#FF6B6B] mb-0.5" />
+    <ArrowRight className="text-[#FF6B6B] w-3 h-3 md:w-4 md:h-4" />
+    <span className="text-xs md:text-sm text-[#FF6B6B] mt-0.5 text-center whitespace-normal min-w-[50px]">{label}</span>
   </div>
 );
 
@@ -107,18 +110,18 @@ const DetailPanel = ({ selectedItem, t }) => {
   }[detail.color];
 
   return (
-    <div className={`mt-3 bg-slate-800/50 p-4 rounded-lg border-2 ${borderColor}`}> {/* Reduzido margin-top e padding */}
-      <div className="flex items-center gap-3 mb-4"> {/* Reduzido gap e margin-bottom */}
-        <div className={`bg-${detail.color}-400/10 p-2 rounded-lg`}> {/* Reduzido padding */}
-          <Icon className={`text-${detail.color}-400 w-5 h-5 md:w-6 md:h-6`} /> {/* Reduzido tamanho do ícone */}
+    <div className={`mt-3 bg-slate-800/50 p-4 rounded-lg border-2 ${borderColor}`}>
+      <div className="flex items-center gap-3 mb-4">
+        <div className={`bg-${detail.color}-400/10 p-2 rounded-lg`}>
+          <Icon className={`text-${detail.color}-400 w-5 h-5 md:w-6 md:h-6`} />
         </div>
-        <h3 className="text-xl md:text-2xl font-medium text-white">{detail.title}</h3> {/* Reduzido tamanho do texto */}
+        <h3 className="text-xl md:text-2xl font-medium text-white">{detail.title}</h3>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"> {/* Reduzido gap */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {detail.features.map((feature, idx) => (
-          <div key={idx} className="flex items-center gap-2"> {/* Reduzido gap */}
-            <div className={`w-1.5 h-1.5 rounded-full bg-${detail.color}-400`} /> {/* Reduzido tamanho do bullet point */}
-            <span className="text-base text-slate-300">{feature}</span> {/* Reduzido tamanho do texto */}
+          <div key={idx} className="flex items-center gap-2">
+            <div className={`w-1.5 h-1.5 rounded-full bg-${detail.color}-400`} />
+            <span className="text-base text-slate-300">{feature}</span>
           </div>
         ))}
       </div>
@@ -135,15 +138,15 @@ const FourMenu = ({ language = 'en' }) => {
     <div className="bg-black text-white pt-0 px-2 sm:px-4 md:px-6 pb-6">
       <div className="max-w-7xl mx-auto flex flex-col">
         <div className="bg-transparent p-2 sm:p-4 md:p-6 rounded-xl flex-grow">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4 md:mb-6"> {/* Responsivo: ajusta direão e alinhamento */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4 md:mb-6">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#FF6B6B] flex items-center gap-2 md:gap-3">
-                <ChefHat className="text-[#00ff9d] w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" /> {/* Responsivo: ajusta tamanho do ícone */}
+                <ChefHat className="text-[#00ff9d] w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" />
                 4menu.today
               </h2>
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white">{t.subtitle}</p> {/* Responsivo: ajusta tamanho do texto */}
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white">{t.subtitle}</p>
             </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4 mt-3 md:mt-0"> {/* Responsivo: permite quebra de linha */}
+            <div className="flex flex-wrap gap-2 sm:gap-4 mt-3 md:mt-0">
               <span className="text-base text-slate-400 flex items-center">
                 <div className="w-4 h-4 rounded-full bg-blue-400 mr-2" />
                 {t.clientInterface}
@@ -159,14 +162,11 @@ const FourMenu = ({ language = 'en' }) => {
             </div>
           </div>
 
-          {/* Menu flow with clickable cards - adjusted sizes */}
+          {/* Menu flow with clickable cards */}
           <div className="relative">
-            <div className="flex flex-row justify-start md:justify-center items-center 
-                            gap-1 xs:gap-2 sm:gap-3 
-                            overflow-x-auto scrollbar-hide 
-                            py-2 sm:py-4 
-                            px-2 sm:px-4
-                            -mx-2 sm:-mx-0"> 
+            <div className={`flex flex-col md:flex-row justify-start md:justify-center items-center
+                            gap-1 xs:gap-2 sm:gap-3
+                            ${'overflow-x-auto scrollbar-hide py-2 sm:py-4 px-2 sm:px-4 -mx-2 sm:-mx-0 md:overflow-visible md:mx-0'}`}>
               <FlowCard
                 icon={Globe}
                 title={t.siteCard.title}
@@ -207,23 +207,23 @@ const FourMenu = ({ language = 'en' }) => {
                 onClick={() => setSelectedItem('tips')}
               />
             </div>
-            
+
             {/* Indicadores de scroll para telas pequenas */}
             <div className="md:hidden absolute inset-y-0 right-0 bg-gradient-to-l from-black w-8" />
             <div className="md:hidden absolute inset-y-0 left-0 bg-gradient-to-r from-black w-8" />
           </div>
 
-          {/* Detailed panel - adjusted spacing */}
+          {/* Detailed panel */}
           <DetailPanel selectedItem={selectedItem} t={t} />
 
-          {/* Additional management sections - reduced top margin */}
+          {/* Additional management sections */}
           <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 bg-slate-800/50 p-3 sm:p-4 md:p-5 rounded-lg">
             <div className="flex items-center gap-4">
               <div className="bg-emerald-400/10 p-3 rounded-lg">
-                <ClipboardList className="text-emerald-400 w-8 h-8 md:w-10 md:h-10" /> {/* Responsivo: ajusta tamanho do ícone */}
+                <ClipboardList className="text-emerald-400 w-8 h-8 md:w-10 md:h-10" />
               </div>
               <div>
-                <h3 className="text-lg md:text-xl font-medium text-emerald-400">{t.financialManagement.title}</h3> {/* Responsivo: ajusta tamanho do texto */}
+                <h3 className="text-lg md:text-xl font-medium text-emerald-400">{t.financialManagement.title}</h3>
                 <p className="text-base text-white">{t.financialManagement.description}</p>
               </div>
             </div>
@@ -247,7 +247,7 @@ const FourMenu = ({ language = 'en' }) => {
             </div>
           </div>
 
-          {/* Contact section - reduced top margin */}
+          {/* Contact section */}
           <div className="mt-3 bg-slate-800/50 rounded-lg p-3">
             <ContactSection title={t.contactUs} />
           </div>
