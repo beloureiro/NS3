@@ -59,8 +59,8 @@ const TabsTrigger = ({ children, value, className }) => {
 
   return (
     <button
-      className={`${className} ${
-        activeTab === value ? "bg-[#00ff9d] text-black" : ""
+      className={`${className} uppercase ${
+        activeTab === value ? "bg-[#00ff9d] text-black font-bold" : ""
       } hover:bg-gray-600 hover:text-white transition-colors`}
       onClick={() => {
         if (activeTab !== value) setActiveTab(value);
@@ -83,16 +83,16 @@ const TabsContent = ({ children, value, className }) => {
 const AdvancedAnalysisExplanation = ({ language }) => {
   const t = translations[language];
   return (
-    <div className="bg-slate-800 p-4 rounded-lg">
+    <div className="bg-gray-800 p-4 rounded-lg">
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-        <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
           <Waypoints className="text-emerald-400 mb-2" size={28} />
           <p className="text-slate-300 text-sm text-center">
             {t.processMapping}
           </p>
         </div>
         <ArrowRightLeft className="text-emerald-400 hidden md:block" size={24} />
-        <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
           <div className="flex items-center gap-4 mb-2">
             <Cpu className="text-emerald-400" size={28} />
             <Plus className="text-emerald-400" size={18} />
@@ -101,7 +101,7 @@ const AdvancedAnalysisExplanation = ({ language }) => {
           <p className="text-slate-300 text-sm text-center">{t.aiProcessing}</p>
         </div>
         <ArrowRightLeft className="text-emerald-400 hidden md:block" size={24} />
-        <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
           <Grid2x2 className="text-emerald-400 mb-2" size={28} />
           <p className="text-slate-300 text-sm text-center">
             {t.complexityMatrix}
@@ -208,7 +208,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 onTabChange={handleTabChange}
               >
                 {/* Tab navigation */}
-                <div className="relative flex flex-col md:flex-row md:justify-between items-center w-full bg-gray-700 p-1 rounded-lg">
+                <div className="relative flex flex-col md:flex-row md:justify-between items-center w-full bg-gray-800 p-1 rounded-lg">
                   <TabsTrigger
                     value="overview"
                     className="relative flex items-center space-x-2 px-4 py-2 rounded-md transition-all w-full md:w-auto"
@@ -294,7 +294,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 <TabsContent value="overview" className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div
-                      className={`bg-gray-700 p-4 rounded-[5px] border ${
+                      className={`bg-gray-800 p-4 rounded-[5px] border ${
                         selectedItem === "processos"
                           ? "border-blue-500"
                           : "border-gray-600"
@@ -308,7 +308,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                       <p className="text-gray-400">{t.processesDesc}</p>
                     </div>
                     <div
-                      className={`bg-gray-700 p-4 rounded-[5px] border ${
+                      className={`bg-gray-800 p-4 rounded-[5px] border ${
                         selectedItem === "pessoas"
                           ? "border-purple-500"
                           : "border-gray-600"
@@ -322,7 +322,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                       <p className="text-gray-400">{t.peopleDesc}</p>
                     </div>
                     <div
-                      className={`bg-gray-700 p-4 rounded-[5px] border ${
+                      className={`bg-gray-800 p-4 rounded-[5px] border ${
                         selectedItem === "tecnologia"
                           ? "border-green-500"
                           : "border-gray-600"
@@ -345,10 +345,10 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </TabsContent>
 
                 <TabsContent value="action" className="space-y-6">
-                  <div className="bg-slate-800 p-4 rounded-lg">
+                  <div className="bg-gray-800 p-4 rounded-lg">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-                      <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
-                        <div className="bg-slate-600/50 p-2 rounded-full mb-2">
+                      <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
+                        <div className="bg-black p-2 rounded-full mb-2">
                           <Target className="text-emerald-400 w-8 h-8" />
                         </div>
                         <h3 className="text-emerald-400 font-semibold text-md mb-2">
@@ -370,8 +370,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         </span>
                       </div>
 
-                      <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
-                        <div className="bg-slate-600/50 p-2 rounded-full mb-2">
+                      <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
+                        <div className="bg-black p-2 rounded-full mb-2">
                           <SquareActivity className="text-emerald-400 w-8 h-8" />
                         </div>
                         <h3 className="text-emerald-400 font-semibold text-md mb-2">
@@ -388,7 +388,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
               <div className="mt-6">
                 <div
-                  className={`bg-gray-700 p-6 rounded-[5px] border ${
+                  className={`bg-gray-800 p-6 rounded-[5px] border ${
                     selectedItem === "processos"
                       ? "border-blue-500"
                       : selectedItem === "pessoas"
