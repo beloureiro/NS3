@@ -39,15 +39,15 @@ const REXPresentation = ({ language = "pt" }) => {
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex items-center gap-3 mb-2">
           <Home className="w-8 h-8 text-[#ffff08]" />
-          <div>
+          <div className="flex items-center gap-2">
             <h1 className="text-3xl font-bold text-[#ffff08]">
               REX - Real Estate Experience
             </h1>
-            <p className="text-lg text-gray-400 mt-2">
-              {texts.headerSubtitle[language]}
-            </p>
           </div>
         </div>
+        <p className="text-xl text-white text-left">
+          {texts.headerSubtitle[language]}
+        </p>
       </div>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

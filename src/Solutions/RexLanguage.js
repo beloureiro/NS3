@@ -4,8 +4,8 @@ export const texts = {
     en: "REX",
   },
   headerSubtitle: {
-    pt: "Real Estate Experience: Uma solução de gestão inovadora para agências e corretores de imóveis",
-    en: "Real Estate Experience: An innovative management solution for agencies and real estate brokers",
+    pt: "Uma solução de gestão inovadora para agências e corretores de imóveis",
+    en: "An innovative management solution for agencies and real estate brokers",
   },
   features: [
     {
