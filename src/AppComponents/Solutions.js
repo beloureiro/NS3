@@ -38,7 +38,7 @@ const Solutions = ({ language }) => {
   // JSX to render the solutions
   return (
     <div
-      className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 max-w-3xl mx-auto"
+      className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-8 max-w-3xl mx-auto"
       style={{ maxWidth: "850px" }} // Adjust the maximum width of the container
     >
       {solutions.map((solution, index) =>
