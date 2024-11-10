@@ -161,19 +161,46 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
   return (
     <div className="bg-black text-white">
-      <div className="max-w-screen-lg mx-auto px-6 py-6">
+      <div className="max-w-screen-lg mx-auto px-6 pt-0 pb-6">
         <Card className="bg-gray-800 border-gray-700 h-full">
           <CardContent className="p-6 h-full flex flex-col">
-            {/* Header fixo */}
+            {/* Fixed Header */}
             <div>
               <div className="flex items-center mb-4 space-x-4">
                 <Waypoints className="w-14 h-14 text-[#00ff9d]" />
                 <h1 className="text-4xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
-              <p className="text-white text-lg text-left mb-6">{t.subtitle}</p>
+              <p className="text-white text-lg text-left mb-6 leading-[2]">
+                Integrates{" "}
+                <span className="inline-flex items-baseline">
+                  <Workflow
+                    className="w-5 h-5 mr-1 text-blue-400"
+                    style={{ verticalAlign: "baseline" }}
+                  />
+                  <span>Processes</span>
+                </span>
+                ,{" "}
+                <span className="inline-flex items-baseline">
+                  <Users
+                    className="w-5 h-5 mr-1 text-purple-400"
+                    style={{ verticalAlign: "baseline" }}
+                  />
+                  <span>People</span>
+                </span>
+                , and{" "}
+                <span className="inline-flex items-baseline">
+                  <Cpu
+                    className="w-5 h-5 mr-1 text-green-400"
+                    style={{ verticalAlign: "baseline" }}
+                  />
+                  <span>Technology</span>
+                </span>{" "}
+                to enhance and stabilize operations, empower teams, and
+                accelerate workflows.
+              </p>
             </div>
 
-            {/* Conteúdo rolável */}
+            {/* Scrollable Content */}
             <div className="overflow-y-auto flex-1">
               <Tabs
                 defaultValue="overview"
@@ -190,7 +217,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                     <span>{t.overview}</span>
                   </TabsTrigger>
 
-                  {/* Setas e linhas ocultas em mobile */}
+                  {/* Hidden arrows and lines on mobile */}
                   <div className="flex items-center hidden md:flex">
                     <div
                       className={`h-0.5 w-8 transition-colors duration-300 ${
@@ -227,7 +254,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                     </div>
                   </TabsTrigger>
 
-                  {/* Setas e linhas ocultas em mobile */}
+                  {/* Hidden arrows and lines on mobile */}
                   <div className="flex items-center hidden md:flex">
                     <div
                       className={`h-0.5 w-8 transition-colors duration-300 ${
@@ -332,7 +359,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         </p>
                       </div>
 
-                      {/* Setas ocultas em mobile */}
+                      {/* Hidden arrows on mobile */}
                       <div className="flex flex-col items-center justify-center hidden md:flex">
                         <ArrowRightLeft className="text-emerald-400 w-5 h-5 mb-1" />
                         <span className="text-slate-400 text-xs">
