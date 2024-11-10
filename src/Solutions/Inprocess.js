@@ -361,13 +361,13 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </TabsContent>
 
                 <TabsContent value="action" className="space-y-4 mt-2">
-                  <div className="bg-gray-800 p-4 rounded-lg">
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+                  <div className="bg-gray-800 p-1 rounded-lg">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-0">
                       <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-1/3">
                         <div className="bg-black p-2 rounded-full mb-2">
                           <Target className="text-emerald-400 w-8 h-8" />
                         </div>
-                        <h3 className="text-emerald-400 font-semibold text-md mb-2">
+                        <h3 className="text-emerald-400 font-semibold text-lg mb-2">
                           {t.actionPlanOnly}
                         </h3>
                         <p className="text-slate-300 text-sm text-center max-w-xs">
@@ -375,13 +375,13 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         </p>
                       </div>
 
-                      {/* Setas e labels */}
-                      <div className="flex flex-col items-center justify-center hidden md:flex w-full md:w-1/3">
+                      {/* Setas e labels - Increased font size */}
+                      <div className="flex flex-col items-center justify-center hidden md:flex w-full md:w-1/6">
                         <ArrowRightLeft className="text-emerald-400 w-5 h-5 mb-1" />
-                        <span className="text-slate-400 text-xs">
+                        <span className="text-slate-400 text-base">
                           {t.continuous}
                         </span>
-                        <span className="text-slate-400 text-xs">
+                        <span className="text-slate-400 text-base">
                           {t.monitoring}
                         </span>
                       </div>
@@ -390,7 +390,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         <div className="bg-black p-2 rounded-full mb-2">
                           <SquareActivity className="text-emerald-400 w-8 h-8" />
                         </div>
-                        <h3 className="text-emerald-400 font-semibold text-md mb-2">
+                        <h3 className="text-emerald-400 font-semibold text-lg mb-2">
                           {t.auditTool}
                         </h3>
                         <p className="text-slate-300 text-sm text-center max-w-xs">
