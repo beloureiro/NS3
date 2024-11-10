@@ -22,7 +22,7 @@ import { translations, explanations } from "./InprocessLanguage";
 // Component for creating a card with specific background and border style and fixed height
 const Card = ({ children, className }) => (
   <div
-    className={`bg-gray-800 border-gray-700 rounded-[10px] ${className}`}
+    className={`bg-transparent border-gray-700 rounded-[10px] ${className}`}
     style={{ minHeight: "60px" }} // Set a minimum height to keep it consistent across tabs
   >
     {children}
@@ -167,8 +167,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
             {/* Main content area */}
             <CardContent className="p-6">
               <div className="flex items-center mb-4 space-x-4">
-                <Waypoints className="w-10 h-10 text-[#00ff9d]" />
-                <h1 className="text-3xl font-bold text-[#00ff9d]">{t.title}</h1>
+                <Waypoints className="w-14 h-14 text-[#00ff9d]" />
+                <h1 className="text-4xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
               <p className="text-white text-lg text-left mb-4">{t.subtitle}</p>
 
