@@ -160,18 +160,21 @@ const InProcessMethodology = ({ language, setLanguage }) => {
   };
 
   return (
-    <div className="bg-black text-white flex flex-col">
-      <div>
-        <div className="max-w-screen-lg mx-auto px-6">
-          <Card className="bg-gray-800 border-gray-700">
-            {/* Main content area */}
-            <CardContent className="p-6">
+    <div className="bg-black text-white">
+      <div className="max-w-screen-lg mx-auto px-6 py-6" style={{ height: 'calc(100vh - 300px)' }}> {/* Ajuste o 300px conforme a altura do seu footer */}
+        <Card className="bg-gray-800 border-gray-700 h-full">
+          <CardContent className="p-6 h-full flex flex-col">
+            {/* Header fixo */}
+            <div>
               <div className="flex items-center mb-4 space-x-4">
                 <Waypoints className="w-14 h-14 text-[#00ff9d]" />
                 <h1 className="text-4xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
               <p className="text-white text-lg text-left mb-6">{t.subtitle}</p>
+            </div>
 
+            {/* Conteúdo rolável */}
+            <div className="overflow-y-auto flex-1">
               <Tabs
                 defaultValue="overview"
                 className="space-y-4"
@@ -376,13 +379,13 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Wrapper div com o espaçamento */}
-      <div className="py-20">  {/* 80px de padding vertical */}
+      {/* Contact Section */}
+      <div className="bg-black">
         <ContactSection title="Contact Us" />
       </div>
     </div>
