@@ -1,37 +1,30 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
-import translations from './translations'; // Importando as traduções para diferentes idiomas
+import translations from './translations';
 
-// Componente principal que representa o dashboard dinâmico de expertise
 const DynamicExpertiseDashboard = ({ language }) => {
-  // Obtém as traduções específicas da linguagem para as áreas de expertise
   const t = translations[language].expertiseAreas;
   
-  // Estado para controlar a área ativa selecionada pelo usuário
-  const [activeArea, setActiveArea] = useState('dataAnalysis'); // Alterado para 'dataAnalysis'
-  
-  // Estado para armazenar os dados animados a serem exibidos no gráfico
+  const [activeArea, setActiveArea] = useState('dataAnalysis');
+  const [hoveredArea, setHoveredArea] = useState(null); // Novo estado para rastrear o botão com hover
   const [animateData, setAnimateData] = useState([]);
-  
-  // Estado para verificar se o dispositivo é móvel
   const [isMobile, setIsMobile] = useState(false);
 
-  // useMemo para memorizar as áreas de expertise e suas propriedades, evitando recalcular quando não necessário
   const expertiseAreas = useMemo(() => ({
-    dataAnalysis: { // Mover dataAnalysis para o primeiro lugar
+    dataAnalysis: {
       title: t.dataAnalysis,
       color: "#4ECDC4",
       skills: t.skills.dataAnalysis.map((skill, index) => ({ 
-        name: skill,
+        name: skill, 
         value: [80, 90, 90, 100, 70, 100][index] 
       }))
     },
     businessManagement: {
-      title: t.businessManagement, // Título da área
-      color: "#ADFF2F", // Cor associada à área
+      title: t.businessManagement,
+      color: "#ADFF2F",
       skills: t.skills.businessManagement.map((skill, index) => ({ 
-        name: skill, // Nome da habilidade
-        value: [90, 85, 75, 75, 85, 80][index] // Valor associado à habilidade
+        name: skill, 
+        value: [90, 85, 75, 75, 85, 80][index] 
       }))
     },
     consultingTeaching: {
@@ -58,32 +51,26 @@ const DynamicExpertiseDashboard = ({ language }) => {
         value: [90, 95, 90, 75, 85][index] 
       }))
     }
-  }), [t]); // Recalcula apenas quando 't' muda
+  }), [t]);
 
-  // useEffect para monitorar a largura da janela e definir se o dispositivo é móvel
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768); // Define isMobile como true se a largura da janela for menor ou igual a 768px
+      setIsMobile(window.innerWidth <= 768);
     };
-
-    checkMobile(); // Verifica inicialmente
-    window.addEventListener('resize', checkMobile); // Adiciona um event listener para resize
-
-    return () => window.removeEventListener('resize', checkMobile); // Remove o listener ao desmontar o componente
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // useEffect para animar os dados ao alterar a área ativa
   useEffect(() => {
-    setAnimateData([]); // Limpa os dados de animação inicialmente
+    setAnimateData([]);
     const timer = setTimeout(() => {
-      setAnimateData(expertiseAreas[activeArea]?.skills || []); // Define os dados da nova área ativa após um breve delay
+      setAnimateData(expertiseAreas[activeArea]?.skills || []);
     }, 50);
-    return () => clearTimeout(timer); // Limpa o timeout ao desmontar ou atualizar o componente
-  }, [activeArea, expertiseAreas]); // Executa quando activeArea ou expertiseAreas mudam
+    return () => clearTimeout(timer);
+  }, [activeArea, expertiseAreas]);
 
-  // Função para renderizar o gráfico de radar
   const renderRadarChart = () => {
-    // Configurações para dispositivos desktop
     const desktopConfig = {
       extraRadius: 0,
       adjustmentFactor: 0.5,
@@ -93,7 +80,6 @@ const DynamicExpertiseDashboard = ({ language }) => {
       lineHeight: 14
     };
 
-    // Configurações para dispositivos móveis
     const mobileConfig = {
       extraRadius: 20,
       adjustmentFactor: 0.3,
@@ -103,10 +89,8 @@ const DynamicExpertiseDashboard = ({ language }) => {
       lineHeight: 12
     };
 
-    // Escolhe a configuração apropriada com base no dispositivo
     const config = isMobile ? mobileConfig : desktopConfig;
 
-    // Função para calcular o raio extra para ajustar o posicionamento das labels
     const calculateExtraRadius = (angle) => {
       const normalizedAngle = Math.abs((angle % 180) - 0) / 90;
       return config.extraRadius * (1 - config.adjustmentFactor * normalizedAngle);
@@ -166,23 +150,31 @@ const DynamicExpertiseDashboard = ({ language }) => {
   return (
     <div className="w-full max-w-4xl mx-auto bg-transparent rounded-lg overflow-hidden shadow-xl">
       <div className="flex flex-wrap justify-center bg-transparent">
-        {Object.keys(expertiseAreas).map(areaKey => (
+        {Object.keys(expertiseAreas).map((areaKey) => (
           <button
             key={areaKey}
             onClick={() => setActiveArea(areaKey)}
+            onMouseEnter={() => setHoveredArea(areaKey)} // Define a área com hover
+            onMouseLeave={() => setHoveredArea(null)} // Limpa a área com hover
             className={`flex-1 mx-1 my-1 py-2 px-2 text-sm font-medium transition-all duration-300 border-2 ${
-              activeArea === areaKey 
+              activeArea === areaKey
                 ? `bg-${expertiseAreas[areaKey]?.color || 'gray-500'} text-white border-${expertiseAreas[areaKey]?.color || 'gray-500'}`
                 : 'bg-[#1f2937] text-gray-300 border-gray-500 hover:bg-gray-800 hover:text-white'
             } rounded-md`}
-            style={{ flex: '0 0 16%' }} // Further adjusts the width of each button
+            style={{
+              flex: '0 0 16%',
+              borderColor: hoveredArea === areaKey ? expertiseAreas[areaKey]?.color : '#374151', // Altera a cor da borda ao hover
+            }}
           >
             {expertiseAreas[areaKey]?.title || ''}
           </button>
         ))}
       </div>
       <div className="p-4 bg-transparent">
-        <h2 className="text-xl font-bold mb-2 text-center" style={{ color: expertiseAreas[activeArea]?.color || '#FFFFFF' }}>
+        <h2
+          className="text-xl font-bold mb-2 text-center"
+          style={{ color: expertiseAreas[activeArea]?.color || '#FFFFFF' }}
+        >
           {expertiseAreas[activeArea]?.title || ''}
         </h2>
         {renderRadarChart()}
