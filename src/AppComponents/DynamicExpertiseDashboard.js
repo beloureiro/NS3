@@ -164,23 +164,24 @@ const DynamicExpertiseDashboard = ({ language }) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-gray-900 rounded-lg overflow-hidden shadow-xl">
-      <div className="flex flex-wrap bg-gray-800">
+    <div className="w-full max-w-4xl mx-auto bg-transparent rounded-lg overflow-hidden shadow-xl">
+      <div className="flex flex-wrap justify-center bg-transparent">
         {Object.keys(expertiseAreas).map(areaKey => (
           <button
             key={areaKey}
             onClick={() => setActiveArea(areaKey)}
-            className={`flex-1 py-2 px-2 text-sm font-medium transition-all duration-300 ${
+            className={`flex-1 mx-1 my-1 py-2 px-2 text-sm font-medium transition-all duration-300 border-2 ${
               activeArea === areaKey 
-                ? `bg-${expertiseAreas[areaKey]?.color || 'gray-500'} text-white`
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white'
-            }`}
+                ? `bg-${expertiseAreas[areaKey]?.color || 'gray-500'} text-white border-${expertiseAreas[areaKey]?.color || 'gray-500'}`
+                : 'bg-[#1f2937] text-gray-300 border-gray-500 hover:bg-gray-800 hover:text-white'
+            } rounded-md`}
+            style={{ flex: '0 0 16%' }} // Further adjusts the width of each button
           >
             {expertiseAreas[areaKey]?.title || ''}
           </button>
         ))}
       </div>
-      <div className="p-4 bg-gray-800">
+      <div className="p-4 bg-transparent">
         <h2 className="text-xl font-bold mb-2 text-center" style={{ color: expertiseAreas[activeArea]?.color || '#FFFFFF' }}>
           {expertiseAreas[activeArea]?.title || ''}
         </h2>
