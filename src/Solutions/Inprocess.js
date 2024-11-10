@@ -60,7 +60,7 @@ const TabsTrigger = ({ children, value, className }) => {
   return (
     <button
       className={`${className} uppercase ${
-        activeTab === value ? "bg-[#00ff9d] text-black font-bold" : ""
+        activeTab === value ? "bg-[#00cc7d] text-black font-bold" : ""
       } hover:bg-gray-600 hover:text-white transition-colors`}
       onClick={() => {
         if (activeTab !== value) setActiveTab(value);
