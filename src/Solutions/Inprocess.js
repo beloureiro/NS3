@@ -388,7 +388,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
       </div>
 
       {/* Contact Section */}
-      <div className="bg-black">
+      <div className="bg-black -mt-4">
         <ContactSection title="Contact Us" />
       </div>
     </div>
