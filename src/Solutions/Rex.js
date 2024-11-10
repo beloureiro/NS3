@@ -165,16 +165,18 @@ const REXPresentation = ({ language }) => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <div className="inline-flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-xl">
-              <Home className="w-8 h-8 text-[#FFFF08]" />
+          <div className="inline-flex items-center gap-0 mb-2">
+            <div className="p-2 rounded-xl">
+              <Home className="w-12 h-12 text-[#FFFF08]" />
             </div>
-            <h1 className="text-4xl font-bold text-[#FFFF08]">REX</h1>
+            <h1 className="text-5xl font-bold text-[#FFFF08]">
+              REX
+            </h1>
           </div>
-          <div className="inline-block px-3 py-1 mb-4 text-sm font-medium text-[#FFFF08] bg-[#FFFF08]/10 rounded-full">
+          <div className="inline-block px-3 py-1 mb-4 text-sm font-medium text-[#FFFF08] bg-[#FFFF08]/10 rounded-md">
             Real Estate Experience
           </div>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-white max-w-2xl mx-auto">
             {texts.headerSubtitle[language]}
           </p>
         </motion.div>
