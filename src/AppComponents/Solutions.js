@@ -50,13 +50,16 @@ const Solutions = ({ language }) => {
             target="_blank"
             rel="noopener noreferrer"
             className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors duration-300"
-            // Set minHeight and maxHeight to control the height of the card
             style={{
               minHeight: "100px",
               maxHeight: "150px",
               width: "100%",
               padding: "10px",
+              border: `2px solid transparent`, // Initial border
+              transition: "border-color 0.3s", // Transition for border color
             }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = solution.titleColor} // Change border color on hover
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = "transparent"} // Reset border color
           >
             <h3
               className="text-lg font-bold mb-2"
@@ -72,13 +75,16 @@ const Solutions = ({ language }) => {
             key={index}
             to={solution.path}
             className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors duration-300"
-            // Set minHeight and maxHeight to control the height of the card
             style={{
               minHeight: "100px",
               maxHeight: "150px",
               width: "100%",
               padding: "10px",
+              border: `2px solid transparent`, // Initial border
+              transition: "border-color 0.3s", // Transition for border color
             }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = solution.titleColor} // Change border color on hover
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = "transparent"} // Reset border color
           >
             <h3
               className="text-lg font-bold mb-2"
