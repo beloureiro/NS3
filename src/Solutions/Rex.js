@@ -205,7 +205,7 @@ const REXPresentation = ({ language }) => {
           transition={{ delay: 0.4 }}
           className="mt-8 mb-4"
         >
-          <ContactSection title="Entre em Contato" />
+          <ContactSection title={texts.contactSectionTitle[language]} />
         </motion.div>
       </div>
 

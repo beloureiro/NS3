@@ -7,6 +7,10 @@ export const texts = {
     pt: "Uma solução de gestão inovadora para agências e corretores de imóveis",
     en: "An innovative management solution for agencies and real estate brokers",
   },
+  contactSectionTitle: {
+    pt: "Entre em Contato",
+    en: "Contact Us"
+  },
   features: [
     {
       id: 1,
