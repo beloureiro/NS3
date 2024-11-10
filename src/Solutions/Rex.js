@@ -15,6 +15,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { texts } from "./RexLanguage";
+import ContactSection from "../AppComponents/ContactSection";
 
 const REXPresentation = ({ language = "pt" }) => {
   const [selectedFeature, setSelectedFeature] = useState(null);
@@ -35,7 +36,7 @@ const REXPresentation = ({ language = "pt" }) => {
   };
 
   return (
-    <div className="bg-gray-900 p-4">
+    <div className="bg-transparent p-4">
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex items-center gap-3 mb-2">
           <Home className="w-8 h-8 text-[#ffff08]" />
@@ -94,6 +95,8 @@ const REXPresentation = ({ language = "pt" }) => {
           </div>
         </div>
       )}
+
+      <ContactSection title="Entre em Contato" />
     </div>
   );
 };
