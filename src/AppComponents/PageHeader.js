@@ -1,71 +1,91 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import { useLocation, Link } from "react-router-dom";
-import translations from "./translations";
-import { ChevronLeft, Globe } from "lucide-react"; // Import icons
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { useLocation, Link } from 'react-router-dom';
+import { ChevronLeft, Globe, ChevronDown } from 'lucide-react';
+import translations from './translations';
 
 const PageHeader = ({ language, setLanguage, logo }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const isHomePage =
-    location.pathname === "/NS3" ||
-    location.pathname === "/NS3/" ||
-    location.pathname === "/" ||
-    location.pathname === "";
-  const t = translations[language];
+  const isHomePage = location.pathname === "/NS3" || 
+                     location.pathname === "/NS3/" || 
+                     location.pathname === "/" || 
+                     location.pathname === "";
 
-  // Hide header on the homepage
+  const t = translations[language];
+  
   if (isHomePage) return null;
+
+  const languages = {
+    en: "English",
+    pt: "Português"
+  };
 
   return (
     <>
-      {/* Helmet component to set the page title and meta description */}
       <Helmet>
         <title>InMotion - Consulting</title>
         <meta name="description" content={t.description} />
       </Helmet>
-
-      {/* Main container for the header content with negative top margin to pull it upwards */}
       <div className="w-full p-4 -mt-6">
-        {" "}
-        {/* Added -mt-6 to move the entire header up */}
-        {/* Flex container to arrange elements horizontally with space between */}
         <div className="flex justify-between items-center w-full max-w-4xl mx-auto px-12">
-          {/* Back link with a left arrow icon, leading to the homepage */}
           <Link
             to="/"
             className="text-[#00ff9d] hover:underline flex items-center w-24"
           >
             <ChevronLeft className="mr-2" /> {t.back}
           </Link>
-
-          {/* Center section for the title, logo, and subtitles */}
+          
           <div className="flex flex-col items-center">
-            {/* Main title */}
             <h1 className="text-3xl font-bold mb-6">{t.title}</h1>
-
-            {/* Logo with animation on hover */}
             <img
               src={logo}
               alt="InMotion Logo"
               className="h-15 transform transition-transform duration-300 hover:scale-110"
             />
-
-            {/* Subtitle */}
             <div className="text-lg text-gray-400 mt-6">
               Your Daily Toolbox for Business Excellence
             </div>
-
-            {/* Secondary subtitle (if any additional text is needed) */}
             <h2 className="text-xl">{t.subtitle}</h2>
           </div>
 
-          {/* Language switcher button, changes language on click */}
-          <button
-            onClick={() => setLanguage((lang) => (lang === "en" ? "pt" : "en"))}
-            className="flex items-center bg-gray-800 px-3 py-2 rounded hover:bg-[#00ff9d] hover:text-black transition-colors w-24"
-          >
-            <Globe className="mr-2" /> {language.toUpperCase()}
-          </button>
+          <div className="relative w-24">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-800/80 backdrop-blur-md 
+                         border border-gray-700 hover:border-[#00ff9d] hover:text-[#00ff9d] 
+                         transition-all duration-300 w-full justify-between group"
+            >
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 group-hover:text-[#00ff9d]" />
+                <span className="text-sm">{language.toUpperCase()}</span>
+              </div>
+              <ChevronDown 
+                className={`w-4 h-4 transition-transform duration-300 group-hover:text-[#00ff9d] 
+                           ${isOpen ? 'rotate-180' : ''}`} 
+              />
+            </button>
+
+            {isOpen && (
+              <div className="absolute right-0 mt-2 w-32 rounded-lg bg-gray-800/80 backdrop-blur-md 
+                            border border-gray-700 overflow-hidden z-50">
+                {Object.entries(languages).map(([code, name]) => (
+                  <button
+                    key={code}
+                    onClick={() => {
+                      setLanguage(code);
+                      setIsOpen(false);
+                    }}
+                    className={`w-full px-4 py-2 text-left text-sm
+                              hover:bg-gray-700/50 hover:text-[#00ff9d] transition-colors
+                              ${language === code ? 'text-[#00ff9d] bg-gray-700/50' : ''}`}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Globe } from 'lucide-react';
+import { Globe, ChevronDown } from 'lucide-react';
 
 // Componente LanguageToggle para alternar entre idiomas
 const LanguageToggle = ({ language, setLanguage }) => {
@@ -42,13 +42,18 @@ const LanguageToggle = ({ language, setLanguage }) => {
       <button
         ref={buttonRef}
         onClick={toggleDropdown}
-        className="flex items-center justify-between w-20 bg-gray-800 text-white text-sm font-medium py-2 px-3 rounded border border-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300 ease-in-out"
+        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-800/80 backdrop-blur-md 
+                   border border-gray-700 hover:border-[#00ff9d] hover:text-[#00ff9d] 
+                   transition-all duration-300 w-full justify-between group"
       >
-        <Globe size={18} className="text-gray-400 mr-2" />
-        <span>{language.toUpperCase()}</span>
-        <svg className="fill-current h-4 w-4 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-          <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-        </svg>
+        <div className="flex items-center gap-2">
+          <Globe size={18} className="text-gray-400 group-hover:text-[#00ff9d]" />
+          <span className="text-sm">{language.toUpperCase()}</span>
+        </div>
+        <ChevronDown 
+          className={`w-4 h-4 transition-transform duration-300 group-hover:text-[#00ff9d] 
+                     ${isOpen ? 'rotate-180' : ''}`} 
+        />
       </button>
       {isOpen && (
         <div
