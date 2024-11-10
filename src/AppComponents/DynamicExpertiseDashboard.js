@@ -6,7 +6,7 @@ const DynamicExpertiseDashboard = ({ language }) => {
   const t = translations[language].expertiseAreas;
   
   const [activeArea, setActiveArea] = useState('dataAnalysis');
-  const [hoveredArea, setHoveredArea] = useState(null); // Novo estado para rastrear o botão com hover
+  const [hoveredArea, setHoveredArea] = useState(null);
   const [animateData, setAnimateData] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -149,27 +149,40 @@ const DynamicExpertiseDashboard = ({ language }) => {
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-transparent rounded-lg overflow-hidden shadow-xl">
-      <div className="flex flex-wrap justify-center bg-transparent">
+      {/* Posicionamento do bloco de texto "Our Expertise" */}
+      <div className="mb-4">
+        <h2 className="text-2xl font-semibold mb-2 text-center">
+          {t.ourExpertise}
+        </h2>
+        <p className="leading-relaxed text-center max-w-4xl mx-auto">
+          {t.expertiseDescriptionShort}
+        </p>
+      </div>
+      
+      {/* Botões de categoria */}
+      <div className="flex flex-wrap justify-center bg-transparent mb-4">
         {Object.keys(expertiseAreas).map((areaKey) => (
           <button
             key={areaKey}
             onClick={() => setActiveArea(areaKey)}
-            onMouseEnter={() => setHoveredArea(areaKey)} // Define a área com hover
-            onMouseLeave={() => setHoveredArea(null)} // Limpa a área com hover
+            onMouseEnter={() => setHoveredArea(areaKey)}
+            onMouseLeave={() => setHoveredArea(null)}
             className={`flex-1 mx-1 my-1 py-2 px-2 text-sm font-medium transition-all duration-300 border-2 ${
               activeArea === areaKey
                 ? `bg-${expertiseAreas[areaKey]?.color || 'gray-500'} text-white border-${expertiseAreas[areaKey]?.color || 'gray-500'}`
                 : 'bg-[#1f2937] text-gray-300 border-gray-500 hover:bg-gray-800 hover:text-white'
             } rounded-md`}
             style={{
-              flex: '0 0 16%',
-              borderColor: hoveredArea === areaKey ? expertiseAreas[areaKey]?.color : '#374151', // Altera a cor da borda ao hover
+              flex: '0 0 14%',
+              borderColor: hoveredArea === areaKey ? expertiseAreas[areaKey]?.color : '#374151',
             }}
           >
             {expertiseAreas[areaKey]?.title || ''}
           </button>
         ))}
       </div>
+
+      {/* Gráfico de radar */}
       <div className="p-4 bg-transparent">
         <h2
           className="text-xl font-bold mb-2 text-center"

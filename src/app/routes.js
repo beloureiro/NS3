@@ -17,7 +17,7 @@ import FourMenu from "../Solutions/4Menu";
 // Header component: displays the main title of the page
 function Header({ title }) {
   return (
-    <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:items-center mb-4 relative">
+    <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:items-center mb-2 relative">
       <h1 className="text-2xl sm:text-4xl font-bold text-center w-full sm:w-auto">
         {title}
       </h1>
@@ -34,16 +34,14 @@ const AppRoutes = ({
   logo,
   setLanguage,
 }) => {
-  // useLocation hook: used to get the current URL path
   const location = useLocation();
 
-  // Color classes for button styling
-  const normalBgColor = "bg-[#000000]"; // Normal background color
-  const hoverBgColor = "hover:bg-[#00ff9d]"; // Hover background color
-  const normalBorderColor = "border-[#00cc7d]"; // Normal border color
-  const hoverBorderColor = "hover:border-[#00cc7d]"; // Hover border color
-  const normalTextColor = "text-[#ffffff]"; // Normal text color
-  const hoverTextColor = "hover:text-[#000000]"; // Hover text color
+  const normalBgColor = "bg-[#000000]";
+  const hoverBgColor = "hover:bg-[#00ff9d]";
+  const normalBorderColor = "border-[#00cc7d]";
+  const hoverBorderColor = "hover:border-[#00cc7d]";
+  const normalTextColor = "text-[#ffffff]";
+  const hoverTextColor = "hover:text-[#000000]";
 
   return (
     <Routes>
@@ -56,14 +54,13 @@ const AppRoutes = ({
             <Header title={t.title} />
 
             {/* Language toggle component positioned at the top-right corner */}
-            <div className="w-full mb-4 sm:mb-0 sm:absolute sm:top-0 sm:right-0 sm:w-auto">
+            <div className="w-full mb-2 sm:mb-0 sm:absolute sm:top-0 sm:right-0 sm:w-auto">
               <LanguageToggle language={language} setLanguage={setLanguage} />
             </div>
 
             {/* Logo and description section */}
-            <div className="mb-4 transform hover:scale-105 transition-transform duration-300 text-center">
+            <div className="mb-2 transform hover:scale-105 transition-transform duration-300 text-center">
               <img src={logo} alt="InMotion logo" className="mx-auto" />
-              {/* Description of the page or company */}
               <p className="mt-1 text-gray-400">{t.description}</p>
             </div>
 
@@ -71,11 +68,11 @@ const AppRoutes = ({
             <Solutions language={language} />
 
             {/* Expertise section */}
-            <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2 text-center">
+            <div className="-mt-2 mb-2 max-w-2xl mx-auto">
+              <h2 className="text-2xl font-semibold mb-1 text-center text-[#00cc7d]">
                 {t.ourExpertise}
               </h2>
-              <p className="leading-relaxed text-center max-w-4xl mx-auto">
+              <p className="leading-relaxed text-center max-w-2xl mx-auto">
                 {t.expertiseDescriptionShort}
               </p>
             </div>
@@ -88,9 +85,8 @@ const AppRoutes = ({
               <div className="mt-2 mb-2 text-center">
                 <button
                   onClick={() => setShowTools(!showTools)}
-                  className={`border-2 text-sm font-medium py-1.5 px-6 rounded inline-flex items-center transition-colors duration-300 ${normalBgColor} ${hoverBgColor} ${normalBorderColor} ${hoverBorderColor} ${normalTextColor} ${hoverTextColor}`}
+                  className={`border-2 text-sm font-medium py-1 px-4 rounded inline-flex items-center transition-colors duration-300 ${normalBgColor} ${hoverBgColor} ${normalBorderColor} ${hoverBorderColor} ${normalTextColor} ${hoverTextColor}`}
                 >
-                  {/* Icon with the label "Quick Tools" */}
                   <Wrench className="mr-1" size={16} />
                   <span>{t.quickToolsButton}</span>
                 </button>

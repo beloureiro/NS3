@@ -51,8 +51,8 @@ const Solutions = ({ language }) => {
             rel="noopener noreferrer"
             className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors duration-300"
             style={{
-              minHeight: "100px",
-              maxHeight: "150px",
+              minHeight: "80px",
+              maxHeight: "130px",
               width: "100%",
               padding: "10px",
               border: `2px solid transparent`, // Initial border
@@ -76,8 +76,8 @@ const Solutions = ({ language }) => {
             to={solution.path}
             className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors duration-300"
             style={{
-              minHeight: "100px",
-              maxHeight: "150px",
+              minHeight: "80px",
+              maxHeight: "130px",
               width: "100%",
               padding: "10px",
               border: `2px solid transparent`, // Initial border
