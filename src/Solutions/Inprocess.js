@@ -79,7 +79,7 @@ const TabsContent = ({ children, value, className }) => {
   ) : null;
 };
 
-// Advanced Analysis Explanation with reduced padding and size adjustments
+// Advanced Analysis Explanation with adjusted padding and size adjustments
 const AdvancedAnalysisExplanation = ({ language }) => {
   const t = translations[language];
   return (
@@ -112,7 +112,7 @@ const AdvancedAnalysisExplanation = ({ language }) => {
   );
 };
 
-// Integrated Action and Audit Explanation with further reduced component dimensions for a more compact rectangular layout
+// Integrated Action and Audit Explanation with adjusted dimensions
 const InProcessMethodology = ({ language, setLanguage }) => {
   const [selectedItem, setSelectedItem] = useState("processos");
   const [currentTab, setCurrentTab] = useState("overview");
@@ -170,7 +170,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 <Waypoints className="w-14 h-14 text-[#00ff9d]" />
                 <h1 className="text-4xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
-              <p className="text-white text-lg text-left mb-4">{t.subtitle}</p>
+              <p className="text-white text-lg text-left mb-6">{t.subtitle}</p>
 
               <Tabs
                 defaultValue="overview"
@@ -259,8 +259,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </div>
 
                 {/* Tab content */}
-                <TabsContent value="overview" className="space-y-4">
-                  <div className="grid grid-cols-3 gap-6">
+                <TabsContent value="overview" className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div
                       className={`bg-gray-700 p-4 rounded-[5px] border ${
                         selectedItem === "processos"
@@ -312,10 +312,10 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   <AdvancedAnalysisExplanation language={language} />
                 </TabsContent>
 
-                <TabsContent value="action" className="space-y-4">
-                  <div className="bg-slate-800 p-3 rounded-lg my-4">
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="bg-slate-700 p-2 rounded-lg flex flex-col items-center transform hover:scale-105 transition-transform cursor-pointer w-full md:w-[35%]">
+                <TabsContent value="action" className="space-y-6">
+                  <div className="bg-slate-800 p-4 rounded-lg">
+                    <div className="flex items-center justify-center gap-4">
+                      <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
                         <div className="bg-slate-600/50 p-2 rounded-full mb-2">
                           <Target className="text-emerald-400 w-8 h-8" />
                         </div>
@@ -337,7 +337,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         </span>
                       </div>
 
-                      <div className="bg-slate-700 p-2 rounded-lg flex flex-col items-center transform hover:scale-105 transition-transform cursor-pointer w-full md:w-[35%]">
+                      <div className="bg-slate-700 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
                         <div className="bg-slate-600/50 p-2 rounded-full mb-2">
                           <SquareActivity className="text-emerald-400 w-8 h-8" />
                         </div>
@@ -353,7 +353,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </TabsContent>
               </Tabs>
 
-              <div className="mt-4">
+              <div className="mt-6">
                 <div
                   className={`bg-gray-700 p-6 rounded-[5px] border ${
                     selectedItem === "processos"
@@ -381,7 +381,10 @@ const InProcessMethodology = ({ language, setLanguage }) => {
         </div>
       </div>
 
-      <ContactSection title="Contact Us" className="mt-4 mb-2" />
+      {/* Wrapper div com o espaçamento */}
+      <div className="py-20">  {/* 80px de padding vertical */}
+        <ContactSection title="Contact Us" />
+      </div>
     </div>
   );
 };
