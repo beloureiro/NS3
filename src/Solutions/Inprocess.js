@@ -18,26 +18,27 @@ import {
 } from "lucide-react";
 import ContactSection from "../AppComponents/ContactSection";
 import { translations, explanations } from "./InprocessLanguage";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Component for creating a card with specific background and border style and fixed height
+// Componente para criar um card com estilo específico de fundo e borda
 const Card = ({ children, className }) => (
   <div
     className={`bg-transparent border-gray-700 rounded-[10px] ${className}`}
-    style={{ minHeight: "60px" }} // Set a minimum height to keep it consistent across tabs
+    style={{ minHeight: "60px" }}
   >
     {children}
   </div>
 );
 
-// Component for the content inside the card with padding
+// Componente para o conteúdo dentro do card com padding
 const CardContent = ({ children, className }) => (
   <div className={`p-6 ${className}`}>{children}</div>
 );
 
-// Context for managing tab state
+// Contexto para gerenciar o estado das abas
 const TabContext = React.createContext();
 
-// Tabs component with state management for active tab
+// Componente Tabs com gerenciamento de estado para a aba ativa
 const Tabs = ({ children, defaultValue, className, onTabChange }) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
@@ -53,7 +54,7 @@ const Tabs = ({ children, defaultValue, className, onTabChange }) => {
   );
 };
 
-// Component for individual tab triggers
+// Componente para os triggers individuais das abas
 const TabsTrigger = ({ children, value, className }) => {
   const { activeTab, setActiveTab } = React.useContext(TabContext);
 
@@ -71,28 +72,43 @@ const TabsTrigger = ({ children, value, className }) => {
   );
 };
 
-// Component for tab content that displays only when active
+// Componente para o conteúdo da aba que exibe apenas quando ativo
 const TabsContent = ({ children, value, className }) => {
   const { activeTab } = React.useContext(TabContext);
-  return activeTab === value ? (
-    <div className={className}>{children}</div>
-  ) : null;
+  return (
+    <div>
+      <AnimatePresence mode="wait">
+        {activeTab === value && (
+          <motion.div
+            key={value}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+            className={className}
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 };
 
-// Advanced Analysis Explanation with adjusted padding and size adjustments
+// Explicação da Análise Avançada com ajustes de padding e tamanho
 const AdvancedAnalysisExplanation = ({ language }) => {
   const t = translations[language];
   return (
     <div className="bg-gray-800 p-4 rounded-lg">
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-1/3">
           <Waypoints className="text-emerald-400 mb-2" size={28} />
           <p className="text-slate-300 text-sm text-center">
             {t.processMapping}
           </p>
         </div>
         <ArrowRightLeft className="text-emerald-400 hidden md:block" size={24} />
-        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-1/3">
           <div className="flex items-center gap-4 mb-2">
             <Cpu className="text-emerald-400" size={28} />
             <Plus className="text-emerald-400" size={18} />
@@ -101,7 +117,7 @@ const AdvancedAnalysisExplanation = ({ language }) => {
           <p className="text-slate-300 text-sm text-center">{t.aiProcessing}</p>
         </div>
         <ArrowRightLeft className="text-emerald-400 hidden md:block" size={24} />
-        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[30%]">
+        <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-1/3">
           <Grid2x2 className="text-emerald-400 mb-2" size={28} />
           <p className="text-slate-300 text-sm text-center">
             {t.complexityMatrix}
@@ -112,7 +128,7 @@ const AdvancedAnalysisExplanation = ({ language }) => {
   );
 };
 
-// Integrated Action and Audit Explanation with adjusted dimensions
+// Metodologia InProcess com ajustes nos espaços entre os elementos
 const InProcessMethodology = ({ language, setLanguage }) => {
   const [selectedItem, setSelectedItem] = useState("processos");
   const [currentTab, setCurrentTab] = useState("overview");
@@ -164,20 +180,20 @@ const InProcessMethodology = ({ language, setLanguage }) => {
       <div className="max-w-screen-lg mx-auto px-6 pt-0 pb-6">
         <Card className="bg-gray-800 border-gray-700 h-full">
           <CardContent className="p-6 h-full flex flex-col">
-            {/* Fixed Header */}
+            {/* Cabeçalho fixo */}
             <div>
               <div className="flex items-center mb-4 space-x-4">
                 <Waypoints className="w-14 h-14 text-[#00ff9d]" />
                 <h1 className="text-4xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
               <p className="text-white text-lg text-left mb-6 leading-[2]">
-                Integrates{" "}
+                Integra{" "}
                 <span className="inline-flex items-baseline">
                   <Workflow
                     className="w-5 h-5 mr-1 text-blue-400"
                     style={{ verticalAlign: "baseline" }}
                   />
-                  <span>Processes</span>
+                  <span>Processos</span>
                 </span>
                 ,{" "}
                 <span className="inline-flex items-baseline">
@@ -185,29 +201,29 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                     className="w-5 h-5 mr-1 text-purple-400"
                     style={{ verticalAlign: "baseline" }}
                   />
-                  <span>People</span>
+                  <span>Pessoas</span>
                 </span>
-                , and{" "}
+                , e{" "}
                 <span className="inline-flex items-baseline">
                   <Cpu
                     className="w-5 h-5 mr-1 text-green-400"
                     style={{ verticalAlign: "baseline" }}
                   />
-                  <span>Technology</span>
+                  <span>Tecnologia</span>
                 </span>{" "}
-                to enhance and stabilize operations, empower teams, and
-                accelerate workflows.
+                para melhorar e estabilizar as operações, capacitar equipes e
+                acelerar fluxos de trabalho.
               </p>
             </div>
 
-            {/* Scrollable Content */}
-            <div className="overflow-y-auto flex-1">
+            {/* Conteúdo rolável */}
+            <div className="flex-1">
               <Tabs
                 defaultValue="overview"
-                className="space-y-4"
+                className="space-y-2"
                 onTabChange={handleTabChange}
               >
-                {/* Tab navigation */}
+                {/* Navegação das abas */}
                 <div className="relative flex flex-col md:flex-row md:justify-between items-center w-full bg-gray-800 p-1 rounded-lg">
                   <TabsTrigger
                     value="overview"
@@ -217,7 +233,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                     <span>{t.overview}</span>
                   </TabsTrigger>
 
-                  {/* Hidden arrows and lines on mobile */}
+                  {/* Setas e linhas ocultas no mobile */}
                   <div className="flex items-center hidden md:flex">
                     <div
                       className={`h-0.5 w-8 transition-colors duration-300 ${
@@ -254,7 +270,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                     </div>
                   </TabsTrigger>
 
-                  {/* Hidden arrows and lines on mobile */}
+                  {/* Setas e linhas ocultas no mobile */}
                   <div className="flex items-center hidden md:flex">
                     <div
                       className={`h-0.5 w-8 transition-colors duration-300 ${
@@ -290,15 +306,15 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </TabsTrigger>
                 </div>
 
-                {/* Tab content */}
-                <TabsContent value="overview" className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Conteúdo das abas */}
+                <TabsContent value="overview" className="space-y-4 mt-2">
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-4">
                     <div
                       className={`bg-gray-800 p-4 rounded-[5px] border ${
                         selectedItem === "processos"
                           ? "border-blue-500"
                           : "border-gray-600"
-                      } hover:border-blue-500 transition-colors cursor-pointer`}
+                      } hover:border-blue-500 transition-colors cursor-pointer w-full md:w-1/3`}
                       onClick={() => setSelectedItem("processos")}
                     >
                       <div className="flex items-center space-x-2 mb-2">
@@ -312,7 +328,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         selectedItem === "pessoas"
                           ? "border-purple-500"
                           : "border-gray-600"
-                      } hover:border-purple-500 transition-colors cursor-pointer`}
+                      } hover:border-purple-500 transition-colors cursor-pointer w-full md:w-1/3`}
                       onClick={() => setSelectedItem("pessoas")}
                     >
                       <div className="flex items-center space-x-2 mb-2">
@@ -326,7 +342,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         selectedItem === "tecnologia"
                           ? "border-green-500"
                           : "border-gray-600"
-                      } hover:border-green-500 transition-colors cursor-pointer`}
+                      } hover:border-green-500 transition-colors cursor-pointer w-full md:w-1/3`}
                       onClick={() => setSelectedItem("tecnologia")}
                     >
                       <div className="flex items-center space-x-2 mb-2">
@@ -340,14 +356,14 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                   </div>
                 </TabsContent>
 
-                <TabsContent value="diagnostic" className="space-y-6">
+                <TabsContent value="diagnostic" className="space-y-4 mt-2">
                   <AdvancedAnalysisExplanation language={language} />
                 </TabsContent>
 
-                <TabsContent value="action" className="space-y-6">
+                <TabsContent value="action" className="space-y-4 mt-2">
                   <div className="bg-gray-800 p-4 rounded-lg">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-                      <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
+                      <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-1/3">
                         <div className="bg-black p-2 rounded-full mb-2">
                           <Target className="text-emerald-400 w-8 h-8" />
                         </div>
@@ -359,8 +375,8 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         </p>
                       </div>
 
-                      {/* Hidden arrows on mobile */}
-                      <div className="flex flex-col items-center justify-center hidden md:flex">
+                      {/* Setas e labels */}
+                      <div className="flex flex-col items-center justify-center hidden md:flex w-full md:w-1/3">
                         <ArrowRightLeft className="text-emerald-400 w-5 h-5 mb-1" />
                         <span className="text-slate-400 text-xs">
                           {t.continuous}
@@ -370,7 +386,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                         </span>
                       </div>
 
-                      <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-[35%]">
+                      <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-1/3">
                         <div className="bg-black p-2 rounded-full mb-2">
                           <SquareActivity className="text-emerald-400 w-8 h-8" />
                         </div>
@@ -386,37 +402,44 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 </TabsContent>
               </Tabs>
 
-              <div className="mt-6">
-                <div
-                  className={`bg-gray-800 p-6 rounded-[5px] border ${
-                    selectedItem === "processos"
-                      ? "border-blue-500"
-                      : selectedItem === "pessoas"
-                      ? "border-purple-500"
-                      : selectedItem === "tecnologia"
-                      ? "border-green-500"
-                      : "border-gray-600"
-                  }`}
-                >
-                  <div className="flex items-center space-x-4 mb-4">
-                    {getIcon(selectedItem || tabToExplanationMap[currentTab])}
-                    <h3 className="text-xl font-semibold text-[#00ff9d]">
-                      {currentExplanation[language].title}
-                    </h3>
-                  </div>
-                  <p className="text-gray-300 leading-relaxed">
-                    {currentExplanation[language].content}
-                  </p>
-                </div>
+              <div className="mt-4">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selectedItem || currentTab}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    className={`bg-gray-800 p-6 rounded-[5px] border ${
+                      selectedItem === "processos"
+                        ? "border-blue-500"
+                        : selectedItem === "pessoas"
+                        ? "border-purple-500"
+                        : selectedItem === "tecnologia"
+                        ? "border-green-500"
+                        : "border-gray-600"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-4 mb-4">
+                      {getIcon(selectedItem || tabToExplanationMap[currentTab])}
+                      <h3 className="text-xl font-semibold text-[#00ff9d]">
+                        {currentExplanation[language].title}
+                      </h3>
+                    </div>
+                    <p className="text-gray-300 leading-relaxed">
+                      {currentExplanation[language].content}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Contact Section */}
+      {/* Seção de Contato */}
       <div className="bg-black -mt-4">
-        <ContactSection title="Contact Us" />
+        <ContactSection title="Fale Conosco" />
       </div>
     </div>
   );

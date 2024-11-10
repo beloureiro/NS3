@@ -352,7 +352,7 @@ const FourMenu = ({ language = 'en' }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-3 bg-slate-800/50 rounded-lg p-3"
+            className="mt-3 rounded-lg p-3"
           >
             <ContactSection title={t.contactUs} />
           </motion.div>
