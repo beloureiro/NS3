@@ -19,7 +19,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { texts } from "./RexLanguage";
 import ContactSection from "../AppComponents/ContactSection";
 
-const REXPresentation = ({ language = "pt" }) => {
+const REXPresentation = ({ language }) => {
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [hoveredFeature, setHoveredFeature] = useState(null);
 
@@ -54,15 +54,15 @@ const REXPresentation = ({ language = "pt" }) => {
     >
       <div
         className={` 
-          h-full cursor-pointer rounded-lg border-2 transition-all duration-300
-          ${
-            selectedFeature?.id === feature.id
-              ? "border-[#FFFF08] bg-gray-800/90"
-              : hoveredFeature?.id === feature.id
-              ? "border-[#FFFF08]/50 bg-gray-800/70"
-              : "border-gray-700 bg-gray-800/60"
-          }
-        `}
+            h-full cursor-pointer rounded-lg border-2 transition-all duration-300
+            ${
+              selectedFeature?.id === feature.id
+                ? "border-[#FFFF08] bg-gray-800/90"
+                : hoveredFeature?.id === feature.id
+                ? "border-[#FFFF08]/50 bg-gray-800/70"
+                : "border-gray-700 bg-gray-800/60"
+            }
+          `}
       >
         <div className="p-3 flex items-center space-x-2">
           <div className="p-2 rounded-lg transition-colors duration-300 bg-transparent shrink-0">
@@ -78,9 +78,11 @@ const REXPresentation = ({ language = "pt" }) => {
           </div>
           <h3
             className={` 
-              text-sm font-semibold transition-colors duration-300
-              ${selectedFeature?.id === feature.id ? "text-[#FFFF08]" : "text-white"}
-            `}
+                text-sm font-semibold transition-colors duration-300
+                ${
+                  selectedFeature?.id === feature.id ? "text-[#FFFF08]" : "text-white"
+                }
+              `}
           >
             {feature.title[language]}
           </h3>
@@ -94,7 +96,7 @@ const REXPresentation = ({ language = "pt" }) => {
     <AnimatePresence mode="wait">
       {feature && (
         <motion.div
-          key={feature.id} // Adicionado para melhorar o controle do componente
+          key={feature.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
@@ -154,8 +156,8 @@ const REXPresentation = ({ language = "pt" }) => {
   );
 
   return (
-    <div className="min-h-screen p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="pb-8"> {/* Removido min-h-screen e adicionado padding-bottom */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -199,7 +201,7 @@ const REXPresentation = ({ language = "pt" }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mt-16"
+          className="mt-8 mb-4"
         >
           <ContactSection title="Entre em Contato" />
         </motion.div>
