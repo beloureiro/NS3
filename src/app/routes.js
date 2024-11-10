@@ -13,6 +13,7 @@ import Solutions from "../AppComponents/Solutions";
 import ContactSection from "../AppComponents/ContactSection";
 import InProcessMethodology from "../Solutions/Inprocess";
 import FourMenu from "../Solutions/4Menu";
+import REXPresentation from "../Solutions/Rex";
 
 // Header component: displays the main title of the page
 function Header({ title }) {
@@ -121,6 +122,10 @@ const AppRoutes = ({
         element={
           <InProcessMethodology language={language} setLanguage={setLanguage} />
         }
+      />
+      <Route 
+        path="/rex" 
+        element={<REXPresentation language={language} setLanguage={setLanguage} />} 
       />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
