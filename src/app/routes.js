@@ -59,15 +59,15 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
               {/* Header with the page title */}
               <Header title={t.title} />
 
-              {/* Language toggle component positioned at the top-right corner */}
-              <div className="w-full mb-2 sm:mb-0 sm:absolute sm:top-0 sm:right-0 sm:w-auto">
-                <LanguageToggle language={language} setLanguage={setLanguage} />
-              </div>
-
               {/* Logo and description section */}
               <div className="mb-2 transform hover:scale-105 transition-transform duration-300 text-center">
                 <img src={logo} alt="InMotion logo" className="mx-auto" />
                 <p className="mt-1 text-gray-400">{t.description}</p>
+              </div>
+
+              {/* Language toggle component positioned below the logo and title on mobile */}
+              <div className="flex justify-center mb-4 sm:mb-0 sm:absolute sm:top-0 sm:right-0">
+                <LanguageToggle language={language} setLanguage={setLanguage} />
               </div>
 
               {/* Solutions component */}
