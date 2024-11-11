@@ -182,9 +182,9 @@ const InProcessMethodology = ({ language, setLanguage }) => {
           <CardContent className="p-6 h-full flex flex-col">
             {/* Cabeçalho fixo */}
             <div>
-              <div className="flex items-center mb-4 space-x-4">
-                <Waypoints className="w-14 h-14 text-[#00ff9d]" />
-                <h1 className="text-4xl font-bold text-[#00ff9d]">{t.title}</h1>
+              <div className="flex items-center mb-4 space-x-2 sm:space-x-4">
+                <Waypoints className="w-12 h-12 sm:w-14 sm:h-14 text-[#00ff9d]" />
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
               <p className="text-white text-lg text-left mb-6 leading-[2]">
                 Integra{" "}
@@ -216,7 +216,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
               </p>
             </div>
 
-            {/* Conteúdo rolável */}
+            {/* Conteúdo rolvel */}
             <div className="flex-1">
               <Tabs
                 defaultValue="overview"
