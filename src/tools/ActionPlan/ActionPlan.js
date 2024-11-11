@@ -371,37 +371,43 @@ const ActionPlanApp = ({ language }) => {
               <CardHeader>
                 <CardTitle>{t.actionPlan}</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full min-w-[600px]">
+              <CardContent className="px-0 sm:px-4">
+                <div className="w-full overflow-x-auto">
+                  <table className="w-full whitespace-nowrap">
                     <thead>
                       <tr>
-                        <th className="text-left py-2 px-4 border-b border-gray-700">
-                          Ação #
+                        <th className="text-left py-2 px-2 sm:px-4 border-b border-gray-700">
+                          #
                         </th>
                         {t.questions.map((q) => (
                           <th
                             key={q.key}
-                            className="text-left py-2 px-4 border-b border-gray-700"
+                            className="text-left py-2 px-2 sm:px-4 border-b border-gray-700"
                           >
-                            {q.key.charAt(0).toUpperCase() + q.key.slice(1)}
+                            <span className="hidden sm:inline">
+                              {q.key.charAt(0).toUpperCase() + q.key.slice(1)}
+                            </span>
+                            <span className="sm:hidden">
+                              {q.key.charAt(0).toUpperCase()}
+                            </span>
                           </th>
                         ))}
-                        <th className="text-left py-2 px-4 border-b border-gray-700">
-                          Actions
+                        <th className="text-left py-2 px-2 sm:px-4 border-b border-gray-700">
+                          <span className="hidden sm:inline">Actions</span>
+                          <span className="sm:hidden">Act</span>
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       {plans.map((plan, index) => (
                         <tr key={index}>
-                          <td className="py-2 px-4 border-b border-gray-700">
+                          <td className="py-2 px-2 sm:px-4 border-b border-gray-700">
                             {index + 1}
                           </td>
                           {t.questions.map((q) => (
                             <td
                               key={q.key}
-                              className="py-2 px-4 border-b border-gray-700"
+                              className="py-2 px-2 sm:px-4 border-b border-gray-700 max-w-[150px] truncate"
                               onDoubleClick={() => handleDoubleClick(index, q.key)}
                             >
                               {editingField &&
@@ -452,7 +458,7 @@ const ActionPlanApp = ({ language }) => {
                               )}
                             </td>
                           ))}
-                          <td className="py-2 px-4 border-b border-gray-700">
+                          <td className="py-2 px-2 sm:px-4 border-b border-gray-700">
                             <button
                               onClick={() => deletePlan(index)}
                               className="bg-red-500 hover:bg-red-700 text-white rounded-full p-1 transition-colors duration-300"
