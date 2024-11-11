@@ -13,14 +13,17 @@ const PageHeader = ({ language, setLanguage, logo }) => {
                      location.pathname === "/" || 
                      location.pathname === "";
 
-  const t = translations[language];
-  
-  if (isHomePage) return null;
-
-  const languages = {
+  // Lista de idiomas suportados
+  const SUPPORTED_LANGUAGES = {
     en: "English",
     pt: "Português"
   };
+  
+  // Garante que o idioma atual é suportado, senão usa inglês
+  const currentLanguage = SUPPORTED_LANGUAGES[language] ? language : "en";
+  const t = translations[currentLanguage];
+  
+  if (isHomePage) return null;
 
   return (
     <>
@@ -82,7 +85,7 @@ const PageHeader = ({ language, setLanguage, logo }) => {
             >
               <div className="flex items-center gap-2">
                 <Globe className="w-4 h-4 group-hover:text-[#00ff9d]" />
-                <span className="text-sm">{language.toUpperCase()}</span>
+                <span className="text-sm">{currentLanguage.toUpperCase()}</span>
               </div>
               <ChevronDown 
                 className={`w-4 h-4 transition-transform duration-300 group-hover:text-[#00ff9d] 
@@ -99,7 +102,7 @@ const PageHeader = ({ language, setLanguage, logo }) => {
                   className="absolute right-0 mt-2 w-full sm:w-32 rounded-lg bg-gray-800/80 backdrop-blur-md 
                             border border-gray-700 overflow-hidden z-50"
                 >
-                  {Object.entries(languages).map(([code, name]) => (
+                  {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
                     <button
                       key={code}
                       onClick={() => {
@@ -108,7 +111,7 @@ const PageHeader = ({ language, setLanguage, logo }) => {
                       }}
                       className={`w-full px-4 py-2 text-left text-sm
                                 hover:bg-gray-700/50 hover:text-[#00ff9d] transition-colors
-                                ${language === code ? 'text-[#00ff9d] bg-gray-700/50' : ''}`}
+                                ${currentLanguage === code ? 'text-[#00ff9d] bg-gray-700/50' : ''}`}
                     >
                       {name}
                     </button>

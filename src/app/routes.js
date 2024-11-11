@@ -41,6 +41,17 @@ function Header({ title }) {
 const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) => {
   const location = useLocation();
 
+  // Lista de idiomas suportados para páginas internas
+  const SUPPORTED_LANGUAGES = ["en", "pt"];
+
+  // Função para garantir idioma suportado
+  const getSupportedLanguage = (currentLanguage) => {
+    return SUPPORTED_LANGUAGES.includes(currentLanguage) ? currentLanguage : "en";
+  };
+
+  // Garante que o idioma atual é suportado para componentes internos
+  const safeLanguage = getSupportedLanguage(language);
+
   const normalBgColor = "bg-[#000000]";
   const hoverBgColor = "hover:bg-[#00ff9d]";
   const normalBorderColor = "border-[#00cc7d]";
@@ -145,7 +156,10 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           path="/4menu"
           element={
             <motion.div {...transitionSettings}>
-              <FourMenu language={language} setLanguage={setLanguage} />
+              <FourMenu 
+                language={safeLanguage} 
+                setLanguage={setLanguage} 
+              />
             </motion.div>
           }
         />
@@ -153,7 +167,10 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           path="/inprocess"
           element={
             <motion.div {...transitionSettings}>
-              <InProcessMethodology language={language} setLanguage={setLanguage} />
+              <InProcessMethodology 
+                language={safeLanguage} 
+                setLanguage={setLanguage} 
+              />
             </motion.div>
           }
         />
@@ -161,7 +178,9 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           path="/rex"
           element={
             <motion.div {...transitionSettings}>
-              <REXPresentation language={language} />
+              <REXPresentation 
+                language={safeLanguage} 
+              />
             </motion.div>
           }
         />
