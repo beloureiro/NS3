@@ -105,7 +105,6 @@ const DynamicExpertiseDashboard = ({ language }) => {
     },
   };
 
-
   // Render radar chart function
   const renderRadarChart = () => {
     // Configurations for desktop and mobile
@@ -207,7 +206,6 @@ const DynamicExpertiseDashboard = ({ language }) => {
     );
   };
 
-
   return (
     <div className="w-full max-w-4xl mx-auto bg-transparent rounded-lg overflow-hidden shadow-xl">
       {/* "Our Expertise" text block */}
@@ -221,41 +219,14 @@ const DynamicExpertiseDashboard = ({ language }) => {
       </div>
 
       {/* Category buttons - implementing responsiveness */}
-      <div
-        className={`flex ${
-          isMobile ? "flex-col" : "flex-wrap"
-        } justify-center bg-transparent mb-4`}
-      >
-        {Object.keys(expertiseAreas).map((areaKey) => (
-          <button
-            key={areaKey}
-            onClick={() => setActiveArea(areaKey)}
-            onMouseEnter={() => setHoveredArea(areaKey)}
-            onMouseLeave={() => setHoveredArea(null)}
-            className={`${
-              isMobile ? "w-full my-1" : "flex-1 mx-1 my-1"
-            } py-2 px-2 text-sm font-medium transition-all duration-300 border-2 ${
-              activeArea === areaKey
-                ? `bg-${
-                    expertiseAreas[areaKey]?.color || "gray-500"
-                  } text-white border-${
-                    expertiseAreas[areaKey]?.color || "gray-500"
-                  }`
-                : "bg-[#1f2937] text-gray-300 border-gray-500 hover:bg-gray-800 hover:text-white"
-            } rounded-md`}
-            style={{
-              flex: isMobile ? "none" : "0 0 14%", // Adjust button width for desktop and mobile
-              borderColor:
-                hoveredArea === areaKey
-                  ? expertiseAreas[areaKey]?.color
-                  : "#374151",
-              marginTop: "-0.5rem",
-            }}
-          >
-            {expertiseAreas[areaKey]?.title || ""}
-          </button>
-        ))}
-      </div>
+      <ExpertiseButtonGrid
+        isMobile={isMobile}
+        activeArea={activeArea}
+        setActiveArea={setActiveArea}
+        hoveredArea={hoveredArea}
+        setHoveredArea={setHoveredArea}
+        expertiseAreas={expertiseAreas}
+      />
 
       {/* Radar chart display */}
       <div className="p-4 bg-transparent">
@@ -270,6 +241,52 @@ const DynamicExpertiseDashboard = ({ language }) => {
         </h2>
         {renderRadarChart()}
       </div>
+    </div>
+  );
+};
+
+const ExpertiseButtonGrid = ({
+  isMobile,
+  activeArea,
+  setActiveArea,
+  hoveredArea,
+  setHoveredArea,
+  expertiseAreas,
+}) => {
+  return (
+    <div
+      className={`flex ${
+        isMobile ? "flex-col" : "flex-wrap"
+      } justify-center bg-transparent mb-4`}
+    >
+      {Object.keys(expertiseAreas).map((areaKey) => (
+        <button
+          key={areaKey}
+          onClick={() => setActiveArea(areaKey)}
+          onMouseEnter={() => setHoveredArea(areaKey)}
+          onMouseLeave={() => setHoveredArea(null)}
+          className={`${
+            isMobile ? "w-full my-1" : "flex-1 mx-1 my-1"
+          } py-2 px-2 text-sm font-medium transition-all duration-300 border-2 ${
+            activeArea === areaKey
+              ? `bg-${expertiseAreas[areaKey]?.color || "gray-500"} text-white`
+              : "bg-[#1f2937] text-gray-300 hover:bg-gray-800 hover:text-white"
+          } rounded-md`}
+          style={{
+            flex: isMobile ? "none" : "0 0 14%",
+            borderColor: isMobile
+              ? activeArea === areaKey // Only show color on mobile when active
+                ? expertiseAreas[areaKey]?.color
+                : "#374151"
+              : hoveredArea === areaKey || activeArea === areaKey // Keep desktop behavior unchanged
+              ? expertiseAreas[areaKey]?.color
+              : "#374151",
+            marginTop: isMobile ? "0" : "-0.5rem",
+          }}
+        >
+          {expertiseAreas[areaKey]?.title || ""}
+        </button>
+      ))}
     </div>
   );
 };
