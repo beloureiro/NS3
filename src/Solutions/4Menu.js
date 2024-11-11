@@ -38,27 +38,14 @@ const FlowCard = ({ icon: Icon, title, color, isSelected, onClick, onMouseEnter,
           : `border-[1px] ${borderColor}`
         }
         hover:border-[2px] hover:${borderColor}
-        
-        // Mobile styles
-        w-full max-w-[180px] mx-auto p-2.5 md:max-w-none md:mx-0
-        
-        // Desktop styles (md and up)
-        md:min-w-[6rem] md:w-24 md:h-24
-        lg:min-w-[7rem] lg:w-28 lg:h-28
-        md:flex-shrink-0 md:flex-grow-0
+        w-full p-4 md:flex-1 md:min-h-[120px]
       `}
     >
-      <div className="
-        // Mobile styles
-        flex items-center space-x-3 md:space-x-0
-        
-        // Desktop styles
-        md:flex-col md:items-center md:text-center md:gap-0
-      ">
-        <div className={`bg-${color}-400/10 p-1.5 rounded-lg shrink-0`}>
-          <Icon className={`text-${color}-400 w-6 h-6 md:w-7 md:h-7`} />
+      <div className="flex items-center space-x-3 md:flex-col md:items-center md:text-center md:space-x-0 md:space-y-2">
+        <div className={`bg-${color}-400/10 p-2 rounded-lg`}>
+          <Icon className={`text-${color}-400 w-7 h-7 md:w-6 md:h-6`} />
         </div>
-        <h3 className="text-base font-medium text-white md:text-sm lg:text-base md:whitespace-normal md:-mt-1">{title}</h3>
+        <h3 className="text-base font-medium text-white md:text-sm">{title}</h3>
       </div>
     </motion.div>
   );
@@ -174,11 +161,11 @@ const FourMenu = ({ language = 'en' }) => {
         >
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4 md:mb-6">
             <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#FF6B6B] flex items-center gap-2 md:gap-3">
-                <ChefHat className="text-[#00ff9d] w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" />
+              <h2 className="text-4xl sm:text-5xl md:text-4xl lg:text-5xl font-bold text-[#FF6B6B] flex items-center gap-2 md:gap-3">
+                <ChefHat className="text-[#00ff9d] w-14 h-14 sm:w-16 sm:h-16 md:w-12 md:h-12 lg:w-14 lg:h-14" />
                 4menu.today
               </h2>
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white">{t.subtitle}</p>
+              <p className="text-lg sm:text-xl md:text-lg lg:text-xl text-white">{t.subtitle}</p>
             </div>
             <div className="flex flex-wrap gap-2 sm:gap-4 mt-3 md:mt-0">
               <span className="text-base text-slate-400 flex items-center">
@@ -248,7 +235,7 @@ const FourMenu = ({ language = 'en' }) => {
             </div>
 
             {/* Desktop Layout (hidden on mobile) */}
-            <div className="hidden md:flex justify-start md:justify-center items-center gap-3">
+            <div className="hidden md:flex justify-center items-stretch gap-3">
               <FlowCard
                 icon={Globe}
                 title={t.siteCard.title}
