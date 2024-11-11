@@ -183,9 +183,9 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
   return (
     <div className="bg-black text-white">
-      <div className="max-w-screen-lg mx-auto px-6 pt-0 pb-6">
+      <div className="max-w-screen-lg mx-auto px-2 sm:px-6 pt-0 pb-6">
         <Card className="bg-gray-800 border-gray-700 h-full">
-          <CardContent className="p-6 h-full flex flex-col">
+          <CardContent className="p-3 sm:p-6 h-full flex flex-col">
             {/* Cabeçalho fixo */}
             <div>
               <div className="flex items-center mb-4 space-x-2 sm:space-x-4 overflow-hidden">
