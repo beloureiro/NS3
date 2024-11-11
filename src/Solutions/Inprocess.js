@@ -107,7 +107,10 @@ const AdvancedAnalysisExplanation = ({ language }) => {
             {t.processMapping}
           </p>
         </div>
-        <ArrowRightLeft className="text-emerald-400 hidden md:block" size={24} />
+        <ArrowRightLeft
+          className="text-emerald-400 hidden md:block"
+          size={24}
+        />
         <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-1/3">
           <div className="flex items-center gap-4 mb-2">
             <Cpu className="text-emerald-400" size={28} />
@@ -116,7 +119,10 @@ const AdvancedAnalysisExplanation = ({ language }) => {
           </div>
           <p className="text-slate-300 text-sm text-center">{t.aiProcessing}</p>
         </div>
-        <ArrowRightLeft className="text-emerald-400 hidden md:block" size={24} />
+        <ArrowRightLeft
+          className="text-emerald-400 hidden md:block"
+          size={24}
+        />
         <div className="bg-gray-900 p-3 rounded-lg flex flex-col items-center w-full md:w-1/3">
           <Grid2x2 className="text-emerald-400 mb-2" size={28} />
           <p className="text-slate-300 text-sm text-center">
@@ -182,9 +188,11 @@ const InProcessMethodology = ({ language, setLanguage }) => {
           <CardContent className="p-6 h-full flex flex-col">
             {/* Cabeçalho fixo */}
             <div>
-              <div className="flex items-center mb-4 space-x-2 sm:space-x-4">
-                <Waypoints className="w-12 h-12 sm:w-14 sm:h-14 text-[#00ff9d]" />
-                <h1 className="text-2xl sm:text-3xl font-bold text-[#00ff9d]">{t.title}</h1>
+              <div className="flex items-center mb-4 space-x-2 sm:space-x-4 overflow-hidden">
+                <Waypoints className="w-12 h-12 sm:w-14 sm:h-14 text-[#00ff9d] flex-shrink-0" />
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#00ff9d] truncate">
+                  {t.title}
+                </h1>
               </div>
               <p className="text-white text-lg text-left mb-6 leading-[2]">
                 {t.subtitle.prefix}{" "}

@@ -21,7 +21,7 @@ import ContactSection from "../AppComponents/ContactSection";
 
 const REXPresentation = ({ language }) => {
   const [selectedFeature, setSelectedFeature] = useState(() => {
-    return texts.features.find(f => f.id === 1);
+    return texts.features.find((f) => f.id === 1);
   });
   const [hoveredFeature, setHoveredFeature] = useState(null);
 
@@ -66,8 +66,8 @@ const REXPresentation = ({ language }) => {
             }
           `}
       >
-        <div className="p-3 flex items-center space-x-2">
-          <div className="p-2 rounded-lg transition-colors duration-300 bg-transparent shrink-0">
+        <div className="p-3 flex items-center">
+          <div className="p-1.5 rounded-lg transition-colors duration-300 bg-transparent shrink-0">
             {React.cloneElement(icons[feature.id], {
               className: `${
                 selectedFeature?.id === feature.id
@@ -79,12 +79,11 @@ const REXPresentation = ({ language }) => {
             })}
           </div>
           <h3
-            className={` 
-                text-sm font-semibold transition-colors duration-300
-                ${
-                  selectedFeature?.id === feature.id ? "text-[#FFFF08]" : "text-white"
-                }
-              `}
+            className={`ml-1 text-sm font-semibold transition-colors duration-300 ${
+              selectedFeature?.id === feature.id
+                ? "text-[#FFFF08]"
+                : "text-white"
+            }`}
           >
             {feature.title[language]}
           </h3>
@@ -158,7 +157,9 @@ const REXPresentation = ({ language }) => {
   );
 
   return (
-    <div className="pb-8"> {/* Removido min-h-screen e adicionado padding-bottom */}
+    <div className="pb-8">
+      {" "}
+      {/* Removido min-h-screen e adicionado padding-bottom */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -169,9 +170,7 @@ const REXPresentation = ({ language }) => {
             <div className="p-2 rounded-xl">
               <Home className="w-12 h-12 text-[#FFFF08]" />
             </div>
-            <h1 className="text-5xl font-bold text-[#FFFF08]">
-              REX
-            </h1>
+            <h1 className="text-5xl font-bold text-[#FFFF08]">REX</h1>
           </div>
           <div className="inline-block px-3 py-1 mb-4 text-sm font-medium text-[#FFFF08] bg-[#FFFF08]/10 rounded-md">
             Real Estate Experience
@@ -210,7 +209,6 @@ const REXPresentation = ({ language }) => {
           <ContactSection title={texts.contactSectionTitle[language]} />
         </motion.div>
       </div>
-
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
