@@ -446,7 +446,7 @@ const InProcessMethodology = ({ language, setLanguage }) => {
 
       {/* Seção de Contato */}
       <div className="bg-black -mt-4">
-        <ContactSection title="Fale Conosco" />
+        <ContactSection title={translations[language].contactUs} />
       </div>
     </div>
   );

@@ -32,6 +32,7 @@ export const translations = {
     continuous: "Continuous",
     monitoring: "Monitoring",
     monitorEvaluate: "Monitor and evaluate process performance",
+    contactUs: "Contact Us"  // Add English translation
   },
   pt: {
     title: "Metodologia InProcess",
@@ -66,6 +67,7 @@ export const translations = {
     continuous: "Contínuo",
     monitoring: "Monitoramento",
     monitorEvaluate: "Monitorar e avaliar o desempenho do processo",
+    contactUs: "Fale Conosco"  // Add Portuguese translation
   },
 };
 
