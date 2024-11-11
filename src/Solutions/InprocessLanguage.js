@@ -1,8 +1,14 @@
 export const translations = {
   en: {
     title: "InProcess Methodology",
-    subtitle:
-      "Integrates Processes, People, and Technology to enhance and stabilize operations, empower teams, and accelerate workflows.",
+    subtitle: {
+      prefix: "Integrates",
+      processes: "Processes",
+      people: "People",
+      technology: "Technology",
+      conjunction: "and",
+      suffix: "to enhance and stabilize operations, empower teams, and accelerate workflows."
+    },
     back: "Back",
     overview: "Overview",
     diagnostic: "Diagnostic & Classification",
@@ -29,8 +35,14 @@ export const translations = {
   },
   pt: {
     title: "Metodologia InProcess",
-    subtitle:
-      "Integra Processos, Pessoas e Tecnologia para aprimorar e estabilizar operações, capacitar equipes e acelerar fluxos de trabalho.",
+    subtitle: {
+      prefix: "Integra",
+      processes: "Processos",
+      people: "Pessoas",
+      technology: "Tecnologia",
+      conjunction: "e",
+      suffix: "para aprimorar e estabilizar operações, capacitar equipes e acelerar fluxos de trabalho."
+    },
     back: "Voltar",
     overview: "Visão Geral",
     diagnostic: "Diagnóstico & Classificação",

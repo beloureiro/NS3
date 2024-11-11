@@ -187,13 +187,13 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#00ff9d]">{t.title}</h1>
               </div>
               <p className="text-white text-lg text-left mb-6 leading-[2]">
-                Integra{" "}
+                {t.subtitle.prefix}{" "}
                 <span className="inline-flex items-baseline">
                   <Workflow
                     className="w-5 h-5 mr-1 text-blue-400"
                     style={{ verticalAlign: "baseline" }}
                   />
-                  <span>Processos</span>
+                  <span>{t.subtitle.processes}</span>
                 </span>
                 ,{" "}
                 <span className="inline-flex items-baseline">
@@ -201,18 +201,17 @@ const InProcessMethodology = ({ language, setLanguage }) => {
                     className="w-5 h-5 mr-1 text-purple-400"
                     style={{ verticalAlign: "baseline" }}
                   />
-                  <span>Pessoas</span>
+                  <span>{t.subtitle.people}</span>
                 </span>
-                , e{" "}
+                , {t.subtitle.conjunction}{" "}
                 <span className="inline-flex items-baseline">
                   <Cpu
                     className="w-5 h-5 mr-1 text-green-400"
                     style={{ verticalAlign: "baseline" }}
                   />
-                  <span>Tecnologia</span>
+                  <span>{t.subtitle.technology}</span>
                 </span>{" "}
-                para melhorar e estabilizar as operações, capacitar equipes e
-                acelerar fluxos de trabalho.
+                {t.subtitle.suffix}
               </p>
             </div>
 
