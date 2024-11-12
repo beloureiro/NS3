@@ -23,19 +23,7 @@ const transitionSettings = {
   transition: { duration: 0.4 },
 };
 
-// Header component: displays the main title of the page
-function Header({ title }) {
-  return (
-    <motion.div
-      className="flex flex-col items-center sm:flex-row sm:justify-center sm:items-center mb-2 relative"
-      {...transitionSettings}
-    >
-      <h1 className="text-2xl sm:text-4xl font-bold text-center w-full sm:w-auto">
-        {title}
-      </h1>
-    </motion.div>
-  );
-}
+// Header component removed as it was not used
 
 // Main AppRoutes component: handles routing and page layout
 const AppRoutes = ({
@@ -76,13 +64,30 @@ const AppRoutes = ({
           path="/"
           element={
             <motion.div {...transitionSettings}>
-              {/* Header with the page title */}
-              <Header title={t.title} />
+              {/* Header with animated title */}
+              <motion.h1
+                key={t.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="text-2xl sm:text-4xl font-bold text-center w-full sm:w-auto"
+              >
+                {t.title}
+              </motion.h1>
 
-              {/* Logo and description section */}
               <div className="mb-2 transform hover:scale-105 transition-transform duration-300 text-center">
                 <img src={logo} alt="InMotion logo" className="mx-auto" />
-                <p className="mt-1 text-gray-400">{t.description}</p>
+                <motion.p
+                  key={t.description}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="mt-1 text-gray-400"
+                >
+                  {t.description}
+                </motion.p>
               </div>
 
               {/* Language toggle component positioned below the logo and title on mobile */}
@@ -93,14 +98,28 @@ const AppRoutes = ({
               {/* Solutions component */}
               <Solutions language={language} />
 
-              {/* Expertise section */}
+              {/* Expertise section with animated text */}
               <div className="-mt-2 mb-2 max-w-2xl mx-auto">
-                <h2 className="text-2xl font-semibold mb-1 text-center text-[#00cc7d]">
+                <motion.h2
+                  key={t.ourExpertise}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-2xl font-semibold mb-1 text-center text-[#00cc7d]"
+                >
                   {t.ourExpertise}
-                </h2>
-                <p className="leading-relaxed text-center max-w-2xl mx-auto">
+                </motion.h2>
+                <motion.p
+                  key={t.expertiseDescriptionShort}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="leading-relaxed text-center max-w-2xl mx-auto"
+                >
                   {t.expertiseDescriptionShort}
-                </p>
+                </motion.p>
               </div>
 
               {/* Dynamic expertise dashboard component */}
