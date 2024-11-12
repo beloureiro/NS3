@@ -38,7 +38,14 @@ function Header({ title }) {
 }
 
 // Main AppRoutes component: handles routing and page layout
-const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) => {
+const AppRoutes = ({
+  language,
+  showTools,
+  setShowTools,
+  t,
+  logo,
+  setLanguage,
+}) => {
   const location = useLocation();
 
   // Lista de idiomas suportados para páginas internas
@@ -46,7 +53,9 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
 
   // Função para garantir idioma suportado
   const getSupportedLanguage = (currentLanguage) => {
-    return SUPPORTED_LANGUAGES.includes(currentLanguage) ? currentLanguage : "en";
+    return SUPPORTED_LANGUAGES.includes(currentLanguage)
+      ? currentLanguage
+      : "en";
   };
 
   // Garante que o idioma atual é suportado para componentes internos
@@ -124,7 +133,7 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           path="/decision-helper"
           element={
             <motion.div {...transitionSettings}>
-              <DecisionHelper language={language} />
+              <DecisionHelper language={safeLanguage} />
             </motion.div>
           }
         />
@@ -132,7 +141,7 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           path="/5w2h"
           element={
             <motion.div {...transitionSettings}>
-              <ActionPlanApp language={language} />
+              <ActionPlanApp language={safeLanguage} />
             </motion.div>
           }
         />
@@ -156,10 +165,7 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           path="/4menu"
           element={
             <motion.div {...transitionSettings}>
-              <FourMenu 
-                language={safeLanguage} 
-                setLanguage={setLanguage} 
-              />
+              <FourMenu language={safeLanguage} setLanguage={setLanguage} />
             </motion.div>
           }
         />
@@ -167,9 +173,9 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           path="/inprocess"
           element={
             <motion.div {...transitionSettings}>
-              <InProcessMethodology 
-                language={safeLanguage} 
-                setLanguage={setLanguage} 
+              <InProcessMethodology
+                language={safeLanguage}
+                setLanguage={setLanguage}
               />
             </motion.div>
           }
@@ -178,9 +184,7 @@ const AppRoutes = ({ language, showTools, setShowTools, t, logo, setLanguage }) 
           path="/rex"
           element={
             <motion.div {...transitionSettings}>
-              <REXPresentation 
-                language={safeLanguage} 
-              />
+              <REXPresentation language={safeLanguage} />
             </motion.div>
           }
         />
